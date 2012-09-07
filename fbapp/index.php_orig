@@ -1,0 +1,222 @@
+<html>
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# showcoderutestapp: http://ogp.me/ns/fb/showcoderutestapp#">
+
+<title>OG Sample Object - Sample Ticket</title>
+
+        <meta property="fb:app_id" content="144623399011345" />
+        <meta property="og:type" content="showcoderutestapp:ticket" />
+        <meta property="og:title" content="Event ticket" />
+        <meta property="og:image"  content="https://showcode.ru/fbapp/9d58b520.png" /> 
+        <meta property="og:url"    content="http://showcode.ru/events/view/9d58b520" /> 
+
+        <link rel="stylesheet" href="reset.css" />
+
+        <link rel="stylesheet" href="base.css" />
+
+        <script src="jquery-1.6.4.js"></script>
+
+    </head>
+<body style="background: #FFF;">
+<?php
+function parse_signed_request($signed_request, $secret) {
+      list($encoded_sig, $payload) = explode('.', $signed_request, 2); 
+
+        // decode the data
+        $sig = base64_url_decode($encoded_sig);
+          $data = json_decode(base64_url_decode($payload), true);
+
+            if (strtoupper($data['algorithm']) !== 'HMAC-SHA256') {
+                    error_log('Unknown algorithm. Expected HMAC-SHA256');
+                        return null;
+                          }
+
+              // check sig
+              $expected_sig = hash_hmac('sha256', $payload, $secret, $raw = true);
+                if ($sig !== $expected_sig) {
+                        error_log('Bad Signed JSON signature!');
+                            return null;
+                              }
+
+                  return $data;
+}
+
+function base64_url_decode($input) {
+      return base64_decode(strtr($input, '-_', '+/'));
+}
+?>
+        
+      <div class="form_main" id="form_tickets_buy" style="height: 92%; width: 95%; top: 0px; border: none; margin: 0; ">
+                 <script type="text/javascript" language="javascript">
+               //<![CDATA[
+            $(document).ready(function() {
+            var count_place = 0;
+            var places = Array();
+            var placesCount = 0;
+            $("#TransactionLog_quantity").keyup(function()
+            {
+                    var q = parseInt($("#TransactionLog_quantity").val());
+                    var radio_inputs = $(".grid-view input");                    
+                        
+                    for(var i = 0; i < radio_inputs.length; i++){
+                            if(radio_inputs[i].checked){
+                                    var elem = radio_inputs[i];
+                            }
+                    }
+                    if(elem){
+                            var price = parseInt($(elem).parents("tr").find("td.price").text());
+                            var quantity_max = parseInt($(elem).parents("tr").find("td.quantity").text());
+
+                            if (q >= 0)
+                                    $("input[name=summ]").val(q*price);
+                            if (q > quantity_max || !q)
+                            {
+                                    $("#TransactionLog_quantity").val(0);
+                                    $("input[name=summ]").val(0);
+                            }
+                    }else{
+
+                        $("#TransactionLog_quantity").val(0);
+                        $("input[name=summ]").val(0);
+                        alert("Выбрать билет");
+                    }
+            });
+
+            $("#htmlcode").click(function()
+            {
+                    $("#htmlcode").attr("rows","9");
+            });
+
+            $("td.place").click(function(){
+                    var place = this;
+                    var placeClass = place.className;
+                    var iplace = parseInt($(place).attr("place"));
+                    var icolumn = parseInt($(place).attr("column"));
+                    var id = (icolumn - 1) * count_place + iplace;
+                    if (!places["order_" + id]) {
+                            if (placesCount < 5) {
+                                    if (placeClass == "place") {
+                                            place.className = "place select_place";
+                                            $(place).css("background", "#429FCC");
+                                    }
+                                    places["order_" + id] = {"place": iplace, "column": icolumn};
+                                    placesCount++;
+                            } else {
+                                    alert("\u041C\u043E\u0436\u043D\u043E \u0437\u0430\u0431\u0440\u043E\u043D\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u043D\u0435 \u0431\u043E\u043B\u0435\u0435 5 \u043C\u0435\u0441\u0442");
+                            }
+                    } else {
+                            if (placeClass == "place select_place") {
+                                    place.className = "place";
+                                    $(place).css("background", "#FFF");
+                            }
+                            places["order_" + id] = null;
+                            placesCount--;
+                    }
+            });
+
+            $("td.place").mouseover(function(){
+                    if(placesCount > 0){
+                            var darw = true;
+                            for(var id in places){
+                                    if (!places[id] || (places[id]["place"] != $(this).attr("place") && places[id]["column"] != $(this).attr("column")))
+                                            darw = true;
+                                    else{
+                                            darw = false;
+                                            break;
+                                    }
+                            }
+                            if(darw){
+                                    $(this).css("background", "#AAE6FF");
+                            }
+                    }else{
+                            $(this).css("background", "#AAE6FF");
+                    }
+            });
+
+            $("td.place").mouseout(function(){
+                    if(placesCount > 0){
+                            var darw = true;
+                            for(var id in places){
+                                    if (!places[id] || (places[id]["place"] != $(this).attr("place") && places[id]["column"] != $(this).attr("column")))
+                                            darw = true;
+                                    else{
+                                            darw = false;
+                                            break;
+                                    }
+                            }
+                            if(darw){
+                                    $(this).css("background", "#FFF");
+                            }
+                    }else{
+                            $(this).css("background", "#FFF");
+                    }
+            });
+
+            $("input[name=\"TransactionLog[payment]\"]").click(function(){
+            if ($("#isPlace").val()==1 && placesCount < 1)
+            {
+                    alert("Сначала выберете место!");
+                    $(this).removeAttr("checked");
+            }});
+
+            $("input[name=\"TransactionLog[ticket_id]\"]").click(function(){
+            if ($("#isPlace").val()==1 && placesCount < 1)
+            {
+                    alert("Сначала выберете место!");
+                    $(this).removeAttr("checked");
+            }});
+
+            $("#submit_save_button").click(function(){
+                    if(placesCount > 0){
+                            var html = "";
+                            for(var id in places){
+                                    html = "";
+                                    html += "<input id=\"TransactionLog_place\" type=\"hidden\" name=\"TransactionLog[place][]\" value=\""+places[id]["place"]+"\">";
+                                    html += "<input id=\"TransactionLog_column\" type=\"hidden\" name=\"TransactionLog[column][]\" value=\""+places[id]["column"]+"\">";
+                                    $("#TransactionLog_event_id").after(html);
+                            }
+                    }
+            });
+            })
+            //]]>
+        </script>
+          <div>
+                              <h1 style="width: 700px; font-size: 20px; line-height: 24px; color: #fb6006;">Заказ билетов на мероприятие «Семинар – обучение работе с системой ShowCode»</h1>
+                        </div>
+	<form enctype="multipart/form-data" id="events-form" action="http://showcode.ru/events/iframe/9d58b520/" method="post">	
+<!--<a style="font-size: 16px; margin:0px 0px 0px 230px;" id="button_bye" href="#">Купить билеты</a>-->
+	
+            
+            <input value="9d58b520" name="TransactionLog[event_id]" id="TransactionLog_event_id" type="hidden" />           
+            <div>
+                    <label for="TransactionLog_phone">Мобильный телефон (10 цифр)</label>                    +7 <input size="37" maxlength="10" name="TransactionLog[phone]" id="TransactionLog_phone" type="text" />                                </div>
+
+            <div>
+                    <label for="TransactionLog_family">Фамилия Имя Отчество</label>                    <input size="40" maxlength="50" name="TransactionLog[family]" id="TransactionLog_family" type="text" />                                                <div class="errorMessage"><p style="color:red"></p></div>
+                                </div>
+            
+            <div>
+                    <label for="TransactionLog_mail">E-mail</label>                    <input size="40" maxlength="50" name="TransactionLog[mail]" id="TransactionLog_mail" type="text" />                                </div>			
+
+					
+		
+		<div>
+			<div id="list_tickets"><h2>Билеты:</h2><table style="width: 94%!important;" class="grid-view"><tr class="title_table"><td></td><td>Осталось</td><td>Цена</td><td>Время начала</td><td>Время окончания</td><td>Описание</td></tr><tr><td><input id="TransactionLog_ticket_id_0" value="132" price="0" quantity="74" type="radio" name="TransactionLog[ticket_id]" /></td><td>74</td><td>0&nbsp;руб.</td><td></td><td></td><td class="last_cell">Билет на мероприятие</td></tr></table></div>			
+					</div>
+                        
+                                                              
+		
+			
+	                <div>
+                                            <input id="submit_save_button" type="submit" name="yt0" value="Забрать билет" />                                    </div>
+
+	
+	</form>
+<a href="attend_to_event.php">Attending to event</a>
+<a href="post_feed.php">Post to your Feed</a>
+<a href="post_wall.php">Post to your Wall</a>
+<a href="frend.php">Invite friend</a>
+<a href="event.php">Event</a>
+</div>
+</body>
+</html>
+

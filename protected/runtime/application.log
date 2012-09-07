@@ -1,0 +1,324 @@
+2012/09/06 23:47:50 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "stylesheets/app.css".' in /www/showco01/www/htdocs/yii/framework/yiilite.php:1693
+Stack trace:
+#0 /www/showco01/www/htdocs/yii/framework/yiilite.php(1609): CWebApplication->runController('stylesheets/app...')
+#1 /www/showco01/www/htdocs/yii/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /www/showco01/www/htdocs/index.php(43): CApplication->run()
+#3 {main}
+REQUEST_URI=/stylesheets/app.css
+HTTP_REFERER=http://showcode.ru/fbapp/ticket/?fb_source=ticker&fb_action_ids=3905042182770&fb_action_types=showcoderutestapp%3Abuy
+---
+2012/09/06 23:47:52 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "favicon.ico".' in /www/showco01/www/htdocs/yii/framework/yiilite.php:1693
+Stack trace:
+#0 /www/showco01/www/htdocs/yii/framework/yiilite.php(1609): CWebApplication->runController('favicon.ico')
+#1 /www/showco01/www/htdocs/yii/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /www/showco01/www/htdocs/index.php(43): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2012/09/06 23:48:15 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "stylesheets/app.css".' in /www/showco01/www/htdocs/yii/framework/yiilite.php:1693
+Stack trace:
+#0 /www/showco01/www/htdocs/yii/framework/yiilite.php(1609): CWebApplication->runController('stylesheets/app...')
+#1 /www/showco01/www/htdocs/yii/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /www/showco01/www/htdocs/index.php(43): CApplication->run()
+#3 {main}
+REQUEST_URI=/stylesheets/app.css
+HTTP_REFERER=http://showcode.ru/fbapp/ticket/?fb_action_ids=3905042182770&fb_action_types=showcoderutestapp%3Abuy&fb_source=timeline_og&action_object_map=%7B%223905042182770%22%3A464101090277408%7D&action_type_map=%7B%223905042182770%22%3A%22showcoderutestapp%3Abuy%22%7D&action_ref_map=%5B%5D
+---
+2012/09/06 23:48:15 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "favicon.ico".' in /www/showco01/www/htdocs/yii/framework/yiilite.php:1693
+Stack trace:
+#0 /www/showco01/www/htdocs/yii/framework/yiilite.php(1609): CWebApplication->runController('favicon.ico')
+#1 /www/showco01/www/htdocs/yii/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /www/showco01/www/htdocs/index.php(43): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2012/09/07 00:23:51 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "favicon.ico".' in /www/showco01/www/htdocs/yii/framework/yiilite.php:1693
+Stack trace:
+#0 /www/showco01/www/htdocs/yii/framework/yiilite.php(1609): CWebApplication->runController('favicon.ico')
+#1 /www/showco01/www/htdocs/yii/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /www/showco01/www/htdocs/index.php(43): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2012/09/07 00:24:00 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "favicon.ico".' in /www/showco01/www/htdocs/yii/framework/yiilite.php:1693
+Stack trace:
+#0 /www/showco01/www/htdocs/yii/framework/yiilite.php(1609): CWebApplication->runController('favicon.ico')
+#1 /www/showco01/www/htdocs/yii/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /www/showco01/www/htdocs/index.php(43): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2012/09/07 00:26:20 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "stylesheets/app.css".' in /www/showco01/www/htdocs/yii/framework/yiilite.php:1693
+Stack trace:
+#0 /www/showco01/www/htdocs/yii/framework/yiilite.php(1609): CWebApplication->runController('stylesheets/app...')
+#1 /www/showco01/www/htdocs/yii/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /www/showco01/www/htdocs/index.php(43): CApplication->run()
+#3 {main}
+REQUEST_URI=/stylesheets/app.css
+HTTP_REFERER=http://showcode.ru/fbapp/ticket/?fb_action_ids=368757869861791&fb_action_types=showcoderutestapp%3Abuy&fb_source=other_multiline&action_object_map=%7B%22368757869861791%22%3A464101090277408%7D&action_type_map=%7B%22368757869861791%22%3A%22showcoderutestapp%3Abuy%22%7D&action_ref_map=%5B%5D
+---
+2012/09/07 00:26:21 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "favicon.ico".' in /www/showco01/www/htdocs/yii/framework/yiilite.php:1693
+Stack trace:
+#0 /www/showco01/www/htdocs/yii/framework/yiilite.php(1609): CWebApplication->runController('favicon.ico')
+#1 /www/showco01/www/htdocs/yii/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /www/showco01/www/htdocs/index.php(43): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2012/09/07 00:54:14 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "favicon.ico".' in /www/showco01/www/htdocs/yii/framework/yiilite.php:1693
+Stack trace:
+#0 /www/showco01/www/htdocs/yii/framework/yiilite.php(1609): CWebApplication->runController('favicon.ico')
+#1 /www/showco01/www/htdocs/yii/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /www/showco01/www/htdocs/index.php(43): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2012/09/07 01:07:03 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "stylesheets/app.css".' in /www/showco01/www/htdocs/yii/framework/yiilite.php:1693
+Stack trace:
+#0 /www/showco01/www/htdocs/yii/framework/yiilite.php(1609): CWebApplication->runController('stylesheets/app...')
+#1 /www/showco01/www/htdocs/yii/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /www/showco01/www/htdocs/index.php(43): CApplication->run()
+#3 {main}
+REQUEST_URI=/stylesheets/app.css
+HTTP_REFERER=http://showcode.ru/fbapp/ticket/?fb_action_ids=368757999861778%2C368757869861791&fb_action_types=showcoderutestapp%3Abuy&fb_source=other_multiline&action_object_map=%7B%22368757999861778%22%3A464101090277408%2C%22368757869861791%22%3A464101090277408%7D&action_type_map=%7B%22368757999861778%22%3A%22showcoderutestapp%3Abuy%22%2C%22368757869861791%22%3A%22showcoderutestapp%3Abuy%22%7D&action_ref_map=%5B%5D
+---
+2012/09/07 01:07:03 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "favicon.ico".' in /www/showco01/www/htdocs/yii/framework/yiilite.php:1693
+Stack trace:
+#0 /www/showco01/www/htdocs/yii/framework/yiilite.php(1609): CWebApplication->runController('favicon.ico')
+#1 /www/showco01/www/htdocs/yii/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /www/showco01/www/htdocs/index.php(43): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2012/09/07 01:11:04 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "favicon.ico".' in /www/showco01/www/htdocs/yii/framework/yiilite.php:1693
+Stack trace:
+#0 /www/showco01/www/htdocs/yii/framework/yiilite.php(1609): CWebApplication->runController('favicon.ico')
+#1 /www/showco01/www/htdocs/yii/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /www/showco01/www/htdocs/index.php(43): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2012/09/07 01:11:09 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "favicon.ico".' in /www/showco01/www/htdocs/yii/framework/yiilite.php:1693
+Stack trace:
+#0 /www/showco01/www/htdocs/yii/framework/yiilite.php(1609): CWebApplication->runController('favicon.ico')
+#1 /www/showco01/www/htdocs/yii/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /www/showco01/www/htdocs/index.php(43): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2012/09/07 01:11:31 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "favicon.ico".' in /www/showco01/www/htdocs/yii/framework/yiilite.php:1693
+Stack trace:
+#0 /www/showco01/www/htdocs/yii/framework/yiilite.php(1609): CWebApplication->runController('favicon.ico')
+#1 /www/showco01/www/htdocs/yii/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /www/showco01/www/htdocs/index.php(43): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2012/09/07 01:33:41 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "favicon.ico".' in /www/showco01/www/htdocs/yii/framework/yiilite.php:1693
+Stack trace:
+#0 /www/showco01/www/htdocs/yii/framework/yiilite.php(1609): CWebApplication->runController('favicon.ico')
+#1 /www/showco01/www/htdocs/yii/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /www/showco01/www/htdocs/index.php(43): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2012/09/07 01:34:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "favicon.ico".' in /www/showco01/www/htdocs/yii/framework/yiilite.php:1693
+Stack trace:
+#0 /www/showco01/www/htdocs/yii/framework/yiilite.php(1609): CWebApplication->runController('favicon.ico')
+#1 /www/showco01/www/htdocs/yii/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /www/showco01/www/htdocs/index.php(43): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2012/09/07 01:34:09 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "favicon.ico".' in /www/showco01/www/htdocs/yii/framework/yiilite.php:1693
+Stack trace:
+#0 /www/showco01/www/htdocs/yii/framework/yiilite.php(1609): CWebApplication->runController('favicon.ico')
+#1 /www/showco01/www/htdocs/yii/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /www/showco01/www/htdocs/index.php(43): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2012/09/07 01:34:20 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "favicon.ico".' in /www/showco01/www/htdocs/yii/framework/yiilite.php:1693
+Stack trace:
+#0 /www/showco01/www/htdocs/yii/framework/yiilite.php(1609): CWebApplication->runController('favicon.ico')
+#1 /www/showco01/www/htdocs/yii/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /www/showco01/www/htdocs/index.php(43): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2012/09/07 01:34:30 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "favicon.ico".' in /www/showco01/www/htdocs/yii/framework/yiilite.php:1693
+Stack trace:
+#0 /www/showco01/www/htdocs/yii/framework/yiilite.php(1609): CWebApplication->runController('favicon.ico')
+#1 /www/showco01/www/htdocs/yii/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /www/showco01/www/htdocs/index.php(43): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2012/09/07 01:35:30 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "favicon.ico".' in /www/showco01/www/htdocs/yii/framework/yiilite.php:1693
+Stack trace:
+#0 /www/showco01/www/htdocs/yii/framework/yiilite.php(1609): CWebApplication->runController('favicon.ico')
+#1 /www/showco01/www/htdocs/yii/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /www/showco01/www/htdocs/index.php(43): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2012/09/07 01:38:02 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "favicon.ico".' in /www/showco01/www/htdocs/yii/framework/yiilite.php:1693
+Stack trace:
+#0 /www/showco01/www/htdocs/yii/framework/yiilite.php(1609): CWebApplication->runController('favicon.ico')
+#1 /www/showco01/www/htdocs/yii/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /www/showco01/www/htdocs/index.php(43): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2012/09/07 01:38:15 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "favicon.ico".' in /www/showco01/www/htdocs/yii/framework/yiilite.php:1693
+Stack trace:
+#0 /www/showco01/www/htdocs/yii/framework/yiilite.php(1609): CWebApplication->runController('favicon.ico')
+#1 /www/showco01/www/htdocs/yii/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /www/showco01/www/htdocs/index.php(43): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2012/09/07 01:38:23 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "favicon.ico".' in /www/showco01/www/htdocs/yii/framework/yiilite.php:1693
+Stack trace:
+#0 /www/showco01/www/htdocs/yii/framework/yiilite.php(1609): CWebApplication->runController('favicon.ico')
+#1 /www/showco01/www/htdocs/yii/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /www/showco01/www/htdocs/index.php(43): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2012/09/07 01:38:37 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "favicon.ico".' in /www/showco01/www/htdocs/yii/framework/yiilite.php:1693
+Stack trace:
+#0 /www/showco01/www/htdocs/yii/framework/yiilite.php(1609): CWebApplication->runController('favicon.ico')
+#1 /www/showco01/www/htdocs/yii/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /www/showco01/www/htdocs/index.php(43): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2012/09/07 01:38:45 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "favicon.ico".' in /www/showco01/www/htdocs/yii/framework/yiilite.php:1693
+Stack trace:
+#0 /www/showco01/www/htdocs/yii/framework/yiilite.php(1609): CWebApplication->runController('favicon.ico')
+#1 /www/showco01/www/htdocs/yii/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /www/showco01/www/htdocs/index.php(43): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2012/09/07 01:39:10 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "favicon.ico".' in /www/showco01/www/htdocs/yii/framework/yiilite.php:1693
+Stack trace:
+#0 /www/showco01/www/htdocs/yii/framework/yiilite.php(1609): CWebApplication->runController('favicon.ico')
+#1 /www/showco01/www/htdocs/yii/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /www/showco01/www/htdocs/index.php(43): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2012/09/07 01:39:21 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "favicon.ico".' in /www/showco01/www/htdocs/yii/framework/yiilite.php:1693
+Stack trace:
+#0 /www/showco01/www/htdocs/yii/framework/yiilite.php(1609): CWebApplication->runController('favicon.ico')
+#1 /www/showco01/www/htdocs/yii/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /www/showco01/www/htdocs/index.php(43): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2012/09/07 01:40:38 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "favicon.ico".' in /www/showco01/www/htdocs/yii/framework/yiilite.php:1693
+Stack trace:
+#0 /www/showco01/www/htdocs/yii/framework/yiilite.php(1609): CWebApplication->runController('favicon.ico')
+#1 /www/showco01/www/htdocs/yii/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /www/showco01/www/htdocs/index.php(43): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2012/09/07 01:40:46 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "favicon.ico".' in /www/showco01/www/htdocs/yii/framework/yiilite.php:1693
+Stack trace:
+#0 /www/showco01/www/htdocs/yii/framework/yiilite.php(1609): CWebApplication->runController('favicon.ico')
+#1 /www/showco01/www/htdocs/yii/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /www/showco01/www/htdocs/index.php(43): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2012/09/07 01:41:09 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "favicon.ico".' in /www/showco01/www/htdocs/yii/framework/yiilite.php:1693
+Stack trace:
+#0 /www/showco01/www/htdocs/yii/framework/yiilite.php(1609): CWebApplication->runController('favicon.ico')
+#1 /www/showco01/www/htdocs/yii/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /www/showco01/www/htdocs/index.php(43): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2012/09/07 01:41:33 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "favicon.ico".' in /www/showco01/www/htdocs/yii/framework/yiilite.php:1693
+Stack trace:
+#0 /www/showco01/www/htdocs/yii/framework/yiilite.php(1609): CWebApplication->runController('favicon.ico')
+#1 /www/showco01/www/htdocs/yii/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /www/showco01/www/htdocs/index.php(43): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2012/09/07 01:42:14 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "favicon.ico".' in /www/showco01/www/htdocs/yii/framework/yiilite.php:1693
+Stack trace:
+#0 /www/showco01/www/htdocs/yii/framework/yiilite.php(1609): CWebApplication->runController('favicon.ico')
+#1 /www/showco01/www/htdocs/yii/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /www/showco01/www/htdocs/index.php(43): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2012/09/07 01:42:36 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "favicon.ico".' in /www/showco01/www/htdocs/yii/framework/yiilite.php:1693
+Stack trace:
+#0 /www/showco01/www/htdocs/yii/framework/yiilite.php(1609): CWebApplication->runController('favicon.ico')
+#1 /www/showco01/www/htdocs/yii/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /www/showco01/www/htdocs/index.php(43): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2012/09/07 01:44:04 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "favicon.ico".' in /www/showco01/www/htdocs/yii/framework/yiilite.php:1693
+Stack trace:
+#0 /www/showco01/www/htdocs/yii/framework/yiilite.php(1609): CWebApplication->runController('favicon.ico')
+#1 /www/showco01/www/htdocs/yii/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /www/showco01/www/htdocs/index.php(43): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2012/09/07 01:45:10 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "favicon.ico".' in /www/showco01/www/htdocs/yii/framework/yiilite.php:1693
+Stack trace:
+#0 /www/showco01/www/htdocs/yii/framework/yiilite.php(1609): CWebApplication->runController('favicon.ico')
+#1 /www/showco01/www/htdocs/yii/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /www/showco01/www/htdocs/index.php(43): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2012/09/07 01:45:56 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "favicon.ico".' in /www/showco01/www/htdocs/yii/framework/yiilite.php:1693
+Stack trace:
+#0 /www/showco01/www/htdocs/yii/framework/yiilite.php(1609): CWebApplication->runController('favicon.ico')
+#1 /www/showco01/www/htdocs/yii/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /www/showco01/www/htdocs/index.php(43): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2012/09/07 09:47:34 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "robots.txt".' in /www/showco01/www/htdocs/yii/framework/yiilite.php:1693
+Stack trace:
+#0 /www/showco01/www/htdocs/yii/framework/yiilite.php(1609): CWebApplication->runController('robots.txt')
+#1 /www/showco01/www/htdocs/yii/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /www/showco01/www/htdocs/index.php(43): CApplication->run()
+#3 {main}
+REQUEST_URI=/robots.txt
+---
+2012/09/07 12:43:41 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "robots.txt".' in /www/showco01/www/htdocs/yii/framework/yiilite.php:1693
+Stack trace:
+#0 /www/showco01/www/htdocs/yii/framework/yiilite.php(1609): CWebApplication->runController('robots.txt')
+#1 /www/showco01/www/htdocs/yii/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /www/showco01/www/htdocs/index.php(43): CApplication->run()
+#3 {main}
+REQUEST_URI=/robots.txt
+---
+2012/09/07 22:34:06 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "favicon.ico".' in /www/showco01/www/htdocs/yii/framework/yiilite.php:1693
+Stack trace:
+#0 /www/showco01/www/htdocs/yii/framework/yiilite.php(1609): CWebApplication->runController('favicon.ico')
+#1 /www/showco01/www/htdocs/yii/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /www/showco01/www/htdocs/index.php(43): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2012/09/07 22:34:18 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "favicon.ico".' in /www/showco01/www/htdocs/yii/framework/yiilite.php:1693
+Stack trace:
+#0 /www/showco01/www/htdocs/yii/framework/yiilite.php(1609): CWebApplication->runController('favicon.ico')
+#1 /www/showco01/www/htdocs/yii/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /www/showco01/www/htdocs/index.php(43): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---

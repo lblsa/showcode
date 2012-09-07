@@ -1,0 +1,1985 @@
+@charset "utf-8";
+/* --------- IMPORT STYLES */
+@import url(reset.css);
+@import url(bxslider.css);
+/* --------- DEFAULT STYLES */
+body {
+    background-color: #000;
+    background-image: url(../images/bg/body_bg.jpg);
+    background-position: center top;
+    background-repeat: no-repeat;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+    font-family: "microsoft Sans Serif", Georgia, Arial, sans-serif;
+    font-size: 11px;
+    font-weight: normal;
+    line-height: 18px;
+    color: #FFF;
+    text-align: left;
+}
+.clear {
+    clear: both !important;
+}
+
+h1 {
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, p, ul, img {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: #fb6006;
+    text-decoration: underline;
+}
+
+a:focus {
+    outline: none;
+}
+
+table {
+    line-height: 15pt;
+}
+p{
+    color: #FFF;
+    font-size: 13px;
+    letter-spacing: 0;
+    line-height: 18px;
+    margin-bottom: 10px;
+    text-shadow:-1px -1px 1px rgba(0,0,0,0.3);
+}
+ul,ol{
+    list-style:disc;
+}
+ul li, ol li{
+    font-size: 13px;
+    color: #FFF;
+}
+/* ul, ol, li in .main_form_wrapper */
+.main_form_wrapper ul, .main_form_wrapper ol{
+    list-style:disc;
+	padding: 0 0 10px 20px;
+}
+.main_form_wrapper ul li, .main_form_wrapper ol li{
+    font-size: 13px;
+    color: #FFF;
+	padding-bottom: 1px;
+}
+.main_form_wrapper table a, .list_buy_events table a, #list_tickets table a{
+ 	color:#fff !important;
+ }
+
+/* --------- WRAPPERS */
+#wrapper {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    min-height: 100%;
+    position: relative;
+    top: 0;
+    left: 0;
+}
+/* wrapper inner styles */
+#wrapper_inner {
+    margin: 0 auto; padding:0 0 280px 0 !important;
+    padding: 0;
+    overflow: hidden;
+    width: 1012px;
+    position: relative;
+	z-index:100;
+	top:-15px;
+    /* background:#030207; */
+}
+.template_without_search{
+	top:39px !important;
+}
+.main_template{
+	top:60px !important;
+}
+
+/* --- HEADER */
+#header {
+    /*background-image: url(../images/bg/header_top_bg.png);
+    background-position: left top;
+    background-repeat: repeat-x;
+	background-color: #1a1b1d;*/
+
+  background: #333333; /* Old browsers */
+background: -moz-linear-gradient(top, #333333 0%, #474849 3%, #404042 21%, #1d1e20 79%, #1a1b1d 88%, #1a1b1d 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#333333), color-stop(3%,#474849), color-stop(21%,#404042), color-stop(79%,#1d1e20), color-stop(88%,#1a1b1d), color-stop(100%,#1a1b1d)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, #333333 0%,#474849 3%,#404042 21%,#1d1e20 79%,#1a1b1d 88%,#1a1b1d 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, #333333 0%,#474849 3%,#404042 21%,#1d1e20 79%,#1a1b1d 88%,#1a1b1d 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top, #333333 0%,#474849 3%,#404042 21%,#1d1e20 79%,#1a1b1d 88%,#1a1b1d 100%); /* IE10+ */
+background: linear-gradient(top, #333333 0%,#474849 3%,#404042 21%,#1d1e20 79%,#1a1b1d 88%,#1a1b1d 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#333333', endColorstr='#1a1b1d',GradientType=0 ); /* IE6-9 */
+
+
+    width: 100%;
+    /*  min-height:74px; */
+    position: fixed;
+	left:0; top:0;
+	z-index:500;
+    /* overflow:hidden; */
+}
+
+#header_wrapper {
+    margin: 0 auto;
+    width: 1012px;
+    position: relative;
+    overflow: hidden;
+}
+
+#header_bottom_border {
+    background: url(../images/bg/header_border_bottom_bg.png) repeat-x scroll left top transparent;
+    height: 25px;
+    min-width: 100%;
+    position:fixed;
+    top: 60px; left:0;
+    width: 100%;
+    z-index: 500;
+	border:0 !important;
+	outline:0 !important;
+}
+
+/* tickets */
+#tickets {
+    background: url(../images/100_percentages_logo.png) no-repeat scroll left 14px transparent;
+    color: #FFF;
+    float: left;
+    font-size: 20px;
+    height: 35px;
+    line-height: 18px;
+    padding: 21px 0 0 56px;
+    position: relative;
+    width: 287px;
+    display: block;
+}
+
+#tickets span {
+    color: #fb6006;
+    float: left;
+    font-weight: normal;
+}
+#analog_tickets{
+    float: left;
+    height: 35px;
+    padding: 21px 0 0 56px;
+    position: relative;
+    width: 287px;
+    display: block;
+}
+
+/* logotype */
+.logotype {
+    height: 105px;
+    left: -379px;
+    margin: 0 auto;
+    position: relative;
+    top: 19px;
+    width: 246px;
+    z-index: 600;
+}
+.logotype a {
+    background: url(../images/logotype_mini.png) no-repeat scroll left top transparent;
+    display: block;
+    height: 105px;
+    width: 246px;
+}
+/* navigation */
+#nav {
+    float: left;
+    font-family: "ms sans Serif", georgia, sans-serif;
+    padding-top: 6px; margin:0 0 0 -2%;
+    position: relative;
+    width: 381px;
+}
+
+#nav ul {
+    list-style: none;
+}
+
+#nav ul li {
+    display: inline;
+    padding-right: 16px;
+}
+
+#top_menu a {
+    font-size: 15px;
+    line-height: 24px;
+    font-weight: normal;
+    color: #fb6006;
+}
+
+#bottom_menu a {
+    font-size: 13px;
+    line-height: 24px;
+    font-weight: normal;
+    color: #ccc;
+}
+
+/* authorization form */
+#authorization_form {
+    padding: 10px 0 0;
+	vertical-align:top !important;
+}
+#authorization_form div p{
+	margin:0 !important; padding:0 !important;
+	vertical-align:middle !important;
+}
+#authorization_form input {
+    background: url(../images/bg/authorization_form_bg.png) no-repeat scroll left top transparent;
+    border: 0 none;
+    height: 20px;
+    margin-bottom: 3px;
+    width: 135px;
+	padding:0 5px;
+}
+#login-form{
+	vertical-align:top !important;
+}
+#submit {
+    background: url(../images/bg/authorization_form_submit_bg.png) left top no-repeat !important;
+    width: 75px !important;
+    height: 20px;
+    font-size: 13px;
+    color: #FFF;
+    line-height: 18px;
+    text-shadow: 0 1px 1px #565656;
+    cursor: pointer;
+    vertical-align:top !important;
+    padding: 1px 0 2px 0 !important;margin-top:1px;
+}
+a#repear_pass{
+    font-family: "microsoft Sans Serif", Arial, sans-serif;
+    font-size: 11px;
+    font-weight: normal;
+    color: #999;
+    line-height: -2px;
+}
+#LoginForm_phone {
+    background: url(../images/bg/authorization_form_bg_126px.png) left top no-repeat !important;
+    margin: 0 5px !important;
+    width: 126px !important;
+	vertical-align:middle !important;
+}
+#LoginForm_password{
+	margin-right: 14px !important;
+	vertical-align:top !important;
+}
+#LoginForm_password a{
+	vertical-align:top !important;
+}
+#login, #login p{
+	vertical-align:top !important;
+}
+#pass, #pass p{
+	vertical-align:top !important;
+}
+/*
+#authorization_form {
+    float: left;
+    padding-top: 10px;
+    position: relative;
+    width: 250px;
+}
+
+#authorization_form input {
+    background: url(../images/bg/authorization_form_bg.png) no-repeat scroll left top transparent;
+    border: 0 none;
+    height: 20px;
+    margin-bottom: 5px;
+    width: 145px;
+}
+
+#login {
+    float: left;
+    margin-right: 23px;
+    width: 145px;
+}
+
+#login input {
+    background: url(../images/bg/authorization_form_bg_126px.png) left top no-repeat;
+    float: right;
+    width: 126px;
+}
+
+#pass {
+    float: left;
+    margin-right: 21px;
+    width: 145px;
+}
+
+#pass input {
+    padding-left: 3px;
+}
+
+#submit input {
+    background: url(../images/bg/authorization_form_submit_bg.png) left top no-repeat;
+    width: 75px;
+    height: 20px;
+    font-size: 13px;
+    color: #FFF;
+    line-height: 18px;
+    text-shadow: 0 1px 1px #565656;
+    cursor: pointer;
+    vertical-align: middle;
+    padding-bottom: 2px;
+}
+
+#repear_pass a {
+    font-family: "ms sans Serif", georgia, sans-serif;
+    font-size: 11px;
+    font-weight: normal;
+    color: #999;
+    line-height: -2px;
+}
+*/
+/* user logged on */
+#user_logged_on {
+    float: right;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 13px;
+    padding-top: 12px;
+    position: relative;
+    top: -1px;
+    width: 270px;
+}
+
+/* top line */
+#user_logged_on p.top_line {
+    line-height: 18px;
+	margin-bottom: 0 !important;
+}
+
+span.welcome {
+    color: #666;
+}
+
+span.user_name {
+    color: #FFF;
+    font-style: italic;
+}
+
+#user_logged_on p.top_line a {
+    color: #999;
+}
+
+/* bottom line */
+#user_logged_on p.bottom_line {
+    color: #999;
+    line-height: 24px;
+}
+
+#user_logged_on p.bottom_line a {
+    color: #999;
+}
+
+/* HEADER:end */
+/* --- LOGOTYPE&DESCRIPTION ZONE */
+#logotype_description {
+    margin: 0;
+    width: 1012px;
+	height: 175px;
+    background: url(../images/bg/logo_description_bg.png) left 3px no-repeat;
+    position: relative;
+}
+
+.text_logo_descr {
+    background: url(../images/qr_code.png) no-repeat scroll left top transparent;
+    color: #1A1B1D;
+    font-size: 16px;
+    height: 70px;
+    left: 354px;
+    line-height: 20px;
+    padding: 0 0 0 62px;
+    position: relative;
+    text-shadow: 0 1px 1px #DCDCDC;
+    top: 63px;
+    width: 442px;
+}
+#available_in_appstore_button {
+    background: url(../images/available_in_appStore_button.png) no-repeat left top;
+    height: 40px;
+    position: absolute;
+    right: 28px;
+    width: 134px;
+}
+#available_in_appstore_button a{
+	display:block !important;
+	width:134px !important; height:40px !important;
+	cursor:pointer;
+}
+#logotype_description a {
+    display: block;
+    height: 140px;
+    left: 37px;
+    position: absolute;
+    top: 18px;
+    width: 350px;
+}
+
+/*** App Store button:start ***/
+.appstore_butn_type_page {
+    background: url(../images/available_in_appStore_button.png) left top no-repeat;
+    height: 40px;
+    left: 905px;
+    position: absolute;
+    top: 94px !important;
+    width: 134px !important;
+}
+.appstore_butn_type_page a{
+	display:block !important;
+	width:134px !important; height:40px !important;
+	cursor:pointer;
+}
+/** App Store button:stop **/
+/* LOGOTYPE&DESCRIPTION ZONE:end */
+/* --- CONTENT */
+#content {
+    position: relative;
+    margin: 0 0 23px 0;
+}
+.top_content_block{
+	position:relative;
+}
+/* NEW MESSAGE AND REGISTRATION BLOCKS (right column) */
+#wrapper_new_mess_and_reg_block {
+    float: left;
+	/*
+    margin: 0 0 0 31px;
+    */
+	margin: 0 0 0 20px;
+	position: relative;
+    width: 200px;
+}
+
+/* new message */
+.new_message_title {
+    font-size: 40px;
+    height: 85px;
+    line-height: 26px;
+    padding: 16px 0 0 16px;
+    position: relative;
+    width: 184px;
+    background: url(../images/bg/new_message_title_bg.png) left top no-repeat;
+}
+
+.new_message_title span {
+    font-size: 24px;
+    display: block;
+    color: #fb6006;
+}
+
+.new_message_descr {
+    font-size: 13px;
+    background: url(../images/bg/bg_50_percent_opacity.png) left top repeat;
+    text-shadow: 1px 1px rgba(0, 0, 0, 0.6);
+    padding: 9px 5px 10px 10px;
+}
+
+/* registration */
+.reg_text {
+    margin: 10px 0;
+}
+
+.reg_text_title {
+    /*background: url("../images/bg/reg_text_title.png") no-repeat scroll left top transparent;*/
+    color: #FB6006;
+    font-size: 24px;
+
+}
+.reg_text_title a{
+	margin:0; padding:14px 0 0;
+	display:block;
+	width:200px; height: 39px;
+	text-align:center;
+	background: #0c0c0c; /* Old browsers */
+	background: -moz-linear-gradient(top,  #0c0c0c 0%, #2d2d2d 1%, #323232 2%, #323232 3%, #1a1b1d 45%, #1a1b1d 89%, #18191b 90%, #1a1b1d 91%, #1a1b1d 96%, #000000 97%, #000000 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#0c0c0c), color-stop(1%,#2d2d2d), color-stop(2%,#323232), color-stop(3%,#323232), color-stop(45%,#1a1b1d), color-stop(89%,#1a1b1d), color-stop(90%,#18191b), color-stop(91%,#1a1b1d), color-stop(96%,#1a1b1d), color-stop(97%,#000000), color-stop(100%,#000000)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #0c0c0c 0%,#2d2d2d 1%,#323232 2%,#323232 3%,#1a1b1d 45%,#1a1b1d 89%,#18191b 90%,#1a1b1d 91%,#1a1b1d 96%,#000000 97%,#000000 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #0c0c0c 0%,#2d2d2d 1%,#323232 2%,#323232 3%,#1a1b1d 45%,#1a1b1d 89%,#18191b 90%,#1a1b1d 91%,#1a1b1d 96%,#000000 97%,#000000 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #0c0c0c 0%,#2d2d2d 1%,#323232 2%,#323232 3%,#1a1b1d 45%,#1a1b1d 89%,#18191b 90%,#1a1b1d 91%,#1a1b1d 96%,#000000 97%,#000000 100%); /* IE10+ */
+	background: linear-gradient(top,  #0c0c0c 0%,#2d2d2d 1%,#323232 2%,#323232 3%,#1a1b1d 45%,#1a1b1d 89%,#18191b 90%,#1a1b1d 91%,#1a1b1d 96%,#000000 97%,#000000 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0c0c0c', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
+}
+/*
+.reg_text_descr {
+    font-size: 13px;
+    background: rgba(0,0,0,0.5) left top repeat scroll;
+    text-shadow: 1px 1px rgba(0, 0, 0, 0.6);
+    padding: 9px 5px 10px 10px;
+    -webkit-border-radius: 0 0 2px 2px;
+    -moz-border-radius: 0 0 2px 2px;
+    border-radius: 0 0 2px 2px;
+}
+*/
+/* BOTTOM content block */
+/* how to */
+.how_to {
+    border-bottom: 4px dotted #262626;
+    padding-bottom: 33px;
+}
+
+.how_to_title {
+    width: 410px;
+}
+
+.how_to_title a {
+    border-bottom: 2px #ec6f26 solid;
+    padding-bottom: 27px;
+}
+
+.brace {
+    padding: 0 21px 0 0;
+}
+
+.how_to_text {
+    font-size: 15px;
+    color: #999;
+    line-height: 17px;
+}
+
+/* description block. tariff. calendar */
+.tariff_and_calendar_wrapper {
+    margin: 54px 0 0;
+    overflow: hidden;
+	position:relative;
+    background: url(../images/bg/bg_50_percent_opacity.png) left top repeat;
+}
+
+/* descr */
+.descr_t_and_c {
+    float: left;
+    width: 365px;
+	position:relative;
+}
+
+.com_events_descr_t_and_c {
+    /* for "coming-events" template */
+    margin-left: 50px !important;
+    width: 427px !important;
+}
+
+.title_t_and_c {
+    margin-bottom: 10px;
+    margin-top: 15px;
+}
+
+.text_t_and_c p {
+    color: #CCC;
+    font-size: 13px;
+    letter-spacing: 0;
+    line-height: 18px;
+    text-indent: 7px;
+    margin-bottom: 10px;
+}
+
+/* tariff */
+.tariff {
+    float: left;
+    margin: 0 0 0 30px;
+    width: 370px !important;
+	position:relative;
+}
+
+.one_tariff {
+    margin-bottom: 19px;
+}
+
+.one_tariff a {
+    display: block;
+    margin: 0 0 4px;
+}
+
+.one_tariff a img {
+    float: left;
+    padding: 0 10px 10px 0;
+    position: relative;
+    top: 5px;
+}
+
+.title_one_tariff {
+    color: #fb6006;
+    font-size: 15px;
+    letter-spacing: 0;
+    line-height: 18px;
+    margin-bottom: 10px;
+    display: inline;
+}
+
+.descr_one_tariff {
+    color: #CCC;
+    font-size: 13px;
+    letter-spacing: 0;
+    line-height: 14px;
+    padding: 0 0 0 63px;
+}
+
+a.all_tariffs {
+    color: #fb6006;
+    font-size: 12px;
+    line-height: 18px;
+    font-family: "microsoft Sans Serif", Tahoma, Arial, sans-serif;
+}
+
+/* calendar */
+.calendar_wrapper {
+    float: left;
+    margin: 0 0 0 30px;
+    width: 200px;
+    height: 218px;
+    background: url(../images/bg/calendar_bg.png) left top no-repeat;
+    position: relative;
+}
+
+.calendar {
+    color: #999;
+    font-size: 13px;
+    line-height: 20px;
+    left: 24px;
+    position: relative;
+    top: 10px;
+}
+
+.calendar a {
+    color: #999;
+    text-decoration: underline;
+    font-size: 13px;
+    line-height: 20px;
+}
+
+.calendar table {
+    border-spacing: 9px 1px;
+    margin: 0 0 5px -8px;
+}
+
+tr.days_of_week {
+    font-size: 11px;
+}
+
+.orange_text, .orange_text a, a.archive_events {
+    color: #fb6006 !important;
+}
+
+/* CREATE EVENT PAGE */
+/* SEARCH BLOCK */
+#search {
+    position: relative;
+    text-align: right;
+    top: 7px;
+    right: 74px;
+}
+
+#search form {
+    position: relative;
+}
+
+input#search {
+    width: 303px;
+    height: 20px;
+    background: url(../images/bg/search_input_text_bg.png) left top no-repeat;
+    border: medium none;
+    -webkit-border-radius: 2px 2px 2px 2px;
+    -moz-border-radius: 2px 2px 2px 2px;
+    border-radius: 2px 2px 2px 2px;
+    position: relative;
+    right: 4px;
+    top: 2px;
+    padding-left: 4px;
+}
+
+input#search_submit {
+    background: url(../images/bg/authorization_form_submit_bg.png) left top no-repeat;
+    color: #FFF;
+    cursor: pointer;
+    font-size: 13px;
+    height: 20px;
+    line-height: 18px;
+    padding-bottom: 2px;
+    text-shadow: 0 1px 1px #565656;
+    vertical-align: middle;
+    width: 75px;
+    border: none !important;
+    position: relative;
+}
+
+/* buttons (edit and my events) */
+.edit_event_buttons {
+    position: relative;
+    right: 74px;
+    text-align: right;
+    top: 17px;
+    z-index: 200;
+}
+
+.edit_event_buttons a {
+    display: inline-block;
+    height: 27px;
+    padding: 4px 10px 0 10px;
+    text-align: center;
+    background: url(../images/bg/actions_with_events_button_bg.png) left top repeat-x;
+    -webkit-border-radius: 2px 2px 2px 2px;
+    -moz-border-radius: 2px 2px 2px 2px;
+    border-radius: 2px 2px 2px 2px;
+    z-index: 200;
+    margin-left: 5px;
+}
+
+/* --- CONTENT (create event page) */
+/* ----------------- FORMS (styles for template "create event" and general styles form) */
+.main_form_wrapper {
+    padding: 35px 175px 48px 74px;
+    position: relative;
+    z-index: 100;
+    /*background: url(../images/bg/bg_50_percent_opacity.png) left top repeat;*/
+    background:url(../images/bg/slider_text_bg.png) left top repeat;
+}
+
+.form_main {
+    font-size: 13px;
+    color: #ccc;
+    line-height: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-shadow: 1px 1px rgba(0, 0, 0, 0.4);
+}
+
+.main_form_wrapper h1 {
+    margin-bottom: 33px;
+}
+
+.main_form_wrapper h2 {
+    display: block;
+    background: #323232; /* Old browsers */
+    background: -moz-linear-gradient(top,  #323232 0%, #464749 3%, #3d3e3f 14%, #1e1f21 43%, #1a1b1d 51%, #1a1b1d 97%, #242528 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#323232), color-stop(3%,#464749), color-stop(14%,#3d3e3f), color-stop(43%,#1e1f21), color-stop(51%,#1a1b1d), color-stop(97%,#1a1b1d), color-stop(100%,#242528)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #323232 0%,#464749 3%,#3d3e3f 14%,#1e1f21 43%,#1a1b1d 51%,#1a1b1d 97%,#242528 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #323232 0%,#464749 3%,#3d3e3f 14%,#1e1f21 43%,#1a1b1d 51%,#1a1b1d 97%,#242528 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #323232 0%,#464749 3%,#3d3e3f 14%,#1e1f21 43%,#1a1b1d 51%,#1a1b1d 97%,#242528 100%); /* IE10+ */
+    background: linear-gradient(top,  #323232 0%,#464749 3%,#3d3e3f 14%,#1e1f21 43%,#1a1b1d 51%,#1a1b1d 97%,#242528 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#323232', endColorstr='#242528',GradientType=0 ); /* IE6-9 */
+    height: 27px;
+    padding: 9px 0 0 21px;
+    -webkit-border-radius: 3px 3px 3px 3px;
+    -moz-border-radius: 3px 3px 3px 3px;
+    border-radius: 3px 3px 3px 3px;
+    margin:20px 0;
+}
+
+/* styles for context information */
+.form_main p {
+    font-size: 12px;
+    color: #a8a8a8;
+    line-height: 22px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.form_main div {
+    margin: 0 0 20px 0;
+    position: relative;
+}
+
+.form_main label {
+    width: 100px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.form_main input {
+    background: url(../images/bg/form_input_bg.png) left top repeat-x;
+    height: 28px;
+    -webkit-border-radius: 2px 2px 2px 2px;
+    -moz-border-radius: 2px 2px 2px 2px;
+    border-radius: 2px 2px 2px 2px;
+    border: none !important;
+    padding-left: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* specific inputs and textarea styles */
+#title_input {
+    width: 650px;
+}
+
+#adrress_input,
+#yandexMap_input{
+    width: 650px;
+}
+
+#location{
+    display: none;
+}
+
+#mapLocation{
+	cursor: pointer;
+	color: #FB6006;
+	text-decoration: underline;
+}
+
+#description_textarea {
+    padding: 5px;
+    width: 645px;
+    height: 114px;
+    background: url(../images/bg/form_textarea_bg.png) left top repeat;
+    border: none !important;
+    -webkit-border-radius: 2px 2px 2px 2px;
+    -moz-border-radius: 2px 2px 2px 2px;
+    border-radius: 2px 2px 2px 2px;
+    resize: vertical;
+    overflow: auto;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#file_upload{
+    width: 169px;
+    height: 28px;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+    opacity: 0;
+    filter: alpha(opacity=0);
+    z-index: 500;
+}
+
+#mask {
+    background: url(../images/bg/download_img_button_bg.png) left top no-repeat;
+    height: 28px;
+    left: 104px;
+    padding: 3px 100px 0 10px;
+    position: absolute;
+    top: 1px;
+    width: 169px;
+    z-index: 0;
+}
+
+#submit_save_button {
+    background: url(../images/bg/submit_save_button_bg.png) left top repeat-x;
+    color: #FFF;
+    cursor: pointer;
+    font-size: 15px;
+    height: 28px;
+    line-height: 28px;
+    padding-bottom: 2px;
+    text-shadow: 0 1px 1px #565656;
+    vertical-align: middle;
+    border: none !important;
+    position: relative;
+    padding: 0 12px;
+    -webkit-border-radius: 2px 2px 2px 2px;
+    -moz-border-radius: 2px 2px 2px 2px;
+    border-radius: 2px 2px 2px 2px;
+}
+
+#Events_facebook_eid{
+	width:650px;
+}
+/* links in form */
+.links_block_in_form {
+    height: 30px;
+    text-align: right;
+}
+
+.links_block_in_form a {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    line-height: 14px;
+    color: #999;
+    text-decoration: underline;
+}
+
+.not_float_block {
+    float: right !important;
+    overflow: hidden;
+}
+
+/* bottom form */
+.bottom_form_style div {
+    float: left;
+}
+
+.elements_form_line_1 {
+    margin: 0 !important;
+    overflow: hidden;
+}
+
+/* specific divs and inputs in bottom form */
+.adrress_input {
+    margin-bottom:20px !important;
+}
+
+.type_ticket, .price, .number {
+    margin-bottom: 0 !important;
+}
+
+.type_ticket label {
+    width: 100px;
+}
+
+.price label {
+    width: 67px;
+}
+
+.number label {
+    width: 100px;
+}
+
+#type_ticket {
+    width: 150px;
+    margin-right: 55px;
+}
+
+#price {
+    width: 40px;
+    margin-right: 55px;
+}
+
+#number {
+    width: 40px;
+}
+
+.number_of_rows label {
+    width: 139px;
+}
+
+.seats label {
+    width: 174px;
+}
+
+.number_of_rows input, .seats input {
+    width: 50px;
+    margin-right: 54px;
+}
+
+/* checkbox's styles */
+.checkbox input {
+    margin-right: 1px;
+    position: relative;
+    top: -1px;
+}
+
+.hall {
+    top: -8px;
+}
+
+.event_in_fb {
+    margin-left: 50px !important;
+    top: -7px;
+}
+
+.i_can_only_see {
+    margin-left: 50px !important;
+    top: -7px;
+}
+
+.event_in_fb label {
+    width: 190px;
+}
+
+.i_can_only_see label {
+    width: 115px;
+}
+
+/* styles for page (mail_with_tickets_to_event) */
+.title_name_event_typical_page {
+    margin-bottom: 25px;
+}
+.title_name_event_typical_page p {
+    color: #EEEEEE;
+    font-size: 17px;
+    padding-bottom: 5px;
+}
+.title_name_event_typical_page span {
+    color: #FFFFFF;
+    font-size: 21px;
+}
+.list-view label {
+    vertical-align: middle;
+    width: 200px !important;
+}
+.list-view p {
+    color: #CCCCCC;
+    margin: 0 0 5px;
+}
+
+
+/* ----------------- FORMS STYLES:end */
+/* --- CONTENT (create event page):end */
+
+/* --- CONTENT (LIST EVENTS):begin */
+/* ----------------- LIST EVENTS:begin */
+#list_events_wrapper {
+    margin-right: -75px;
+}
+
+#list_events {
+    background: url(../images/bg/bg_50_percent_opacity.png) left top repeat;
+    padding: 35px 0 35px 75px;
+    position: relative;
+    z-index: 100;
+}
+
+#list_events h1 {
+    margin-bottom: 20px;
+}
+
+/* one event preview */
+.one_event_preview {
+    display: inline-block;
+    margin-bottom: 25px;
+    margin-right: 50px;
+    overflow: hidden;
+    vertical-align: text-top;
+    width: 175px;
+}
+
+.one_event_preview a.small_img {
+    display: block;
+    width: 173px;
+    height: 123px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    border: 1px #f2f2f2 solid;
+}
+
+.one_event_info_wrapper {
+    border-bottom: 1px solid #7F3105;
+    padding-bottom: 3px;
+    margin-bottom: 7px;
+}
+
+.one_event_info_wrapper h2 {
+    font-weight: normal;
+    margin-bottom: 7px;
+}
+
+.one_event_info_wrapper h2 span {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+    color: #999;
+    display: block;
+}
+
+.one_event_info_wrapper h2 a {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 18px;
+    color: #fb6006;
+}
+
+.info_about_event_preview {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    line-height: 19px;
+    color: #fff;
+}
+
+.info_about_event_preview.time{
+    background: url("/images/icons/clock.png") no-repeat scroll 0 0 transparent;
+    padding-left: 21px;
+}
+.info_about_event_preview.date{
+    background: url("/images/icons/date.png") no-repeat scroll 0 0 transparent;
+    padding-left: 21px;
+}
+.info_about_event_preview.map{
+    background: url("/images/icons/map.png") no-repeat scroll 0 0 transparent;
+    padding-left: 21px;
+}
+
+.info_about_event_preview span {
+    color: #666;
+}
+
+.autor_event_preview {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    line-height: 28px;
+    color: #999;
+    font-style: italic;
+}
+
+.autor_event_preview span {
+    color: #666;
+    font-style: normal;
+}
+
+.autor_event_preview a {
+    color: #999;
+}
+
+a.click_on_link {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: #c00;
+    font-style: normal;
+    text-decoration: underline;
+    display: block;
+    text-align: right;
+}
+
+a.click_on_link span {
+    text-decoration: none;
+}
+
+/* pagination coming events */
+.pagination_coming_events {
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    padding-top: 20px;
+}
+
+.pagination_coming_events ul {
+    list-style: none;
+    display: inline-block;
+    zoom: 1;
+}
+
+.pagination_coming_events ul li {
+    float: left;
+    display: inline;
+    overflow: hidden;
+    text-align: center;
+    cursor: default;
+    line-height: 22px;
+}
+
+.pagination_coming_events ul li a {
+    display: block;
+    float: left;
+}
+
+.pagination_coming_events ul li span {
+    color: #4C4C4C;
+    display: block;
+    float: left;
+    font-size: 24px;
+    height: 32px;
+    letter-spacing: 3px;
+    line-height: 30px;
+}
+
+.first a {
+    margin-right: 20px;
+    width: 11px;
+    background: url(../images/bg/events_list/double_arrow_left_bg.png) left top no-repeat;
+    height: 32px;
+}
+
+.previous a {
+    margin-right: 18px;
+    width: 10px;
+    background: url(../images/bg/events_list/one_arrow_left_bg.png) left top no-repeat;
+    height: 32px;
+}
+
+.next a {
+    margin-left: 18px;
+    width: 10px;
+    background: url(../images/bg/events_list/one_arrow_right_bg.png) left top no-repeat;
+    height: 32px;
+}
+
+.last a {
+    margin-left: 23px;
+    width: 11px;
+    background: url(../images/bg/events_list/double_arrow_right_bg.png) left top no-repeat;
+    height: 32px;
+}
+
+li.pag_com_events_number_link a {
+    width: 32px;
+    height: 32px;
+    background: url(../images/bg/events_list/item_passive_pagination_bg.png) left top no-repeat;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color: #999;
+    text-decoration: none;
+    line-height: 32px;
+    text-align: center;
+    margin: 0 5px;
+}
+
+li.pag_com_events_number_link a:active {
+    background: url(../images/bg/events_list/item_active_pagination_bg.png) left top no-repeat;
+}
+
+li.selected a {
+    background: url(../images/bg/events_list/item_active_pagination_bg.png) left top no-repeat !important;
+}
+
+/* ----------------- LIST EVENTS:end */
+/* --- CONTENT (LIST EVENTS):end */
+/* --- DESCRIPTION EVENT:begin */
+.description_event_wrapper {
+    padding: 45px 0 30px 75px;
+    position: relative;
+    overflow: hidden;
+    background: url(../images/bg/bg_50_percent_opacity.png) left top repeat;
+    border-bottom: 4px dotted #262626;
+}
+
+.description_event {
+    position: relative;
+    overflow: hidden;
+}
+
+.full_image {
+    width: 300px;
+    float: left;
+}
+
+.full_image img {
+    width: 298px !important;
+    border: 1px #FFF solid;
+}
+
+.full_text_info_about_event {
+    float: left;
+    margin-left: 22px;
+    width: 537px;
+}
+
+.full_text_info_about_event div {
+    margin-bottom: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.full_text_info_about_event div span {
+    color: #D5D5D5;
+    display: inline-block;
+    float: left;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 14px;
+    text-shadow: -1px 0 1px rgba(0, 0, 0, 0.7);
+    width: 80px;
+}
+
+.full_text_info_about_event div p {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    color: #FFF;
+    text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.6);
+    padding-left: 80px;
+}
+
+.full_text_info_about_event div h2 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fb6006;
+    text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.5);
+}
+
+.full_text_info_about_event a {
+    color: #FFF !important;
+}
+
+p.info_about_event_full {
+    text-indent: 7px;
+    line-height: 19px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px !important;
+    color: #ccc !important;
+    margin-bottom: 10px;
+}
+
+.buy_ticket_and_back_to_events {
+    position: relative;
+    overflow: hidden;
+    left: 81px;
+}
+
+.buy_ticket_button {
+    background: url(../images/bg/buy_ticket_bg.png) left top no-repeat;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: block;
+    font-family: "microsoft Sans Serif",Arial,sans-serif;
+    font-size: 13px;
+    height: 20px;
+    line-height: 20px;
+    margin-bottom: 4px;
+    padding-bottom: 2px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: 0 1px 1px #565656;
+    vertical-align: middle;
+    width: 105px;
+}
+
+.back_to_events {
+    color: #FB6006;
+    display: block;
+    font-family: "microsoft Sans Serif",Arial,sans-serif;
+    font-size: 13px;
+    margin-bottom: 7px;
+    position: relative;
+    text-decoration: underline;
+    text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.4);
+}
+
+/* --- DESCRIPTION EVENT:end */
+/* --- DESCRIPTION EVENT (ZOO):begin*/
+.description_event_wrapper-zoo{
+    padding: 0 0 30px 75px;
+    position: relative;
+    overflow: hidden;
+    background: url(../images/bg/bg_50_percent_opacity.png) left top repeat;
+    border-bottom: 4px dotted #262626;
+}
+.description_event-zoo{
+    position: relative;
+    overflow: hidden;
+    padding: 45px 0 0 0;
+}
+.full_image-zoo{
+    width: 346px;
+    float: left;
+    position: relative;
+    top: -36px;
+}
+.full_image-zoo img{}
+.full_text_info_about_event-zoo{
+    float: left;
+    margin-left: 22px;
+    width: 537px;
+}
+.full_text_info_about_event-zoo div{
+    margin-bottom: 10px;
+    position: relative;
+    overflow: hidden;
+}
+.full_text_info_about_event-zoo div span {
+    color: #D5D5D5;
+    display: inline-block;
+    float: left;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 14px;
+    text-shadow: -1px 0 1px rgba(0, 0, 0, 0.7);
+    width: 80px;
+}
+#event-title-zoo{
+    padding:8px 29px;
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+    height:38px;
+    background:url(../images/bg/event-title-zoo_bg.png) left top repeat-x;
+
+    border-left: 1px rgba(26,27,29,0.6) solid;
+    border-bottom: 1px rgba(88, 87, 70, 0.8) solid;
+    border-right: 1px rgba(88, 87, 70, 0.8) solid;
+}
+.date-event-zoo a{
+    color:#fff;
+    text-decoration:underline;
+}
+#event-title-zoo h2{}
+#event-title-zoo h2 span{
+    display: block;
+    width: 100%;
+}
+#map-zoo{
+	background-color: rgba(0, 0, 0, 0.5);
+    background-image: url(../images/bg/white_noise_bg.png);
+    background-position: left top;
+    background-repeat: repeat;
+    display: block;
+    height: 100%;
+    left: 0;
+    position: fixed!important;
+    top: 0;
+    width: 100%;
+    z-index: 200;
+    padding-top: 10%;
+    padding-left: 34%;
+}
+
+p.info_about_event_full-zoo{
+    text-indent: 7px;
+    line-height: 19px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px !important;
+    color: #ccc !important;
+    margin-bottom: 10px;
+    display: block;
+    margin-left: 80px;
+}
+.buy_ticket_and_back_to_events-zoo{
+    position: relative;
+    overflow: hidden;
+    margin-left: 81px;
+}
+.buy_ticket_button-zoo{
+    background: url(../images/bg/buy_ticket_bg_turquoise.png) left top no-repeat;
+    cursor: pointer;
+    display: block;
+    height: 41px;
+    margin-bottom: 10px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    width: 180px;
+}
+.back_to_events-zoo{
+    color: #FB6006;
+    display: block;
+    font-family: "microsoft Sans Serif",Arial,sans-serif;
+    font-size: 13px;
+    margin-bottom: 7px;
+    position: relative;
+    text-decoration: underline;
+    text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.4);
+}
+/* --- DESCRIPTION EVENT (ZOO):end*/
+/* --- list tickets (TABLE) */
+/* --- LIST TICKETS */
+.list_buy_events {
+    padding: 35px 72px 48px 74px;
+}
+
+.list_tickets_wrapper {
+    position: relative;
+    padding: 35px 77px 48px 74px;
+    background: url(../images/bg/bg_50_percent_opacity.png) left top repeat;
+    z-index: 100;
+}
+
+#list_tickets {
+    color: #FFF;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    font-weight: normal;
+    line-height: 18px;
+}
+
+#list_tickets h2{font-size: 125%;}
+
+#list_tickets table {
+    width: 94%!important;
+    background-color: rgba(255, 255, 255, 0.1);
+    background-image: url(../images/bg/white_noise_bg.png);
+    background-position: left top;
+    background-repeat: repeat;
+    -webkit-border-radius: 3px 3px 3px 3px;
+    -moz-border-radius: 3px 3px 3px 3px;
+    border-radius: 3px 3px 3px 3px;
+    padding: 3px;
+    text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.9);
+    border-spacing: 0 !important;
+    margin-top:10px;
+    border: 1px solid rgba(209, 205, 203, 0.1);
+    font-size: 12px;
+}
+
+#list_tickets table tr {
+    padding: 7px 0;
+    text-align: left;
+    vertical-align: middle;
+	margin:15px 0 0 0;
+	cursor:pointer;
+}
+
+#list_tickets table tr:hover {
+    padding: 7px 8px 7px 7px;
+    background: url(../images/bg/bg_50_percent_opacity.png) left top repeat;
+    color: #FFF;
+    -webkit-border-radius: 3px 3px 3px 3px;
+    -moz-border-radius: 3px 3px 3px 3px;
+    border-radius: 3px 3px 3px 3px;
+}
+
+#list_tickets table tr td,
+#list_tickets table tr th{
+    padding: 7px 15px 7px 5px;
+    border: 1px solid rgba(209, 205, 203, 0.2);
+}
+
+table.statistics{
+    width: 101%!important;
+}
+
+table.filter-statistics-grid {
+    width: 101%!important;
+    font-size: 12px;
+}
+
+table.filter-statistics-grid tr td{
+    color: #FFF;
+}
+
+table.filter-statistics-grid input{
+    height: 20px!important;
+}
+
+
+.white_noise {
+    background-image: url(../images/bg/white_noise_bg.png);
+    background-color: rgba(255, 255, 255, 0.1);
+    background-repeat: repeat;
+    background-position: left top;
+}
+
+.title_table {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.7);
+    font-size: 12px;
+    text-shadow: 1px 1px 1px #8F7B67;
+	cursor:default !important;
+}
+
+tr.title_table:hover {
+    background-color: rgba(0, 0, 0, 0.7) !important;
+}
+/* small, middle, large culumns */
+td.small_column{
+	width:70px !important;
+}
+td.middle_column{
+	width:100px !important;
+}
+td.large_column{
+	width:130px !important;
+}
+
+/* title "number_of_tickets" */
+.number_of_tickets {
+    font-family: Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    margin-bottom: 15px;
+    text-align: right;
+    text-shadow: 1px 0 1px rgba(0, 0, 0, 0.5);
+}
+
+.number_of_tickets span {
+    font-weight: bold;
+}
+
+/* pagination */
+.pagination {
+    text-shadow: -1px 0 1px rgba(0, 0, 0, 0.6);
+    margin: 0 auto;
+    overflow: hidden;
+    padding-top: 20px;
+    position: relative;
+    text-align: center;
+}
+
+.pagination ul {
+    display: inline-block;
+}
+
+.pagination ul li {
+    cursor: default;
+    display: inline;
+    float: left;
+    line-height: 22px;
+    overflow: hidden;
+    text-align: center;
+    padding-right: 10px;
+}
+
+/* last cell */
+td.last_cell {
+    width: 100% !important;
+}
+
+/* --- list tickets (TABLE):end */
+/* LIST TICKETS ZOO:begin */
+#list_tickets-zoo{
+    color: #FFF;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    font-weight: normal;
+    line-height: 18px;
+}
+#list_tickets-zoo h2{}
+#list_tickets-zoo table{
+    width:97%!important;
+    background-color: rgba(255, 255, 255, 0.1);
+    background-image: url(../images/bg/white_noise_bg.png);
+    background-position: left top;
+    background-repeat: repeat;
+    -webkit-border-radius: 3px 3px 3px 3px;
+    -moz-border-radius: 3px 3px 3px 3px;
+    border-radius: 3px 3px 3px 3px;
+    padding: 3px;
+    text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.9);
+    border-spacing: 0 !important;
+    margin-top:10px;
+    border: 1px solid rgba(209, 205, 203, 0.1);
+}
+#list_tickets-zoo table tr{
+    padding: 7px 0;
+    text-align: left;
+    vertical-align: middle;
+    margin:15px 0 0 0;
+    cursor:pointer;
+}
+#list_tickets-zoo table tr:hover{
+    padding: 7px 8px 7px 7px;
+    background: url(../images/bg/bg_50_percent_opacity.png) left top repeat;
+    color: #FFF;
+    -webkit-border-radius: 3px 3px 3px 3px;
+    -moz-border-radius: 3px 3px 3px 3px;
+    border-radius: 3px 3px 3px 3px;
+}
+#list_tickets-zoo table tr.title_table-zoo{
+    background: rgba(4, 70, 80, 0.7);
+    font-size: 14px;
+    text-shadow: 1px 1px 1px #8F7B67;
+    cursor:default !important;
+}
+#list_tickets-zoo table td{
+    padding: 9px 15px 9px 5px;
+    border: 1px solid rgba(209, 205, 203, 0.2);
+}
+.last_cell-zoo{
+    width: 100% !important;
+}
+/* LIST TICKETS ZOO:end */
+/* BOTTOM INFORMATION VIEW EVENT:begin */
+.bottom_info_view_event {
+    margin: 15px 0;
+}
+
+.bottom_info_view_event h3 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    margin-bottom: 15px;
+    text-shadow: -1px -1px 1px rgba(160, 160, 160, 0.5);
+}
+
+.api_key_qr_code_rsa_key .one_group_elements_form {
+    font-size: 13px;
+    margin: 15px 0 10px 10px;
+    text-shadow: -1px -1px 1px rgba(255, 255, 255, 0.3);
+}
+
+.one_group_elements_form label {
+    display: inline-block;
+    padding-top: 2px;
+    vertical-align: top;
+    width: 160px;
+}
+
+.one_group_elements_form input {
+    background: url(../images/bg/form_input_bg.png) repeat-x scroll left top transparent;
+    border: 0 none;
+    width: 699px;
+    padding: 4px;
+	border-radius:2px 2px 2px 2px;
+}
+
+.one_group_elements_form textarea {
+    background: url(../images/bg/form_textarea_bg.png) left top repeat;
+    height: 139px;
+    padding: 4px;
+    width: 699px;
+	border:none;
+	border-radius: 2px 2px 2px 2px;
+}
+
+.one_group_elements_form textarea {
+    background: url("../images/bg/form_textarea_bg.png") repeat scroll left top transparent;
+    border: medium none;
+    border-radius: 2px 2px 2px 2px;
+    height: 139px;
+    padding: 4px;
+    width: 699px;
+}
+
+.print_qr_code {
+    background: url(../images/print_icon.gif) left center no-repeat;
+    cursor: pointer;
+    font-size: 13px;
+    text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.4);
+    text-decoration: none;
+}
+
+/* BOTTOM INFORMATION VIEW EVENT:end */
+/* PROFILE CONTENT TABLE:begin */
+table#user_info_table tr {
+    border-bottom: 1px dotted #999;
+    display: block;
+    padding: 7px 0;
+	margin:0 !important;
+}
+
+table#user_info_table tr:hover {
+    padding: 7px 0 !important;
+    background-color: none !important;
+    color: #FFF;
+    -webkit-border-radius: 0 0 0 0 !important;
+    -moz-border-radius: 0 0 0 0 !important;
+    border-radius: 0 0 0 0 !important;
+}
+
+table#user_info_table td img {
+    width: 150px;
+}
+
+td.first_column {
+    padding: 5px 0 0 5px !important;
+    width: 301px;
+}
+
+td.second_column {
+    width: 531px;
+}
+
+/* PROFILE CONTENT TABLE:end */
+
+/* A POP-UP WINDOW. BUY A TICKET:begin */
+.payment {
+    background-color: rgba(0, 0, 0, 0.5);
+    background-image: url(../images/bg/white_noise_bg.png);
+    background-position: left top;
+    background-repeat: repeat;
+    display: block;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 200;
+}
+#form_tickets_buy.form_main {
+    background-color: #000000;
+    border: 5px solid #FFFFFF;
+    border-radius: 5px 5px 5px 5px;
+    color: #CCCCCC;
+    display: block;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 13px;
+    height: 66%;
+    line-height: 24px;
+    margin: 0 auto;
+    overflow: hidden;
+    padding: 20px;
+    position: relative;
+    text-shadow: 1px 1px rgba(0, 0, 0, 0.4);
+    top: 13%;
+    width: 700px;
+    overflow-y: scroll;
+}
+#form_tickets_buy.form_main table td{
+	height: 20px;
+    width: 20px;
+}
+.buy_close{
+	background:url(../images/close_button.png) 3px 3px no-repeat!important;
+    display: block;
+    height: 16px!important;
+    left: 675px; top: -10px;
+    position: relative;
+    width: 17px;
+	cursor: pointer;
+	padding: 11px!important;
+}
+/* A POP-UP WINDOW. BUY A TICKET:end */
+
+/* SOCIAL NETWORKS (likes):begin */
+table#social_networks_likes td{
+	padding-top:12px;
+}
+/* SOCIAL NETWORKS (likes):end */
+
+/* --- FOOTER */
+/* footer wrappers and base style */
+#footer {
+    height: 191px;
+ position: absolute;
+    width: 100%;
+	bottom:0;
+    background: url(../images/bg/footer_repeat_bg.png) left top repeat-x;
+	z-index:500;
+}
+
+#footer_wrapper_repeat_bg {
+    background: url(../images/bg/footer_bg.png) center top no-repeat;
+    position: relative;
+}
+
+#footer_wrapper {
+    margin: 0 auto;
+    width: 1012px;
+    position: relative;
+    overflow: hidden;
+    top: 14px;
+}
+
+.title_footer {
+    font-size: 18px;
+    line-height: 18px;
+    color: #fb6006;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+    text-rendering: optimizeLegibility;
+    margin: 0 0 9px;
+}
+
+/* first column */
+td#first_column {
+    width: 450px;
+}
+
+#footer_wrapper ul li {
+    background: url(../images/arrow.png) left 5px no-repeat;
+    padding: 0 0 0 10px;
+}
+
+#footer_wrapper ul li a {
+    font-size: 13px;
+    line-height: 18px;
+    color: #666;
+    text-decoration: underline;
+}
+
+#footer_wrapper table, #footer_wrapper table tr, #footer_wrapper table tr td {
+    vertical-align: top;
+}
+
+.first_list ul {
+    margin: 0;
+    padding: 0;
+    width: 450px;
+    overflow: hidden;
+}
+
+.first_list ul li {
+    display: inline;
+    float: left;
+    margin-right: 11px;
+    text-shadow: 1px 1px rgba(0, 0, 0, 0.9);
+    width: 45%;
+}
+
+/* second column */
+#second_column {
+    width: 242px;
+}
+
+.second_list ul {
+    list-style: none;
+}
+
+.second_list ul li {
+    list-style: none;
+    text-shadow: 1px 1px rgba(0, 0, 0, 0.9);
+}
+
+/* third column */
+#bottom_menu {
+    list-style: none;
+    padding: 0 0 12px 0 !important;
+}
+
+#bottom_menu li {
+    background: none !important;
+    padding: 0 8px 0 0 !important;
+    display: inline;
+}
+
+#bottom_menu li a {
+    font-size: 15px;
+    line-height: 18px;
+    color: #999;
+    text-shadow: 1px 1px rgba(0, 0, 0, 0.4);
+}
+
+.we_are_in_web span {
+    font-size: 13px;
+    line-height: 18px;
+    color: #999;
+    text-shadow: 1px 1px rgba(0, 0, 0, 0.9);
+    padding: 10px 0 10px 0;
+    display: block;
+}
+
+.we_are_in_web a {
+    margin-right: 10px;
+}
+.we_are_in_web img{
+	height:20px;
+}
+/* copyright */
+.copyright {
+    color: #666666;
+    font-size: 11px;
+    line-height: 18px;
+    margin-top: 16px;
+    text-align: center;
+}
+
+/* FOOTER:end */
+
+td.place{background: #FFF; cursor: pointer;color: #000; padding: 3px;}
+td.place.select_place{background: #429FCC}
+td.place.select_mouse{background: #AAE6FF}
+
+/*Card buy Form: begin*/
+#card-form{
+    border: 2px solid #D5D5D6;
+    margin: 0 0 2% 30%;
+    padding: 2% 2% 0 2%;
+    width: 370px;
+    background: url('/images/card_mastercard.gif') 95% 6% no-repeat;
+}
+
+#card-form div.row{
+    margin: 20px 0 20px 0;
+}
+
+#card-form input{
+    float: right;
+    width: 220px;
+    color: #999;
+}
+#card-form input#card_pay{
+    float: none;
+    margin-left: 20%;
+    color: #000;
+}
+
+#card-form span{
+    font-style: italic;
+    margin-left: 145px;
+}
+/*Card buy Form: end*/
+
+.errorMessage{color: #F00;}
+
+/* Scanners */
+
+#scanner-description{
+    width: 50%;
+}
+#scanner-uniq{
+    width: 25%;
+}
+
+#scanner-status{
+    padding: 0 7px!important;
+    width: 18px;
+}
+
+.scanner-access{
+    background-color: rgb(0,255,0);
+    display: block;
+    height: 18px;
+    width: 18px;
+}
+
+.scanner-not-access{
+    background-color: rgb(225,15,15);
+    display: block;
+    height: 18px;
+    width: 18px;
+}

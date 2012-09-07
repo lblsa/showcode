@@ -1,0 +1,2 @@
+curl -F 'access_token=AAACDiMJTBBEBAKsv3xGfQkk02vdmdGdXzBFRedksCHH6s5q53AgtHWdQUjHamwBZBKRDNq6buQ6dDPLLfxLAC6PK9UMxCnOj18od7W6vmHycqCfDA' -F 'ticket=http://showcode.ru/events/iframe/9d58b520' 'https://graph.facebook.com/me/showcoderutestapp:buy'
+

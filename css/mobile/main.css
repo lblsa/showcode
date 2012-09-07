@@ -1,0 +1,45 @@
+#mainmenu{
+	margin: 0 0 20px 0;
+	padding: 0;
+                    width: 100%;
+}
+
+.container{
+    width: 80%;
+    margin-right: 0;
+    margin-top: 0;
+    padding-top: 0;
+    padding-right: 0;
+
+}
+
+.search-form .ui-icon{
+	height: 18px;
+    width: 18px;
+}
+
+.search-form .ui-icon-plus{
+	background-position: -15px -127px !important;
+}
+
+.search-form .ui-icon-minus{
+	background-position: -47px -127px !important;
+}
+
+.ui-footer{
+	width: 94%!important;
+}
+
+.popup_msg{
+    position:absolute;
+    z-index:10;
+    /*width:172px;
+    height:102px;*/
+    border: 2px solid #5E87B0;
+    padding: 20px;
+    text-align:center;
+    color:#FF0000;
+    font: 14px Verdana, Arial, Helvetica, sans-serif;
+    background:#EEE;
+    display:none;
+}
