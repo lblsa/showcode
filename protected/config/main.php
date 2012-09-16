@@ -106,7 +106,7 @@ return array(
 		*/
 		// uncomment the following to use a MySQL database
 		'db'=>array(
-			'connectionString' => 'mysql:host=mysql.showco01.mass.hc.ru;dbname=wwwshowcoderu',
+			'connectionString' => 'mysql:host=eu-cdbr-azure-west-a.cloudapp.net;dbname=showcode',
 			'emulatePrepare' => true,
 			// Set the charset of the connection
 			'charset' => 'utf8',
@@ -114,8 +114,8 @@ return array(
 			'nullConversion' => PDO::NULL_EMPTY_STRING,
 			// Cache queries
 			'schemaCachingDuration' => 1000,
-			'username' => 'showco01',
-			'password' => 'pepsi1',
+			'username' => 'b9b78b6b8334cf',
+			'password' => '7342842c',
 			//'username' => 'root',
 			//'password' => '',
 			'tablePrefix' => 'tbl_',
