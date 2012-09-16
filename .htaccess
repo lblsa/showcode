@@ -11,7 +11,4 @@ RewriteCond %{REQUEST_FILENAME} !-d
 # otherwise forward it to index.php
 RewriteRule . index.php
 
-RewriteCond %{HTTP_HOST} ^www.showcode.azurewebsites.net
-RewriteRule ^(.*)$ http://showcode.azurewebsites.net/$1 [R=301,L]
-
 Redirect /zoo http://showcode.azurewebsites.net/events/view/3a5095f1
