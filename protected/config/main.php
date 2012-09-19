@@ -82,6 +82,7 @@ return array(
 		'urlManager'=>array(
 			'urlFormat'=>'path',
 			'showScriptName'=>false,
+            'caseSensitive'=>false,
 			'rules'=>array(
 				'ticket' => 'transactionLog',
 				'ticket/<action:(view|admin|getQrCodeTicket|delete)>/<id:[\w\d]+>' => 'transactionLog/<action>',
@@ -91,12 +92,12 @@ return array(
 				'feedback/<action:(view|admin)>/<id:[\w\d]+>' => 'contacts/<action>',
 				'feedback/<action:\w+>' => 'contacts/<action>',
 					
-				'page/<view:\w+>' => 'site/page',
 				'<controller:\w+>/<action:\w+>/<id:[\w\d]+>'=>'<controller>/<action>',
+				'page/<view:\w+>' => 'site/page'
 				//'<_c:(events|user)>/<id:[\w\d]+>' => '<_c>/view',
 				//'<_c:(events|user)>' => '<_c>/list',
-				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
-				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>'
+				//'<controller:\w+>/<id:\d+>'=>'<controller>/view',
+				//'<controller:\w+>/<action:\w+>'=>'<controller>/<action>'
 			),
 		),
 		/*
