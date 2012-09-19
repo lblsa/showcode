@@ -1,4 +1,5 @@
 <?php
+$echo $_REQUEST['REQUEST_URI'];
 
 // change the following paths if necessary
 $yii=dirname(__FILE__).'/yii/framework/yiilite.php';
