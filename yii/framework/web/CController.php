@@ -259,7 +259,6 @@ class CController extends CBaseController
 	{
 		if(($action=$this->createAction($actionID))!==null)
 		{
-        die(var_dump($action));
 			if(($parent=$this->getModule())===null)
 				$parent=Yii::app();
 			if($parent->beforeControllerAction($this,$action))
@@ -412,6 +411,7 @@ class CController extends CBaseController
 	{
 		if($actionID==='')
 			$actionID=$this->defaultAction;
+        die(var_dump($actionID));
 		if(method_exists($this,'action'.$actionID) && strcasecmp($actionID,'s')) // we have actions method
 			return new CInlineAction($this,$actionID);
 		else
