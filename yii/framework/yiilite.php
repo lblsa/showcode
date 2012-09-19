@@ -1606,7 +1606,6 @@ class CWebApplication extends CApplication
 		}
 		else
 			$route=$this->getUrlManager()->parseUrl($this->getRequest());
-        die(var_dump($route));
 		$this->runController($route);
 	}
 	protected function registerCoreComponents()
@@ -1683,6 +1682,7 @@ class CWebApplication extends CApplication
 	{
 		if(($ca=$this->createController($route))!==null)
 		{
+        die(var_dump($ca));
 			list($controller,$actionID)=$ca;
 			$oldController=$this->_controller;
 			$this->_controller=$controller;
