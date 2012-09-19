@@ -259,6 +259,7 @@ class CController extends CBaseController
 	{
 		if(($action=$this->createAction($actionID))!==null)
 		{
+        die(var_dump($action));
 			if(($parent=$this->getModule())===null)
 				$parent=Yii::app();
 			if($parent->beforeControllerAction($this,$action))
