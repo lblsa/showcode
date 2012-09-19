@@ -1,0 +1,16 @@
+AddDefaultCharset UTF-8
+
+
+RewriteEngine on
+
+# if a directory or a file exists, use it directly
+RewriteCond %{REQUEST_URI} !^/fbapp [NC]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# otherwise forward it to index.php
+RewriteRule . index.php
+
+RewriteRule ^(.*)$ http://showcode.azurewebsites.net/$1 [R=301,L]
+
+Redirect /zoo http://showcode.azurewebsites.net/events/view/3a5095f1
