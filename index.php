@@ -1,5 +1,5 @@
 <?php
-echo $_REQUEST['REQUEST_URI'];
+echo $_SERVER['REQUEST_URI'];
 
 // change the following paths if necessary
 $yii=dirname(__FILE__).'/yii/framework/yiilite.php';
@@ -7,6 +7,7 @@ $config=dirname(__FILE__).'/protected/config/main.php';
 
 // remove the following lines when in production mode
 //defined('YII_DEBUG') or define('YII_DEBUG',true);
+define('YII_DEBUG',true);
 // specify how many levels of call stack should be shown in each log message
 defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL',3);
 
