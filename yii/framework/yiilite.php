@@ -1606,6 +1606,7 @@ class CWebApplication extends CApplication
 		}
 		else
 			$route=$this->getUrlManager()->parseUrl($this->getRequest());
+        die(var_dump($route));
 		$this->runController($route);
 	}
 	protected function registerCoreComponents()
