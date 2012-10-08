@@ -1,6 +1,4 @@
 <?php
-echo $_SERVER['REQUEST_URI'];
-
 // change the following paths if necessary
 $yii=dirname(__FILE__).'/yii/framework/yiilite.php';
 $config=dirname(__FILE__).'/protected/config/main.php';
