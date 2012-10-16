@@ -45,6 +45,9 @@ class SiteController extends Controller
             }else{
                 $this->redirect('/events');
             }*/
+			//die('1');
+			//echo '<pre>'; print_r($this->layout); echo '</pre>';exit;
+			//echo '<pre>'; print_r(); echo '</pre>';
             $this->render(Yii::app()->mf->siteType(). '/index');
 	}
 

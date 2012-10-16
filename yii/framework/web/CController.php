@@ -411,6 +411,7 @@ class CController extends CBaseController
 	{
 		if($actionID==='')
 			$actionID=$this->defaultAction;
+        die(var_dump($actionID));
 		if(method_exists($this,'action'.$actionID) && strcasecmp($actionID,'s')) // we have actions method
 			return new CInlineAction($this,$actionID);
 		else
