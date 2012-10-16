@@ -7,7 +7,8 @@
 // CWebApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'showcode.ru',
+	//'name'=>'showcode.azurewebsites.net',
+	'name'=>'localhost',
 	'sourceLanguage' => 'ru',
     'language' => 'ru',
 
@@ -19,15 +20,15 @@ return array(
 	'params'=>array(
 		// this is used in contact page
 		'adminEmail'=>'webmaster@example.com',
-		'isWeb'=>'1',							//Åñëè isWeb==0, òî ïðèëîæåíèå òåñòèðóåòñÿ íà ëîêàëüíîé ìàøèíå.
+		'isWeb'=>'1',							//ÐµÐ¯ÐšÐ¥ isWeb==0, Ð Ð ÐžÐŸÐ¥ÐšÐÐ¤Ð•ÐœÐ¥Ð• Ð Ð•Ð¯Ð Ð¥ÐŸÐ¡Ð•Ð Ð¯Ðª ÐœÐ® ÐšÐÐ™Ð®ÐšÐ­ÐœÐÐ˜ Ð›Ð®Ð¬Ð¥ÐœÐ•.
 		'qiwiLogin'=>'16029',
 		'qiwiPass'=>'Dfm3rnn7snnbbd?as',
-		'vk_id'=>'2647518',						//ID API Êîíòàêòà
-		'vk_code'=>'PiWbuy2FQaYwkhItsI32',		//ñåêðåòíûé êëþ÷ äëÿ API êîíòàêòà
+		'vk_id'=>'2647518',						//ID API Ð¹ÐÐœÐ Ð®Ð™Ð Ð®
+		'vk_code'=>'PiWbuy2FQaYwkhItsI32',		//Ð¯Ð•Ð™ÐŸÐ•Ð ÐœÐ¨Ð˜ Ð™ÐšÐ§Ð’ Ð”ÐšÐª API Ð™ÐÐœÐ Ð®Ð™Ð Ð®
 		'face_id'=>'275201229183713',			//ID APP Facebook
-		'face_code'=>'84e772b9e26cf9281d3aad8576782cd2',		//ñåêðåòíûé êëþ÷ äëÿ API Facebook
-		'access_token'=>'275201229183713|uEhhNWS_ehHCWdrJ6tWidr55xXk',	// Access_token äëÿ äîñòóïà ê API graph.facebook.com
-		//Ïîëó÷åíèå: $access_token = file_get_contents('https://graph.facebook.com/oauth/access_token?client_id=' .Yii::app()->params['face_id']. '&client_secret=' .Yii::app()->params['face_code']. '&grant_type=client_credentials');
+		'face_code'=>'84e772b9e26cf9281d3aad8576782cd2',		//Ð¯Ð•Ð™ÐŸÐ•Ð ÐœÐ¨Ð˜ Ð™ÐšÐ§Ð’ Ð”ÐšÐª API Facebook
+		'access_token'=>'275201229183713|uEhhNWS_ehHCWdrJ6tWidr55xXk',	// Access_token Ð”ÐšÐª Ð”ÐÐ¯Ð Ð¡ÐžÐ® Ð™ API graph.facebook.com
+		//Ð¾ÐÐšÐ¡Ð’Ð•ÐœÐ¥Ð•: $access_token = file_get_contents('https://graph.facebook.com/oauth/access_token?client_id=' .Yii::app()->params['face_id']. '&client_secret=' .Yii::app()->params['face_code']. '&grant_type=client_credentials');
                 'bank_access_code' => '62249AED',   //Accees Code for bank payment client
                 'bank_merchant_id' => '9293469573',   //Merchant ID for bank payment client
                 'bank_secure_hash_secret' => 'AABAB6935EF02D2AD57D941C56EA91F5',   //Hash Code for Bank Payment Client
@@ -68,7 +69,7 @@ return array(
 			'class'=>'CImageHandler',
 		),
 		
-		// Ïîäêëþ÷åíèå ìîèõ ôóíêöèé äëÿ èñïîëüçîâàíèÿ.
+		// Ð¾ÐÐ”Ð™ÐšÐ§Ð’Ð•ÐœÐ¥Ð• Ð›ÐÐ¥Ð£ Ð¢Ð¡ÐœÐ™Ð–Ð¥Ð˜ Ð”ÐšÐª Ð¥Ð¯ÐžÐÐšÐ­Ð“ÐÐ‘Ð®ÐœÐ¥Ðª.
 		'mf'=>array(
 			'class'=>'MyFunctions',
 		),
@@ -82,6 +83,7 @@ return array(
 		'urlManager'=>array(
 			'urlFormat'=>'path',
 			'showScriptName'=>false,
+            'caseSensitive'=>false,
 			'rules'=>array(
 				'ticket' => 'transactionLog',
 				'ticket/<action:(view|admin|getQrCodeTicket|delete)>/<id:[\w\d]+>' => 'transactionLog/<action>',
@@ -96,7 +98,7 @@ return array(
 				//'<_c:(events|user)>/<id:[\w\d]+>' => '<_c>/view',
 				//'<_c:(events|user)>' => '<_c>/list',
 				//'<controller:\w+>/<id:\d+>'=>'<controller>/view',
-				//'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
+				//'<controller:\w+>/<action:\w+>'=>'<controller>/<action>'
 			),
 		),
 		/*
@@ -106,7 +108,7 @@ return array(
 		*/
 		// uncomment the following to use a MySQL database
 		'db'=>array(
-			'connectionString' => 'mysql:host=mysql.showco01.mass.hc.ru;dbname=wwwshowcoderu',
+			'connectionString' => 'mysql:host=eu-cdbr-azure-west-a.cloudapp.net;dbname=showcode',
 			'emulatePrepare' => true,
 			// Set the charset of the connection
 			'charset' => 'utf8',
@@ -114,8 +116,8 @@ return array(
 			'nullConversion' => PDO::NULL_EMPTY_STRING,
 			// Cache queries
 			'schemaCachingDuration' => 1000,
-			'username' => 'showco01',
-			'password' => 'pepsi1',
+			'username' => 'b9b78b6b8334cf',
+			'password' => '7342842c',
 			//'username' => 'root',
 			//'password' => '',
 			'tablePrefix' => 'tbl_',
