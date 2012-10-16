@@ -7,7 +7,8 @@
 // CWebApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'showcode.azurewebsites.net',
+	//'name'=>'showcode.azurewebsites.net',
+	'name'=>'localhost',
 	'sourceLanguage' => 'ru',
     'language' => 'ru',
 
