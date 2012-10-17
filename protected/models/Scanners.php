@@ -132,10 +132,10 @@ class Scanners extends CActiveRecord
             $text .= '<td align="center">';
             $text .= '<table cellspasing="0" border="0" cellpadding="0" height="460px" width="728px" style="margin: 0pt; padding:0; background-color: rgb(255, 255, 255); border-collapse: collapse; border-spacing:0;">';
             $text .= '<tr>';
-            $text .= '<td style="background-image:url(http://' .$_SERVER['HTTP_HOST']. '/images/email/content_bg.png); background-repeat:no-repeat; background-position:left top; padding-top: 0px; padding-right:0; padding-bottom:0; padding-left: 21px;">';
+            $text .= '<td style="background-image:url(/images/email/content_bg.png); background-repeat:no-repeat; background-position:left top; padding-top: 0px; padding-right:0; padding-bottom:0; padding-left: 21px;">';
             $text .= '<table cellspasing="0" border="0" cellpadding="0" width="698px" style="margin: 0pt; padding: 0pt; background-color: rgb(255, 255, 255); border-collapse: collapse; border-spacing:0;">';
             $text .= '<tr>';
-            $text .= '<td colspan="2"><img src="http://' .$_SERVER['HTTP_HOST']. '/images/email/logo_empty.jpg" alt="Showcode" title="Showcode" style="margin: 0pt; padding: 0pt; border: 0pt none; display: block;"></td>';
+            $text .= '<td colspan="2"><img src="/images/email/logo_empty.jpg" alt="Showcode" title="Showcode" style="margin: 0pt; padding: 0pt; border: 0pt none; display: block;"></td>';
 	    $text .= '</tr>';
 	    $text .= '<tr>';
 	    $text .= '<td colspan="2"><div style="height: 90px;"><p style="font-family:Arial, Helvetica, sans-serif; font-size:24px; font-weight:normal; font-style:normal; color:#333; padding-bottom: 10px;">При запросе устройства к серверу произошла нестандартная ситуация</p></div></td>';

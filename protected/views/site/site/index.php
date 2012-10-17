@@ -274,10 +274,10 @@ echo "Success: ".(($decoded == $message) ? "True" : "False")."<hr />\n";
                     return false;
                 };
             </script>
-            <a style="background: url(http://showcode.ru/images/button_buy_ticket.png) no-repeat scroll left top transparent; color: #FFFFFF; cursor: pointer; display: block; font-size: 13px; height: 41px; line-height: 20px; margin: 4px auto; padding-bottom: 2px; position: relative; text-align: center; text-decoration: none; text-shadow: 0 1px 1px #565656; vertical-align: middle; width: 180px;" id="button_bye" href="#" onClick="openMenu();return false;"></a>
+            <a style="background: url(/images/button_buy_ticket.png) no-repeat scroll left top transparent; color: #FFFFFF; cursor: pointer; display: block; font-size: 13px; height: 41px; line-height: 20px; margin: 4px auto; padding-bottom: 2px; position: relative; text-align: center; text-decoration: none; text-shadow: 0 1px 1px #565656; vertical-align: middle; width: 180px;" id="button_bye" href="#" onClick="openMenu();return false;"></a>
             <div id="payment" style="border: medium none;box-shadow: 0 0 30px -5px #000000;display: none;height: 522px;left: 50%;margin-left: -408px;margin-top: -267px;padding: 3px;position: fixed;top: 50%;width: 784px; z-index: 65010;">
-                <input type="button" value="" onclick="javascript:closeMenu();return false;" id="buy_close" style="width: 17px;border: none; background:url(http://showcode.ru/images/close_button.png) left top no-repeat; display: block; left: 740px; top: 20px; position: absolute; cursor: pointer;" />
-                <iframe src="http://showcode.ru/events/iframe/9d58b520" width="100%" height="100%" style="border:none;"></iframe>
+                <input type="button" value="" onclick="javascript:closeMenu();return false;" id="buy_close" style="width: 17px;border: none; background:url(/images/close_button.png) left top no-repeat; display: block; left: 740px; top: 20px; position: absolute; cursor: pointer;" />
+                <iframe src="/events/iframe/9d58b520" width="100%" height="100%" style="border:none;"></iframe>
             </div>                  
             
         </div>

@@ -39,14 +39,9 @@ class SiteController extends Controller
 	 * when an action is not explicitly requested by users.
 	 */
 	public function actionIndex()
-	{
-            /*if (Yii::app()->user->isGuest){
-		$this->actionLogin();
-            }else{
-                $this->redirect('/events');
-            }*/
-            $this->render(Yii::app()->mf->siteType(). '/index');
-	}
+    {
+        $this->render(Yii::app()->mf->siteType(). '/index');
+    }
 
 	/**
 	 * Восстановление пароля
@@ -127,15 +122,13 @@ class SiteController extends Controller
 			{
 				$fromMail = 'noreply@'.$_SERVER[HTTP_HOST];
 				$text = $model->getTextEmailOfFeedback();
-				$Admin_Email = User::model()->findAll(array('select'=>'`email`','condition'=>'role="admin" and send_mail = 1'));
-				if($Admin_Email)
-					foreach($Admin_Email as $name=>$value){
-						Yii::app()->mf->mail_html($value->email,$fromMail,Yii::app()->name,$text,$model->subject);
-					}
-				//Yii::app()->mf->mail_html(Yii::app()->params['adminEmail'],$fromMail,Yii::app()->name,$model->body,$model->subject);
-				/*$headers="From: {$model->email}\r\nReply-To: {$model->email}";
-				mail(Yii::app()->params['adminEmail'],$model->subject,$model->body,$headers);*/
-				Yii::app()->user->setFlash('contact','Thank you for contacting us. We will respond to you as soon as possible.');
+                $Admin_Email = User::model()->findAll(array('select'=>'`email`','condition'=>'role="admin" and send_mail = 1'));
+                if($Admin_Email)
+                    foreach($Admin_Email as $name=>$value){
+                        Yii::app()->mf->mail_html($value->email,$fromMail,Yii::app()->name,$text,$model->subject);
+                    }
+
+                Yii::app()->user->setFlash('contact','Thank you for contacting us. We will respond to you as soon as possible.');
 				$this->refresh();
 			}
 		}
@@ -161,28 +154,18 @@ class SiteController extends Controller
             // collect user input data
             if(isset($_POST['LoginForm']))
             {
-                    $_POST['LoginForm']['password'] = str_replace("\n","",$_POST['LoginForm']['password']);
-                    $model->attributes=$_POST['LoginForm'];
-                    // validate user input and redirect to the previous page if valid
-                    if($model->validate() && $model->login())
-                            $this->redirect(Yii::app()->user->returnUrl);
+                $model->attributes=$_POST['LoginForm'];
+
+                $pass = $model->password;
+                $md5Pass = md5($model->password);
+                $model->password = $pass.'/'.$md5Pass;
+                // validate user input and redirect to the previous page if valid
+                if($model->validate() && $model->login())
+                    $this->redirect(Yii::app()->user->returnUrl);
+                else
+                    $model->password = $pass;
             }
-            /*elseif (isset($_GET['uid']) && isset($_GET['hash']))
-            {
-                    if ($model->loginSocial('vkontakte'))
-                            $this->redirect(Yii::app()->user->returnUrl);
-            }
-            elseif (isset($_GET['code']))
-            {
-                    $token_url = 'https://graph.facebook.com/oauth/access_token?client_id=' .Yii::app()->params['face_id']. '&redirect_uri=http://' .$_SERVER['HTTP_HOST']. '/site/login&client_secret=' .Yii::app()->params['face_code']. '&code=' .$_GET['code'];
-                    $access_token = file_get_contents($token_url);
-                    $params = null;
-                    parse_str($access_token, $params);
-                    $graph_url = 'https://graph.facebook.com/me?access_token=' .$params['access_token'];
-                    $user = json_decode(file_get_contents($graph_url));
-                    if (isset($user->id) && isset($user->name) && $model->loginSocial('facebook',$user->id,$user->name,$user->email,$params['access_token']))
-                            $this->redirect(Yii::app()->user->returnUrl);
-            }*/
+
             $this->render(Yii::app()->mf->siteType(). '/login',array('model'=>$model));
 	}
 
