@@ -89,7 +89,7 @@ class TransactionLogController extends Controller
                 $pages->pageSize=10;
                 $pages->applyLimit($criteria);
 
-                dataProvider=new CActiveDataProvider('TransactionLog', array(
+                $dataProvider=new CActiveDataProvider('TransactionLog', array(
                     'criteria'=>$criteria,
                 ));
             }
