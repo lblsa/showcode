@@ -14,3 +14,6 @@ RewriteRule . index.php
 #RewriteRule ^(.*)$ http://showcode.azurewebsites.net/$1 [R=301,L]
 
 #Redirect /zoo http://showcode.azurewebsites.net/events/view/3a5095f1
+
+RewriteCond %{SERVER_PORT} !^443$
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI}
