@@ -44,14 +44,23 @@ class User extends CActiveRecord
 		if(!$this->isNewRecord)
 		{
 			$oldPasswordDB = User::model()->findByPk(Yii::app()->user->id, array('select'=>'password'))->password;
+			
+			$curOldPass = $this->oldPassword;
+			$curOldPassMd5 = md5($this->oldPassword);
+			$oldPass = $curOldPass.'/'.$curOldPassMd5;
+
+			//echo '<pre>'; print_r($oldPasswordDB); echo '</pre>';//exit;
+			//echo '<pre>'; print_r($oldPass); echo '</pre>';exit;
+			
 			if ($this->newPassword == '' && $this->repeatPassword == '')
-				$this->password=$oldPasswordDB;
-			elseif (md5($this->oldPassword) == $oldPasswordDB){
-                            if($this->newPassword == $this->repeatPassword)
-				$this->password = md5($this->newPassword);
-                            else
-                                $this->addError('password','Новый пароль не совпадает');
-                        }else
+				$this->password=$oldPasswordDB;						
+			elseif ($oldPass == $oldPasswordDB)
+			{
+                if($this->newPassword == $this->repeatPassword)
+					$this->password = $this->newPassword.'/'.md5($this->newPassword);
+                else
+                     $this->addError('password','Новый пароль не совпадает');
+            }else
 				$this->addError('password','Старый пароль не совпадает');
 		}
 		return parent::beforeValidate();

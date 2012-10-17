@@ -105,6 +105,7 @@ class UserController extends Controller
 	{
 		$model=$this->loadModel($id);
 		$model->phone=substr($model->phone,1);
+		//echo '<pre>'; print_r($model->phone); echo '</pre>';exit;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
