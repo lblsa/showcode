@@ -25,7 +25,7 @@ class User extends CActiveRecord
 		);
 	public $oldPassword;
 	public $newPassword;
-        public $repeatPassword;
+    public $repeatPassword;
 
 	/**
 	 * This method is invoked before validation starts.
@@ -44,14 +44,20 @@ class User extends CActiveRecord
 		if(!$this->isNewRecord)
 		{
 			$oldPasswordDB = User::model()->findByPk(Yii::app()->user->id, array('select'=>'password'))->password;
+			
+			$curOldPass = $this->oldPassword;
+			$curOldPassMd5 = md5($this->oldPassword);
+			$oldPass = $curOldPass.'/'.$curOldPassMd5;
+
 			if ($this->newPassword == '' && $this->repeatPassword == '')
-				$this->password=$oldPasswordDB;
-			elseif (md5($this->oldPassword) == $oldPasswordDB){
-                            if($this->newPassword == $this->repeatPassword)
-				$this->password = md5($this->newPassword);
-                            else
-                                $this->addError('password','Новый пароль не совпадает');
-                        }else
+				$this->password=$oldPasswordDB;						
+			elseif ($oldPass == $oldPasswordDB)
+			{
+                if($this->newPassword == $this->repeatPassword)
+					$this->password = $this->newPassword.'/'.md5($this->newPassword);
+                else
+                     $this->addError('password','Новый пароль не совпадает');
+            }else
 				$this->addError('password','Старый пароль не совпадает');
 		}
 		return parent::beforeValidate();
@@ -153,10 +159,10 @@ class User extends CActiveRecord
             $text = $text.'<td align="center">';
             $text = $text.'<table cellspasing="0" border="0" cellpadding="0" height="460px" width="728px" style="margin: 0pt; padding:0; background-color: rgb(255, 255, 255); border-collapse: collapse; border-spacing:0;">';
             $text = $text.'<tr>';
-            $text = $text.'<td style="background-image:url(http://' .$_SERVER['HTTP_HOST']. '/images/email/content_bg.png); background-repeat:no-repeat; background-position:left top; padding-top: 0px; padding-right:0; padding-bottom:0; padding-left: 21px;">';
+            $text = $text.'<td style="background-image:url(https://' .$_SERVER['HTTP_HOST']. '/images/email/content_bg.png); background-repeat:no-repeat; background-position:left top; padding-top: 0px; padding-right:0; padding-bottom:0; padding-left: 21px;">';
             $text = $text.'<table cellspasing="0" border="0" cellpadding="0" width="698px" style="margin: 0pt; padding: 0pt; background-color: rgb(255, 255, 255); border-collapse: collapse; border-spacing:0;">';
             $text = $text.'<tr>';
-            $text = $text.'<td colspan="2"><img src="http://' .$_SERVER['HTTP_HOST']. '/images/email/logo_welcome.jpg" alt="Showcode. Добро пожаловать." title="Showcode. Добро пожаловать." style="margin: 0pt; padding: 0pt; border: 0pt none; display: block;"></td>';
+            $text = $text.'<td colspan="2"><img src="https://' .$_SERVER['HTTP_HOST']. '/images/email/logo_welcome.jpg" alt="Showcode. Добро пожаловать." title="Showcode. Добро пожаловать." style="margin: 0pt; padding: 0pt; border: 0pt none; display: block;"></td>';
 	    $text .= '</tr>';
 	    $text .= '<tr>';
 	    $text .= '<td colspan="2"><div style="height: 40px;"><p style="font-family:Arial, Helvetica, sans-serif; font-size:24px; font-weight:normal; font-style:normal; color:#333; padding-bottom: 10px;">Здравствуйте, '.$this->name.'.</p></div></td>';
@@ -210,10 +216,10 @@ class User extends CActiveRecord
             $text = $text.'<td align="center">';
             $text = $text.'<table cellspasing="0" border="0" cellpadding="0" height="460px" width="728px" style="margin: 0pt; padding:0; background-color: rgb(255, 255, 255); border-collapse: collapse; border-spacing:0;">';
             $text = $text.'<tr>';
-            $text = $text.'<td style="background-image:url(http://' .$_SERVER['HTTP_HOST']. '/images/email/content_bg.png); background-repeat:no-repeat; background-position:left top; padding-top: 0px; padding-right:0; padding-bottom:0; padding-left: 21px;">';
+            $text = $text.'<td style="background-image:url(https://' .$_SERVER['HTTP_HOST']. '/images/email/content_bg.png); background-repeat:no-repeat; background-position:left top; padding-top: 0px; padding-right:0; padding-bottom:0; padding-left: 21px;">';
             $text = $text.'<table cellspasing="0" border="0" cellpadding="0" width="698px" style="margin: 0pt; padding: 0pt; background-color: rgb(255, 255, 255); border-collapse: collapse; border-spacing:0;">';
             $text = $text.'<tr>';
-            $text = $text.'<td colspan="2"><img src="http://' .$_SERVER['HTTP_HOST']. '/images/email/logo_change_pass.jpg" alt="Showcode. Изменение пароля." title="Showcode. Изменение пароля." style="margin: 0pt; padding: 0pt; border: 0pt none; display: block;"></td>';
+            $text = $text.'<td colspan="2"><img src="https://' .$_SERVER['HTTP_HOST']. '/images/email/logo_change_pass.jpg" alt="Showcode. Изменение пароля." title="Showcode. Изменение пароля." style="margin: 0pt; padding: 0pt; border: 0pt none; display: block;"></td>';
 	    $text .= '</tr>';
 	    $text .= '<tr>';
 	    $text .= '<td colspan="2"><div style="height: 40px;"><p style="font-family:Arial, Helvetica, sans-serif; font-size:24px; font-weight:normal; font-style:normal; color:#333; padding-bottom: 10px;">Здравствуйте, '.$this->name.'.</p></div></td>';
@@ -258,7 +264,10 @@ class User extends CActiveRecord
 	 */
 	public function validatePassword($password)
     {
-        return $this->hashPassword($password)===$this->password;
+		if (($password)===$this->password)
+			return true;
+		else
+			return false;
     }
 
 	/**
@@ -580,6 +589,8 @@ class User extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('phone, name, role', 'required', 'message'=>'Не может быть пустым'),
+			array('email', 'unique'),
+			array('phone', 'unique'),
 			array('uniq, email, password, name, oldPassword, newPassword, repeatPassword, organization, phone', 'length', 'max'=>128),
 			array('phone', 'match', 'pattern'=>'/^[\d]{10}$/', 'message'=>'Телефонный номер должен состоять из 10 цифр'),
 			array('role', 'length', 'max'=>10),
@@ -613,8 +624,8 @@ class User extends CActiveRecord
 			'uniq' => 'Уникальный пароль для Web API',
 			'email' => 'Email',
 			'password' => 'Пароль',
-                        'newPassword' => 'Новый пароль',
-                        'repeatPassword' => 'Повторить пароль',
+			'newPassword' => 'Новый пароль',
+			'repeatPassword' => 'Повторить пароль',
 			'name' => 'Фамилия Имя Отчество',
 			'role' => 'Роль',
 			'organization' => 'Название организации',

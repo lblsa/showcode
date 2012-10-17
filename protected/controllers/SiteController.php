@@ -45,6 +45,9 @@ class SiteController extends Controller
             }else{
                 $this->redirect('/events');
             }*/
+			//die('1');
+			//echo '<pre>'; print_r($this->layout); echo '</pre>';exit;
+			//echo '<pre>'; print_r(); echo '</pre>';
             $this->render(Yii::app()->mf->siteType(). '/index');
 	}
 
@@ -161,11 +164,17 @@ class SiteController extends Controller
             // collect user input data
             if(isset($_POST['LoginForm']))
             {
-                    $_POST['LoginForm']['password'] = str_replace("\n","",$_POST['LoginForm']['password']);
-                    $model->attributes=$_POST['LoginForm'];
-                    // validate user input and redirect to the previous page if valid
-                    if($model->validate() && $model->login())
-                            $this->redirect(Yii::app()->user->returnUrl);
+				$model->attributes=$_POST['LoginForm'];
+				
+				$pass = $model->password;
+				$md5Pass = md5($model->password);
+				$model->password = $pass.'/'.$md5Pass;
+				// validate user input and redirect to the previous page if valid
+				if($model->validate() && $model->login())
+					$this->redirect(Yii::app()->user->returnUrl);
+				else
+					$model->password = $pass;
+				
             }
             /*elseif (isset($_GET['uid']) && isset($_GET['hash']))
             {
