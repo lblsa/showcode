@@ -20,8 +20,10 @@ class UserIdentity extends CUserIdentity
     // Данный метод вызывается один раз при аутентификации пользователя.
 	public function authenticate()
     {
-        $username='7'.strtolower($this->username);
-        $user=User::model()->find('LOWER(phone)=:phone',array(':phone'=>$username));
+		//$username='7'.strtolower($this->username);
+        /*$user=User::model()->find('LOWER(phone)=:phone',array(':phone'=>strtolower($this->username)));
+		//echo '<pre>'; print_r($username); echo '</pre>';//exit;
+        echo '<pre>'; print_r(($this->password)); echo '</pre>';//exit;
         if($user===null)
             $this->errorCode=self::ERROR_USERNAME_INVALID;
         else if(!$user->validatePassword($this->password))
@@ -32,6 +34,25 @@ class UserIdentity extends CUserIdentity
             $this->username=$user->phone;
             $this->errorCode=self::ERROR_NONE;
         }
+        return $this->errorCode==self::ERROR_NONE;*/
+		//echo '<pre>'; print_r($this); echo '</pre>';
+		$phone = $this->username;
+		$pass = $this->password;
+		
+		$user = User::model()->findByAttributes(array('phone'=>$phone));
+		
+		//echo '<pre>'; print_r($user->validatePassword($pass)); echo '</pre>';exit;
+        if($user===null)
+            $this->errorCode=self::ERROR_USERNAME_INVALID;
+        else if($user->validatePassword($pass)!==true)
+            $this->errorCode=self::ERROR_PASSWORD_INVALID;
+        else
+        {
+            $this->_id=$user->user_id;
+            $this->username=$user->phone;
+            $this->errorCode=self::ERROR_NONE;
+        }
+		//echo '<pre>'; print_r($this->errorCode); echo '</pre>';exit;
         return $this->errorCode==self::ERROR_NONE;
     }
 
