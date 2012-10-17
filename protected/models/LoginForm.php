@@ -42,7 +42,7 @@ class LoginForm extends CFormModel
 	{
 		if(!$this->hasErrors())
 		{
-			$this->_identity=new UserIdentity($this->phone,$this->password);
+			$this->_identity=new UserIdentity('7'.$this->phone,$this->password);
 			if(!$this->_identity->authenticate())
 				$this->addError('password','Неправильная пара телефон / пароль');
 		}
@@ -70,14 +70,17 @@ class LoginForm extends CFormModel
 	{
 		if($this->_identity===null)
 		{
-			$this->_identity=new UserIdentity($this->phone,$this->password);
+			$phone = '7'.$this->phone;
+			$this->_identity=new UserIdentity($phone, $this->password);
 			$this->_identity->authenticate();
 		}
+		//echo '<pre>'; print_r($this->_identity->errorCode); echo '</pre>';exit;
 		if($this->_identity->errorCode===UserIdentity::ERROR_NONE)
 		{
 			//$duration=$this->rememberMe ? 3600*24*30 : 0; // 30 days
-                        $duration = 3600*24*30;
+            $duration = 3600*24*30;
 			Yii::app()->user->login($this->_identity,$duration);
+			//die('11111111111111');
 			return true;
 		}
 		else

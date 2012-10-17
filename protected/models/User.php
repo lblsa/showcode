@@ -25,7 +25,7 @@ class User extends CActiveRecord
 		);
 	public $oldPassword;
 	public $newPassword;
-        public $repeatPassword;
+    public $repeatPassword;
 
 	/**
 	 * This method is invoked before validation starts.
@@ -258,7 +258,15 @@ class User extends CActiveRecord
 	 */
 	public function validatePassword($password)
     {
-        return $this->hashPassword($password)===$this->password;
+        //return $this->hashPassword($password)===$this->password;
+		//echo '<pre>'; print_r($password); echo '</pre>';
+		//echo '<pre>'; print_r($this->password); echo '</pre>';//exit;
+		if (($password)===$this->password)
+			return true;
+		else
+			return false;
+        //return ($password)===$this->password;
+		
     }
 
 	/**
@@ -580,6 +588,8 @@ class User extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('phone, name, role', 'required', 'message'=>'Не может быть пустым'),
+			array('email', 'unique'),
+			array('phone', 'unique'),
 			array('uniq, email, password, name, oldPassword, newPassword, repeatPassword, organization, phone', 'length', 'max'=>128),
 			array('phone', 'match', 'pattern'=>'/^[\d]{10}$/', 'message'=>'Телефонный номер должен состоять из 10 цифр'),
 			array('role', 'length', 'max'=>10),
@@ -613,8 +623,8 @@ class User extends CActiveRecord
 			'uniq' => 'Уникальный пароль для Web API',
 			'email' => 'Email',
 			'password' => 'Пароль',
-                        'newPassword' => 'Новый пароль',
-                        'repeatPassword' => 'Повторить пароль',
+			'newPassword' => 'Новый пароль',
+			'repeatPassword' => 'Повторить пароль',
 			'name' => 'Фамилия Имя Отчество',
 			'role' => 'Роль',
 			'organization' => 'Название организации',
