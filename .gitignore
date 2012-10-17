@@ -1,6 +1,8 @@
 .hg
+assets
 webalizer
 webstat
 weba
+.htaccess
 --index.html
 test.html
