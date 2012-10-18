@@ -448,7 +448,7 @@ class EventsController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
-                $this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column3';
+		$this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column3';
 		$this->datepicker();
 		$model=$this->loadModel($id);
 		$tickets=$this->loadTicket($id);

@@ -11,7 +11,7 @@
     
     <!-- buttons (edit and my events) -->
     <div class="edit_event_buttons">
-        <?php
+        <?php 
             if(count($this->menu) > 0){
                 foreach($this->menu as $k => $menu){
                     echo CHtml::link($menu['label'],$menu['url'],isset($menu['linkOptions']) ? $menu['linkOptions'] : array());
