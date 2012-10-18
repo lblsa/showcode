@@ -90,7 +90,7 @@ class User extends CActiveRecord
 				}
 			}
 
-                        if (!$this->email)
+            if (!$this->email)
 				$this->email=NULL;
 
 			//Проверка, что админа может создать только админ
@@ -137,6 +137,13 @@ class User extends CActiveRecord
 				$PASSWORD_SMS = 'MoZBdJsXG8';
 
 				$r = smsapi_push_msg_nologin($EMAIL_SMS, $PASSWORD_SMS, $p, $message, array("unicode"=>"1"));
+				
+				//отправляем уведомление, что появился новый пользователь
+				$to = 'showcode@googlegroups.com';
+				$subject = 'Новый пользователь';
+				$message = 'В системе зарегистрировался новый пользователь';
+				
+				mail($to, $subject, $message);
 				/*
 				if ($r[0]=='0')
 					echo 'Сообщение отправлено';
