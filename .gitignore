@@ -1,7 +1,11 @@
 .hg
+assets
+images/qrcode
+images/logo
 webalizer
 webstat
 weba
+.htaccess
 --index.html
 test.html
 protected/config/main.php
