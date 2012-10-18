@@ -25,8 +25,8 @@
 defined('YII_BEGIN_TIME') or define('YII_BEGIN_TIME',microtime(true));
 defined('YII_DEBUG') or define('YII_DEBUG',false);
 defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL',0);
-defined('YII_ENABLE_EXCEPTION_HANDLER') or define('YII_ENABLE_EXCEPTION_HANDLER',false);
-defined('YII_ENABLE_ERROR_HANDLER') or define('YII_ENABLE_ERROR_HANDLER',false);
+defined('YII_ENABLE_EXCEPTION_HANDLER') or define('YII_ENABLE_EXCEPTION_HANDLER',true);
+defined('YII_ENABLE_ERROR_HANDLER') or define('YII_ENABLE_ERROR_HANDLER',true);
 defined('YII_PATH') or define('YII_PATH',dirname(__FILE__));
 defined('YII_ZII_PATH') or define('YII_ZII_PATH',YII_PATH.DIRECTORY_SEPARATOR.'zii');
 class YiiBase
