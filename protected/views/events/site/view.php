@@ -437,7 +437,6 @@ echo '<div class="full_text_info_about_event'.$uniqEvent->prefix_class.'">';
             'itemCssClass' => array('event-title-zoo',''),
         ));
     ?>
-    <?php echo '</div>'; ?>
 <?php endif; ?>
 
 <div class="clear"></div>
