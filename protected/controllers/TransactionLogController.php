@@ -63,6 +63,7 @@ class TransactionLogController extends Controller
 	{
             $this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column2';
             $criteria=new CDbCriteria();
+            $criteria->addCondition('status = 1');
 
             if (!yii::app()->user->isAdmin())
             {
@@ -76,9 +77,8 @@ class TransactionLogController extends Controller
                             $events_id = substr($events_id, 0, strlen($events_id)-1);
                             $events_id.=')';
                     }*/
-                    $criteria->condition = 'user_id = ' .yii::app()->user->id. $events_id;
+                $criteria->addCondition('user_id = ' .yii::app()->user->id. $events_id, 'AND');
             }
-            $criteria->condition = 'status = 1';
             $criteria->order = 'datetime DESC';
 
             if(!Yii::app()->mf->isMobile()){

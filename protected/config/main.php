@@ -83,7 +83,7 @@ return array(
 		'urlManager'=>array(
 			'urlFormat'=>'path',
 			'showScriptName'=>false,
-            'caseSensitive'=>false,
+            'caseSensitive'=>true,
 			'rules'=>array(
 				'ticket' => 'transactionLog',
 				'ticket/<action:(view|admin|getQrCodeTicket|delete)>/<id:[\w\d]+>' => 'transactionLog/<action>',
