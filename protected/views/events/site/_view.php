@@ -15,3 +15,4 @@
     <?php endif; ?>
 </div>
 <?php echo CHtml::link(CHtml::encode('Перейти'), array('/events/view/'.$data->id),array('class'=>'click_on_link')) ?>
+<?/*<a href="<?php echo CHtml::normalizeUrl(array('/events/view/'.$data->id));?>">1</a>*/?>

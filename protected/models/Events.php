@@ -113,7 +113,7 @@ class Events extends CActiveRecord
 
             if($this->addEventFacebook && !$this->facebook_eid){
                 if (!Yii::app()->user->access_token || !$this->addEventFacebook(Yii::app()->user->access_token, $this->id)){
-                        $auth_url = "https://www.facebook.com/dialog/oauth?client_id=".Yii::app()->params['face_id']."&redirect_uri=http://". $_SERVER['HTTP_HOST']."/events/view/".$this->id."&scope=create_event";
+                        $auth_url = "https://www.facebook.com/dialog/oauth?client_id=".Yii::app()->params['face_id']."&redirect_uri=https://". $_SERVER['HTTP_HOST']."/events/view/".$this->id."&scope=create_event";
                         header('Location: '.$auth_url);
                         die();
                 }
@@ -516,7 +516,7 @@ class Events extends CActiveRecord
             $text = '';
             $text = $text.'<table cellspasing="0" border="0" cellpadding="0" width="697px" style="margin: 0pt; padding: 0pt; background-color: rgb(255, 255, 255); border-collapse: collapse;">';
             $text = $text.'<tr height="138px">';
-            $text = $text.'<td><img src="http://' .$_SERVER['HTTP_HOST']. '/images/email/logo_empty.jpg" alt="Showcode." title="Showcode." style="margin: 0pt; padding: 0pt; border: 0pt none; display: block;"></td>';
+           $text = $text.'<td><img src="/images/email/logo_empty.jpg" alt="Showcode." title="Showcode." style="margin: 0pt; padding: 0pt; border: 0pt none; display: block;"></td>';
             $text = $text.'</tr>';
             $text = $text.'<tr height="41px">';
             $text = $text.'<td><p style="font-family:Arial, Helvetica, sans-serif; font-size:24px; font-weight:normal; font-style:normal; color:#333;">Здравствуйте, '.Yii::app()->user->name.'.</p></td>';

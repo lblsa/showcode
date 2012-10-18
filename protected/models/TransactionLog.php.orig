@@ -789,7 +789,7 @@ class TransactionLog extends CActiveRecord
         /* Отправляем запрос в Bank Payment Client */
         public function virtualPaymentClient(){
             $Payment_Client_URL = "https://migs.mastercard.com.au/vpcpay"; // URL для доступа клиента-оплаты банка
-            $urlBack = 'http://'.$_SERVER['HTTP_HOST'].'/ticket/paymentClient';
+            $urlBack = 'https://'.$_SERVER['HTTP_HOST'].'/ticket/paymentClient';
             $vpcURL = $Payment_Client_URL . "?";
 
             $md5HashData = Yii::app()->params['bank_secure_hash_secret'];

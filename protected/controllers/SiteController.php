@@ -49,7 +49,7 @@ class SiteController extends Controller
 	 */
 	public function actionRecovery()
 	{
-            $this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column3';
+		$this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column3';
 		if(isset($_POST['phone']))
         {
             if(preg_match("~[\d]{10}~i", $_POST['phone'])){
@@ -159,6 +159,8 @@ class SiteController extends Controller
                 $pass = $model->password;
                 $md5Pass = md5($model->password);
                 $model->password = $pass.'/'.$md5Pass;
+				//echo '<pre>'; print_r($model->validate()); echo '</pre>';//exit;
+				//echo '<pre>'; print_r($model->login()); echo '</pre>';exit;
                 // validate user input and redirect to the previous page if valid
                 if($model->validate() && $model->login())
                     $this->redirect(Yii::app()->user->returnUrl);

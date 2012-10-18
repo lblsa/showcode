@@ -6,7 +6,7 @@
 
             if(theName.length > 0)
             {
-                var url = "http://"+location.hostname+"/ticket/delete/"+theName+"?ajax";
+                var url = "https://"+location.hostname+"/ticket/delete/"+theName+"?ajax";
                 $.ajax({
                   type: "POST",
                   url: url,
@@ -24,7 +24,7 @@
 
             if(theName.length > 0)
             {
-                var url = "http://"+location.hostname+"/events/checkTicket/"+theName+"?markticket=1&ajax";
+                var url = "https://"+location.hostname+"/events/checkTicket/"+theName+"?markticket=1&ajax";
 
                 $.ajax({
                   type: "POST",
@@ -44,7 +44,7 @@
         function onSuccess(data)
         {
             console.log("Result: " + data);
-            window.location = "http://"+location.hostname+data;
+            window.location = "https://"+location.hostname+data;
         }
 
         function onSuccessCheckTicket(data)

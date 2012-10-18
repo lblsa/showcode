@@ -17,7 +17,7 @@ Yii::app()->clientScript->registerScriptFile('http://userapi.com/js/api/openapi.
 
 <!--
 <div id="vk_auth"></div><br />
-<a id="b1" href="https://www.facebook.com/dialog/oauth?client_id=<?php echo Yii::app()->params['face_id']; ?>&redirect_uri=http://<?php echo $_SERVER['HTTP_HOST']; ?>/site/login&scope=offline_access,email&display=page"><img src="/images/facebook.png" title="Войти через Facebook" alt="Войти через Facebook" /></a>
+<a id="b1" href="https://www.facebook.com/dialog/oauth?client_id=<?php echo Yii::app()->params['face_id']; ?>&redirect_uri=https://<?php echo $_SERVER['HTTP_HOST']; ?>/site/login&scope=offline_access,email&display=page"><img src="/images/facebook.png" title="Войти через Facebook" alt="Войти через Facebook" /></a>
 -->
 	<h3>Авторизация</h3>
 	<p>Пожалуйста, авторизуйтесь, используя форму ниже:</p>

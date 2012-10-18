@@ -265,7 +265,7 @@ class User extends CActiveRecord
 	 */
 	public function validatePassword($password)
     {
-        if (($password)===$this->password)
+		if (($password)===$this->password)
             return true;
 
         return false;
