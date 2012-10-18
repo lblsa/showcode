@@ -90,7 +90,7 @@ class User extends CActiveRecord
 				}
 			}
 
-                        if (!$this->email)
+            if (!$this->email)
 				$this->email=NULL;
 
 			//Проверка, что админа может создать только админ
@@ -137,12 +137,10 @@ class User extends CActiveRecord
 				$PASSWORD_SMS = 'MoZBdJsXG8';
 
 				$r = smsapi_push_msg_nologin($EMAIL_SMS, $PASSWORD_SMS, $p, $message, array("unicode"=>"1"));
-				/*
-				if ($r[0]=='0')
-					echo 'Сообщение отправлено';
-				else
-					echo 'ошибка: ' .$r[0];
-				*/
+
+                //отправляем уведомление, что появился новый пользователь
+                $message = 'В системе зарегистрировался новый пользователь. Телефон: '.$this->phone;
+				Yii::app()->mf->mail_html('showcode@googlegroups.com','noreply@'.$_SERVER[HTTP_HOST],Yii::app()->name,$message,'В системе ' .Yii::app()->name. ' новый пользователь!');
 			}
 		}
 	}

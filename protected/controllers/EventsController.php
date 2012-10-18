@@ -36,7 +36,7 @@ class EventsController extends Controller
 				'users'=>array('*','@'),
 			),
 			array('allow',			// Для Организатора разрешено: 'index', 'view', 'admin' и 'create'
-				'actions'=>array('index','view'),
+				'actions'=>array('index', 'view', 'create', 'admin'),
 				'expression' => 'yii::app()->user->isOrganizer()',
 				//'expression' => array($this, 'isOrganizer'),
 			),

@@ -256,7 +256,7 @@ echo "Success: ".(($decoded == $message) ? "True" : "False")."<hr />\n";
     <div class="new_message">
         <!-- title -->
         <div class="new_message_title">
-            <?php if(Yii::app()->user->isAdmin()): ?>
+            <?php if(Yii::app()->user->isAdmin() || Yii::app()->user->isOrganizer()): ?>
                 <?php echo CHtml::link('СОЗДАТЬ<span>новое событие</span>', array('/events/create')); ?>
             <?php else: ?>
                 <?php echo CHtml::link('Смотреть<span>мероприятия</span>', array('/events')); ?>
