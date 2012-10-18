@@ -397,17 +397,17 @@ class Events extends CActiveRecord
 	{
 		//$HtmlCode = '<script type="text/javascript">function openMenu(){document.getElementById("payment").style.display = "block";document.getElementById("button_bye").style.display = "none";};function closeMenu(){document.getElementById("payment").style.display = "none";document.getElementById("button_bye").style.display = "block";return false;};</script>';
 		$HtmlCode = '<script type="text/javascript">function openMenu(){document.getElementById("payment").style.display = "block";};function closeMenu(){document.getElementById("payment").style.display = "none";return false;};</script>';
-		//$HtmlCode.= '<a href="/events/view/' .$this->id. '" > <img src="http://' .$_SERVER['HTTP_HOST'].$this->changeNameImageOnMini($this->logo). '"></a><br><a href="/events/view/' .$this->id. '">' .$this->title. '</a>';
+		//$HtmlCode.= '<a href="http://' .$_SERVER['HTTP_HOST']. '/events/view/' .$this->id. '" > <img src="http://' .$_SERVER['HTTP_HOST'].$this->changeNameImageOnMini($this->logo). '"></a><br><a href="http://' .$_SERVER['HTTP_HOST']. '/events/view/' .$this->id. '">' .$this->title. '</a>';
                 /*if($ticket[0]['type'] == 'free')
                     CHtml::link('Пойду', '#',array('class' => 'buy_ticket_button', 'id'=>'button_bye'));
                 else
                     CHtml::link('Купить билет', '#',array('class' => 'buy_ticket_button', 'id'=>'button_bye'));*/
 
-		$HtmlCode.= '<a style="background: url(/images/button_buy_ticket.png) no-repeat scroll left top transparent; color: #FFFFFF; cursor: pointer; display: block; font-size: 13px; height: 41px; line-height: 20px; margin: 4px auto; padding-bottom: 2px; position: relative; text-align: center; text-decoration: none; text-shadow: 0 1px 1px #565656; vertical-align: middle; width: 180px;" id="button_bye" href="#" onClick="openMenu();return false;"></a>';
+		$HtmlCode.= '<a style="background: url(http://' .$_SERVER['HTTP_HOST']. '/images/button_buy_ticket.png) no-repeat scroll left top transparent; color: #FFFFFF; cursor: pointer; display: block; font-size: 13px; height: 41px; line-height: 20px; margin: 4px auto; padding-bottom: 2px; position: relative; text-align: center; text-decoration: none; text-shadow: 0 1px 1px #565656; vertical-align: middle; width: 180px;" id="button_bye" href="#" onClick="openMenu();return false;"></a>';
 
                 $HtmlCode.= '<div id="payment" style="border: medium none;box-shadow: 0 0 30px -5px #000000;display: none;height: 522px;left: 50%;margin-left: -408px;margin-top: -267px;padding: 3px;position: fixed;top: 50%;width: 784px; z-index: 65010;">';
-                $HtmlCode.= '<input type="button" value="" onclick="javascript:closeMenu();return false;" id="buy_close" style="width: 17px;border: none; background:url(/images/close_button.png) left top no-repeat; display: block; left: 740px; top: 20px; position: absolute; cursor: pointer;" />';
-                $HtmlCode.= '<iframe src="/events/iframe/' .$this->id. '" width="100%" height="100%" style="border:none;"></iframe>';
+                $HtmlCode.= '<input type="button" value="" onclick="javascript:closeMenu();return false;" id="buy_close" style="width: 17px;border: none; background:url(http://' .$_SERVER['HTTP_HOST']. '/images/close_button.png) left top no-repeat; display: block; left: 740px; top: 20px; position: absolute; cursor: pointer;" />';
+                $HtmlCode.= '<iframe src="http://' .$_SERVER['HTTP_HOST']. '/events/iframe/' .$this->id. '" width="100%" height="100%" style="border:none;"></iframe>';
                 $HtmlCode.= '</div>';
 		return $HtmlCode;
 	}
@@ -516,13 +516,13 @@ class Events extends CActiveRecord
             $text = '';
             $text = $text.'<table cellspasing="0" border="0" cellpadding="0" width="697px" style="margin: 0pt; padding: 0pt; background-color: rgb(255, 255, 255); border-collapse: collapse;">';
             $text = $text.'<tr height="138px">';
-            $text = $text.'<td><img src="/images/email/logo_empty.jpg" alt="Showcode." title="Showcode." style="margin: 0pt; padding: 0pt; border: 0pt none; display: block;"></td>';
+            $text = $text.'<td><img src="http://' .$_SERVER['HTTP_HOST']. '/images/email/logo_empty.jpg" alt="Showcode." title="Showcode." style="margin: 0pt; padding: 0pt; border: 0pt none; display: block;"></td>';
             $text = $text.'</tr>';
             $text = $text.'<tr height="41px">';
             $text = $text.'<td><p style="font-family:Arial, Helvetica, sans-serif; font-size:24px; font-weight:normal; font-style:normal; color:#333;">Здравствуйте, '.Yii::app()->user->name.'.</p></td>';
             $text = $text.'</tr>';
             $text = $text.'<tr>';
-            $text = $text.'<td style="background-color:#e5e5e5;"><p style="padding:16px 10px; font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal; color:#333;">Вы запросили список всех билетов для мероприятия под названием «<a target="_blank" title="' .$this->title. '" href="/events/view/' .$this->id. '">' .$this->title. '</a>»</p></td>';
+            $text = $text.'<td style="background-color:#e5e5e5;"><p style="padding:16px 10px; font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal; color:#333;">Вы запросили список всех билетов для мероприятия под названием «<a target="_blank" title="' .$this->title. '" href="http://' .$_SERVER['HTTP_HOST']. '/events/view/' .$this->id. '">' .$this->title. '</a>»</p></td>';
             $text = $text.'</tr>';
             $text = $text.'<tr>';
             $text = $text.'<td style="padding-top:15px; padding-bottom:15px; border-bottom-width:1px; border-bottom-color:#999999; border-bottom-style:solid;">';

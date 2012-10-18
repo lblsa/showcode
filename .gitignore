@@ -1,5 +1,7 @@
 .hg
 assets
+images/qrcode
+images/logo
 webalizer
 webstat
 weba

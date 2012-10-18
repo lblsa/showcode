@@ -160,10 +160,10 @@ class User extends CActiveRecord
             $text = $text.'<td align="center">';
             $text = $text.'<table cellspasing="0" border="0" cellpadding="0" height="460px" width="728px" style="margin: 0pt; padding:0; background-color: rgb(255, 255, 255); border-collapse: collapse; border-spacing:0;">';
             $text = $text.'<tr>';
-            $text = $text.'<td style="background-image:url(/images/email/content_bg.png); background-repeat:no-repeat; background-position:left top; padding-top: 0px; padding-right:0; padding-bottom:0; padding-left: 21px;">';
+            $text = $text.'<td style="background-image:url(http://' .$_SERVER['HTTP_HOST']. '/images/email/content_bg.png); background-repeat:no-repeat; background-position:left top; padding-top: 0px; padding-right:0; padding-bottom:0; padding-left: 21px;">';
             $text = $text.'<table cellspasing="0" border="0" cellpadding="0" width="698px" style="margin: 0pt; padding: 0pt; background-color: rgb(255, 255, 255); border-collapse: collapse; border-spacing:0;">';
             $text = $text.'<tr>';
-            $text = $text.'<td colspan="2"><img src="/images/email/logo_welcome.jpg" alt="Showcode. Добро пожаловать." title="Showcode. Добро пожаловать." style="margin: 0pt; padding: 0pt; border: 0pt none; display: block;"></td>';
+            $text = $text.'<td colspan="2"><img src="http://' .$_SERVER['HTTP_HOST']. '/images/email/logo_welcome.jpg" alt="Showcode. Добро пожаловать." title="Showcode. Добро пожаловать." style="margin: 0pt; padding: 0pt; border: 0pt none; display: block;"></td>';
 	    $text .= '</tr>';
 	    $text .= '<tr>';
 	    $text .= '<td colspan="2"><div style="height: 40px;"><p style="font-family:Arial, Helvetica, sans-serif; font-size:24px; font-weight:normal; font-style:normal; color:#333; padding-bottom: 10px;">Здравствуйте, '.$this->name.'.</p></div></td>';
@@ -217,10 +217,10 @@ class User extends CActiveRecord
             $text = $text.'<td align="center">';
             $text = $text.'<table cellspasing="0" border="0" cellpadding="0" height="460px" width="728px" style="margin: 0pt; padding:0; background-color: rgb(255, 255, 255); border-collapse: collapse; border-spacing:0;">';
             $text = $text.'<tr>';
-            $text = $text.'<td style="background-image:url(/images/email/content_bg.png); background-repeat:no-repeat; background-position:left top; padding-top: 0px; padding-right:0; padding-bottom:0; padding-left: 21px;">';
+            $text = $text.'<td style="background-image:url(http://' .$_SERVER['HTTP_HOST']. '/images/email/content_bg.png); background-repeat:no-repeat; background-position:left top; padding-top: 0px; padding-right:0; padding-bottom:0; padding-left: 21px;">';
             $text = $text.'<table cellspasing="0" border="0" cellpadding="0" width="698px" style="margin: 0pt; padding: 0pt; background-color: rgb(255, 255, 255); border-collapse: collapse; border-spacing:0;">';
             $text = $text.'<tr>';
-            $text = $text.'<td colspan="2"><img src="/images/email/logo_change_pass.jpg" alt="Showcode. Изменение пароля." title="Showcode. Изменение пароля." style="margin: 0pt; padding: 0pt; border: 0pt none; display: block;"></td>';
+            $text = $text.'<td colspan="2"><img src="http://' .$_SERVER['HTTP_HOST']. '/images/email/logo_change_pass.jpg" alt="Showcode. Изменение пароля." title="Showcode. Изменение пароля." style="margin: 0pt; padding: 0pt; border: 0pt none; display: block;"></td>';
 	    $text .= '</tr>';
 	    $text .= '<tr>';
 	    $text .= '<td colspan="2"><div style="height: 40px;"><p style="font-family:Arial, Helvetica, sans-serif; font-size:24px; font-weight:normal; font-style:normal; color:#333; padding-bottom: 10px;">Здравствуйте, '.$this->name.'.</p></div></td>';
