@@ -20,11 +20,13 @@ class UserIdentity extends CUserIdentity
     // Данный метод вызывается один раз при аутентификации пользователя.
 	public function authenticate()
     {
-        $username='7'.strtolower($this->username);
-        $user=User::model()->find('LOWER(phone)=:phone',array(':phone'=>$username));
+        $phone = $this->username;
+        $pass = $this->password;
+        $user = User::model()->findByAttributes(array('phone'=>$phone));
+
         if($user===null)
             $this->errorCode=self::ERROR_USERNAME_INVALID;
-        else if(!$user->validatePassword($this->password))
+        else if($user->validatePassword($pass)!==true)
             $this->errorCode=self::ERROR_PASSWORD_INVALID;
         else
         {

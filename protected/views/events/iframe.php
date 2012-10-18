@@ -3,9 +3,9 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="language" content="en" />
-        <link rel="stylesheet" href="//<?php echo $_SERVER['HTTP_HOST'] ?>/css/reset.css" />
-        <link rel="stylesheet" href="//<?php echo $_SERVER['HTTP_HOST'] ?>/css/base.css" />
-        <script src="//<?php echo $_SERVER['HTTP_HOST'] ?>/js/jquery-1.6.4.js"></script>
+        <link rel="stylesheet" href="/css/reset.css" />
+        <link rel="stylesheet" href="/css/base.css" />
+        <script src="/js/jquery-1.6.4.js"></script>
 </head>
 <body style="background: #FFF;">
         
@@ -315,7 +315,7 @@
                         <h2>Ваш билет забронирован в сервисе Showcode.</h2>
                         <p>На указанный вами телефонный номер и E-mail выслана ссылка на билет данного мероприятия.</p>
                         <p>Просмотр билетов в сервисе Showcode доступен только для зарегистрированных пользователей. Если вы не зарегистрированы, то вам на указанный номер телефона будет выслано SMS-сообщение с паролем к данному сервису.</p>
-                        <a target="_blank" href="//<?php echo $_SERVER['HTTP_HOST'] ?>/ticket/view/<?php echo $log->uniq ?>">Для просмотра билета перейдите по ссылке.</a>
+                        <a target="_blank" href="/ticket/view/<?php echo $log->uniq ?>">Для просмотра билета перейдите по ссылке.</a>
 <?php endif; ?>
 </div>
 </body>
