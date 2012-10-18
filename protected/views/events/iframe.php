@@ -3,9 +3,9 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="language" content="en" />
-        <link rel="stylesheet" href="http://<?php echo $_SERVER['HTTP_HOST'] ?>/css/reset.css" />
-        <link rel="stylesheet" href="http://<?php echo $_SERVER['HTTP_HOST'] ?>/css/base.css" />
-        <script src="http://<?php echo $_SERVER['HTTP_HOST'] ?>/js/jquery-1.6.4.js"></script>
+        <link rel="stylesheet" href="/css/reset.css" />
+        <link rel="stylesheet" href="/css/base.css" />
+        <script src="/js/jquery-1.6.4.js"></script>
 </head>
 <body style="background: #FFF;">
         

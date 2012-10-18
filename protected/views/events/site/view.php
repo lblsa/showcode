@@ -206,6 +206,11 @@ if((yii::app()->user->isAdmin() || yii::app()->user->isOrganizer()) && $model->s
         array('label'=>'Управление мероприятиями', 'url'=>array('admin')),
     );
 }
+else if(yii::app()->user->isAdmin() || yii::app()->user->isOrganizer())
+{
+    $this->menu[] = array('label'=>'Редактировать', 'url'=>array('update', 'id'=>$model->id));
+    $this->menu[] = array('label'=>'Управление мероприятиями', 'url'=>array('admin'));
+}
 if (yii::app()->user->isAdmin() || yii::app()->user->isCreator($model->id))
         if($model->status != 'published')
             $this->menu[]=array('label'=>'Удалить мероприятие', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Вы действительно хотите удалить мероприятие?'));
@@ -216,7 +221,7 @@ if (yii::app()->user->isCreator($model->id) && $model->status == 'published')
 {
 	$this->menu[]=array('label'=>'Билеты', 'url'=>array('/ticket/admin', 'id'=>$model->id));
 	$this->menu[]=array('label'=>'Проверка билетов', 'url'=>array('checkTicket', 'id'=>$model->id));
-        $this->menu[]=array('label'=>'Письмо с билетами', 'url'=>array('protectionEmail', 'id'=>$model->id));
+    $this->menu[]=array('label'=>'Письмо с билетами', 'url'=>array('protectionEmail', 'id'=>$model->id));
 }
 ?>
 
@@ -261,7 +266,7 @@ if (yii::app()->user->isCreator($model->id) && $model->status == 'published')
                 'name'=>'facebook_eid',
                 'type'=>'url',
                 );
-        $attributes[] = array(
+        /*$attributes[] = array(
             'name'=>'status',
             'type'=>'raw',
             'value'=>'<p>'.Events::$STATUS[$model->status].'</p>',
@@ -389,12 +394,14 @@ echo '<div class="full_text_info_about_event'.$uniqEvent->prefix_class.'">';
                 'type'=>'url',
                 );
 
+/*
         if(Yii::app()->user->isAdmin())
             $attributes[] = array(
                 'label'=>'<div><span>'.Events::model()->getAttributeLabel('status').':</span>',
                 'type'=>'raw',
                 'value'=>'<p>'.Events::$STATUS[$model->status].'</p>'.'</div>',
                 );
+                */
         if(Yii::app()->user->isAdmin())
             $attributes[]=array(
                 'label'=>'<div><span>'.Tickets::model()->getAttributeLabel('type').':</span>',
@@ -430,6 +437,7 @@ echo '<div class="full_text_info_about_event'.$uniqEvent->prefix_class.'">';
             'itemCssClass' => array('event-title-zoo',''),
         ));
     ?>
+    <?php echo '</div>'; ?>
 <?php endif; ?>
 
 <div class="clear"></div>
@@ -468,9 +476,9 @@ echo '<div class="full_text_info_about_event'.$uniqEvent->prefix_class.'">';
 
 
 <!--Выводится информация о билетах-->
-<?php $this->renderPartial(Yii::app()->mf->siteType(). '/_ticket', array('ticket'=>$ticket,'uniqEvent'=>$uniqEvent)); ?>
-
-
+<div style="clear: all">
+    <?php $this->renderPartial(Yii::app()->mf->siteType(). '/_ticket', array('ticket'=>$ticket,'uniqEvent'=>$uniqEvent)); ?>
+</div>
 <?php
 	//для админа или создателя мероприятия выводим открытые ключи rsa и код для вставки на сторонние ресурсы.
 if (Yii::app()->user->isAdmin() || Yii::app()->user->isCreator($model->id))

@@ -25,7 +25,7 @@ class User extends CActiveRecord
 		);
 	public $oldPassword;
 	public $newPassword;
-        public $repeatPassword;
+    public $repeatPassword;
 
 	/**
 	 * This method is invoked before validation starts.
@@ -42,18 +42,25 @@ class User extends CActiveRecord
 		if (User::model()->exists("`phone` = :phone and `user_id` != :userid", array(':phone'=>$this->phone, ':userid'=>Yii::app()->user->id)))
 			$this->addError('phone','Пользователь с таким номером телефона уже существует');
 		if(!$this->isNewRecord)
-		{
-			$oldPasswordDB = User::model()->findByPk(Yii::app()->user->id, array('select'=>'password'))->password;
-			if ($this->newPassword == '' && $this->repeatPassword == '')
-				$this->password=$oldPasswordDB;
-			elseif (md5($this->oldPassword) == $oldPasswordDB){
-                            if($this->newPassword == $this->repeatPassword)
-				$this->password = md5($this->newPassword);
-                            else
-                                $this->addError('password','Новый пароль не совпадает');
-                        }else
-				$this->addError('password','Старый пароль не совпадает');
-		}
+        {
+            $oldPasswordDB = User::model()->findByPk(Yii::app()->user->id, array('select'=>'password'))->password;
+
+            $curOldPass = $this->oldPassword;
+            $curOldPassMd5 = md5($this->oldPassword);
+            $oldPass = $curOldPass.'/'.$curOldPassMd5;
+
+            if ($this->newPassword == '' && $this->repeatPassword == '')
+                $this->password=$oldPasswordDB; 
+            else if ($oldPass == $oldPasswordDB)
+            {
+                if($this->newPassword == $this->repeatPassword)
+                    $this->password = $this->newPassword.'/'.md5($this->newPassword);
+                else
+                    $this->addError('password','Новый пароль не совпадает');
+            }
+            else
+                $this->addError('password','Старый пароль не совпадает');
+        }
 		return parent::beforeValidate();
     }
 
@@ -83,7 +90,7 @@ class User extends CActiveRecord
 				}
 			}
 
-                        if (!$this->email)
+            if (!$this->email)
 				$this->email=NULL;
 
 			//Проверка, что админа может создать только админ
@@ -130,12 +137,10 @@ class User extends CActiveRecord
 				$PASSWORD_SMS = 'MoZBdJsXG8';
 
 				$r = smsapi_push_msg_nologin($EMAIL_SMS, $PASSWORD_SMS, $p, $message, array("unicode"=>"1"));
-				/*
-				if ($r[0]=='0')
-					echo 'Сообщение отправлено';
-				else
-					echo 'ошибка: ' .$r[0];
-				*/
+
+                //отправляем уведомление, что появился новый пользователь
+                $message = 'В системе зарегистрировался новый пользователь. Телефон: '.$this->phone;
+				Yii::app()->mf->mail_html('showcode@googlegroups.com','noreply@'.$_SERVER[HTTP_HOST],Yii::app()->name,$message,'В системе ' .Yii::app()->name. ' новый пользователь!');
 			}
 		}
 	}
@@ -258,7 +263,10 @@ class User extends CActiveRecord
 	 */
 	public function validatePassword($password)
     {
-        return $this->hashPassword($password)===$this->password;
+        if (($password)===$this->password)
+            return true;
+
+        return false;
     }
 
 	/**
@@ -580,6 +588,8 @@ class User extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('phone, name, role', 'required', 'message'=>'Не может быть пустым'),
+            array('email', 'unique'),
+            array('phone', 'unique'),
 			array('uniq, email, password, name, oldPassword, newPassword, repeatPassword, organization, phone', 'length', 'max'=>128),
 			array('phone', 'match', 'pattern'=>'/^[\d]{10}$/', 'message'=>'Телефонный номер должен состоять из 10 цифр'),
 			array('role', 'length', 'max'=>10),
@@ -613,8 +623,8 @@ class User extends CActiveRecord
 			'uniq' => 'Уникальный пароль для Web API',
 			'email' => 'Email',
 			'password' => 'Пароль',
-                        'newPassword' => 'Новый пароль',
-                        'repeatPassword' => 'Повторить пароль',
+            'newPassword' => 'Новый пароль',
+            'repeatPassword' => 'Повторить пароль',
 			'name' => 'Фамилия Имя Отчество',
 			'role' => 'Роль',
 			'organization' => 'Название организации',

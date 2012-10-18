@@ -36,7 +36,7 @@ class EventsController extends Controller
 				'users'=>array('*','@'),
 			),
 			array('allow',			// Для Организатора разрешено: 'index', 'view', 'admin' и 'create'
-				'actions'=>array('index','view'),
+				'actions'=>array('index', 'view', 'create', 'admin'),
 				'expression' => 'yii::app()->user->isOrganizer()',
 				//'expression' => array($this, 'isOrganizer'),
 			),
@@ -448,17 +448,13 @@ class EventsController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
-                $this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column3';
+        $this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column3';
 		$this->datepicker();
 		$model=$this->loadModel($id);
 		$tickets=$this->loadTicket($id);
-		//print_r($tickets[0]->attributes);
-		//print_r('</br>');
-		//die();
 		$valid=true;
 
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
 		if(isset($_POST['Events']))
 		{
 			$model->attributes=$_POST['Events'];
@@ -492,8 +488,6 @@ class EventsController extends Controller
 	            $valid=$tickets1->validate() && $valid;
 	            $tickets1s[$i] = $tickets1;
 	        }
-
-			//$tickets->attributes=$_POST['Tickets'];
 
 			if ($valid){
 				foreach($tickets1s as $i=>$t)
