@@ -20,7 +20,7 @@ class UserIdentity extends CUserIdentity
     // Данный метод вызывается один раз при аутентификации пользователя.
 	public function authenticate()
     {
-        $phone = $this->username;
+        $phone = '7'.$this->username;
         $pass = $this->password;
         $user = User::model()->findByAttributes(array('phone'=>$phone));
 

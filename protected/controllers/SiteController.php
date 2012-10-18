@@ -49,30 +49,32 @@ class SiteController extends Controller
 	 */
 	public function actionRecovery()
 	{
-            $this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column3';
+		$this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column3';
 		if(isset($_POST['phone']))
 		{
-                    if(preg_match("~[\d]{10}~i", $_POST['phone'])){
-			$user = User::model()->find('phone=:phone',array(':phone'=>'7'.$_POST['phone']));
+			if(preg_match("~[\d]{10}~i", $_POST['phone']))
+			{
+				$user = User::model()->find('phone=:phone',array(':phone'=>'7'.$_POST['phone']));
+				if($user)
+				{
+					$new_pass = $user->generatePassword(10);
+					User::model()->updateAll(array("password" => $new_pass.'/'.md5($new_pass)),"phone = '" .$user->phone. "'");
 
-			if($user){
-				$new_pass = $user->generatePassword(10);
-				User::model()->updateAll(array("password" => md5($new_pass)),"phone = '" .$user->phone. "'");
-
-				$text = $user->getTextEmailAboutRecoveryPassword($new_pass);
-				if($user->email){
-					$fromMail = 'noreply@'.$_SERVER[HTTP_HOST];
-					Yii::app()->mf->mail_html($user->email,$fromMail,Yii::app()->name,$text,'Восстановление пароля');
+					$text = $user->getTextEmailAboutRecoveryPassword($new_pass);
+					if($user->email)
+					{
+						$fromMail = 'noreply@'.$_SERVER[HTTP_HOST];
+						Yii::app()->mf->mail_html($user->email,$fromMail,Yii::app()->name,$text,'Восстановление пароля');
+					}
+					$message = Yii::app()->name. '.Новый пароль: ' .$new_pass;
+					$user->sendMessenge($message, $user->phone);
+					$this->render(Yii::app()->mf->siteType(). '/recovery',array('answer'=>1,'phone'=>$user->phone));
 				}
-				$message = Yii::app()->name. '.Новый пароль: ' .$new_pass;
-				$user->sendMessenge($message, $user->phone);
-				$this->render(Yii::app()->mf->siteType(). '/recovery',array('answer'=>1,'phone'=>$user->phone));
-			}else{
-				$this->render(Yii::app()->mf->siteType(). '/recovery',array('error_user'=>1,'phone'=>$_POST['phone']));
+				else
+					$this->render(Yii::app()->mf->siteType(). '/recovery',array('error_user'=>1,'phone'=>$_POST['phone']));
 			}
-                    }else{
-                        $this->render(Yii::app()->mf->siteType(). '/recovery',array('error_phone'=>1,'phone'=>$_POST['phone']));
-                    }
+			else
+				$this->render(Yii::app()->mf->siteType(). '/recovery',array('error_phone'=>1,'phone'=>$_POST['phone']));
 		}
 		else
 			$this->render(Yii::app()->mf->siteType(). '/recovery');
@@ -159,6 +161,8 @@ class SiteController extends Controller
                 $pass = $model->password;
                 $md5Pass = md5($model->password);
                 $model->password = $pass.'/'.$md5Pass;
+				//echo '<pre>'; print_r($model->validate()); echo '</pre>';//exit;
+				//echo '<pre>'; print_r($model->login()); echo '</pre>';exit;
                 // validate user input and redirect to the previous page if valid
                 if($model->validate() && $model->login())
                     $this->redirect(Yii::app()->user->returnUrl);
