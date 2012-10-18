@@ -68,10 +68,10 @@ class SiteController extends Controller
                     $user->sendMessenge($message, $user->phone);
                     $this->render(Yii::app()->mf->siteType(). '/recovery',array('answer'=>1,'phone'=>$user->phone));
                 }else{
-                    $this->render(Yii::app()->mf->siteType(). '/recovery',array('error_user'=>1,'phone'=>$_POST['phone']));
+                    $this->render(Yii::app()->mf->siteType(). '/recovery',array('error_user'=>1,'phone'=>'7'.$_POST['phone']));
                 }
             }else{
-                $this->render(Yii::app()->mf->siteType(). '/recovery',array('error_phone'=>1,'phone'=>$_POST['phone']));
+                $this->render(Yii::app()->mf->siteType(). '/recovery',array('error_phone'=>1,'phone'=>'7'.$_POST['phone']));
             }
         }
 		else
