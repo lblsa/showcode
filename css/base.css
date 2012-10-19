@@ -1126,7 +1126,7 @@ a.click_on_link span {
 }
 
 /* pagination coming events */
-.pagination_coming_events {
+.pagination_coming_events{
     margin: 0 auto;
     overflow: hidden;
     position: relative;
@@ -1134,13 +1134,13 @@ a.click_on_link span {
     padding-top: 20px;
 }
 
-.pagination_coming_events ul {
+.pagination_coming_events ul{
     list-style: none;
     display: inline-block;
     zoom: 1;
 }
 
-.pagination_coming_events ul li {
+.pagination_coming_events ul li{
     float: left;
     display: inline;
     overflow: hidden;
@@ -1149,12 +1149,12 @@ a.click_on_link span {
     line-height: 22px;
 }
 
-.pagination_coming_events ul li a {
+.pagination_coming_events ul li a{
     display: block;
     float: left;
 }
 
-.pagination_coming_events ul li span {
+.pagination_coming_events ul li span{
     color: #4C4C4C;
     display: block;
     float: left;
