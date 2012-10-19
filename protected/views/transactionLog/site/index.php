@@ -1,3 +1,10 @@
+<style>
+	#my_tick, #my_event, #all_tick
+	{
+		margin-right: 10px;
+		margin-bottom: 10px;
+	}
+</style>
 <?php $this->pageTitle=Yii::app()->name.' - Список ваших билетов' ?>
 <?php
 $this->breadcrumbs=array(
@@ -8,53 +15,33 @@ $this->menu=array(
 );
 ?>
 <div class="main_form_wrapper list_buy_events">
-    <h1>Список купленных билетов</h1>
-<?php if(count($data)>0): ?>
-    <?php //$data = $dataProvider->getData(); ?>
-    <div id="list_tickets">
-    	<?php if($pages->itemCount > 0): ?>
-        <div class="number_of_tickets">
-            <?php echo CHtml::encode('Записи с '); ?>
-            <span><?php echo ($pages->offset + 1); ?></span>
-            <?php echo CHtml::encode(' по '); ?>
-            <!--Вычисляет по какой элемент выводится список-->
-            <span><?php echo ($pages->offset + ($pages->limit-floor(($pages->currentPage+1) * (1/$pages->pageCount))*($pages->limit*$pages->pageCount - $pages->itemCount))); ?></span>
-            <?php echo CHtml::encode('. Всего записей '); ?>
-            <span><?php echo $pages->itemCount; ?></span>
-        </div>
-        <?php endif; ?>
-        <table>
-            <tr class="title_table">
-                <td><?php echo CHtml::encode($data[0]->getAttributeLabel('event_id')); ?></td>
-                <td><?php echo CHtml::encode($data[0]->getAttributeLabel('type')); ?></td>
-                <td><?php echo CHtml::encode($data[0]->getAttributeLabel('quantity')); ?></td>
-                <td><?php echo CHtml::encode($data[0]->getAttributeLabel('price')); ?></td>
-                <td><?php echo CHtml::encode($data[0]->getAttributeLabel('total')); ?></td>
-                <td><?php echo CHtml::encode($data[0]->getAttributeLabel('datetime')); ?></td>
-                <td><?php echo CHtml::encode($data[0]->getAttributeLabel('user_id')); ?></td>
-                <td><?php echo CHtml::encode($data[0]->getAttributeLabel('payment')); ?></td>
-                <td><?php echo CHtml::encode($data[0]->getAttributeLabel('status')); ?></td>
-            </tr>
-            <?php foreach($data as $i=>$item): ?>
-                <tr>
-                    <?php echo $this->renderPartial(Yii::app()->mf->siteType(). '/_view',array('data'=>$item)); ?>
-                </tr>
-            <?php endforeach; ?>
-        </table>
-
-        <!-- pagination:begin -->
-        <div class="pagination_coming_events">
-            <?php $this->widget('CLinkPager', array(
-                'pages' => $pages,
-                'header'=>'',
-                'nextPageLabel'=>'',
-                'prevPageLabel'=>'',
-                'firstPageLabel'=>'',
-                'lastPageLabel'=>'',
-                'htmlOptions'=>array('class'=>'','id'=>''),
-            )) ?>
-        </div>
-        <!-- pagination:end -->
-    </div>
-   <?php endif; ?>
+	<div>
+		<?php //echo CHtml::button('Показать мои купленные билеты', array('id'=>'my_tick'));?>
+		<?php //echo CHtml::checkBox('my_tick');?>
+	</div>
+	<h1 style="margin-bottom: 5px;">Список моих купленных билетов</h1>
+	<div id="my_tick_list">
+		<?php $t = TransactionLog::model()->getData(0, yii::app()->user->id);?>
+		<?php $data = $t['data'];?>
+		<?php $pages = $t['pages'];?>
+		<?php $this->renderPartial(Yii::app()->mf->siteType().'/_ticket_list', array('data' => $data, 'pages' => $pages, 'flag' => 0, 'id_user' => yii::app()->user->id));?>
+	</div>	
+	
+	<h1 style="margin-bottom: 5px;">Список билетов на мои мероприятия</h1>	
+		<div id="my_ev_tick_list">
+		<?php $t2 = TransactionLog::model()->getData(1, yii::app()->user->id);?>
+		<?php $data2 = $t2['data'];?>
+		<?php $pages2 = $t2['pages'];?>
+		<?php $this->renderPartial(Yii::app()->mf->siteType().'/_ticket_list', array('data' => $data2, 'pages' => $pages2, 'flag' => 1, 'id_user' => yii::app()->user->id));?>
+	</div>
+	
+	<?php if(yii::app()->user->isAdmin()):?>
+		<h1 style="margin-bottom: 5px;">Список всех билетов</h1>	
+		<div id="all_tick_list">
+			<?php $t3 = TransactionLog::model()->getData(1, '');?>
+			<?php $data3 = $t3['data'];?>
+			<?php $pages3 = $t3['pages'];?>
+			<?php $this->renderPartial(Yii::app()->mf->siteType().'/_ticket_list', array('data' => $data3, 'pages' => $pages3, 'flag' => 1, 'id_user' => ''));?>
+		</div>
+	<? endif;?>
 </div>
