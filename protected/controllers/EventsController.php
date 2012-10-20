@@ -45,11 +45,11 @@ class EventsController extends Controller
 				'expression' => 'yii::app()->user->isCreator($_GET["id"])',
 				//'expression' => array($this, 'isCreator'),
 			),
-			array('deny',			//Запрещаем отельно для админа проверять билеты.
+			/*array('deny',			//Запрещаем отельно для админа проверять билеты.
 				'actions'=>array('checkTicket','passedList'),
 				'expression' => 'yii::app()->user->isAdmin()',
 				//'expression' => array($this, 'isAdmin'),
-			),
+			),*/
 			array('allow',			// Для Админа разрешено всё!
 				'expression' => 'yii::app()->user->isAdmin()',
 				//'expression' => array($this, 'isAdmin'),
@@ -836,47 +836,52 @@ class EventsController extends Controller
 	 */
 	public function actionCheckTicket($id)
 	{
-                $event = Events::model()->findByPk($id,array('select'=>'id, title, DATE(datetime) as datetime'));
-                $eventUniq = $event->uniqium;
+		$event = Events::model()->findByPk($id,array('select'=>'id, title, DATE(datetime) as datetime'));
+		$eventUniq = $event->uniqium;
 		$model=new TransactionLog;
+		
 
-                $ticket = $this->loadTicket($id);
-                if(isset($_POST['TransactionLog'])){
-                    $type = $ticket[0]->type;
-                    $date_begin = $ticket[0]->date_begin;
-                    $date_end = $ticket[0]->date_end;
-                    if ((($type == 'travel' && ($date_begin > date('Y-m-d') && $date_end < date('Y-m-d'))) || ($type != 'travel' && $event->datetime != date('Y-m-d'))) && !$eventUniq->infinity_time)
-                            $model=null;
-                    else{
-                         $model = $this->entryTicket(trim($_POST['TransactionLog']['uniq']),$id);
-                    }
-                }
-                if(!isset($_GET['ajax'])){
-                    $this->render(Yii::app()->mf->siteType(). '/checkTicket',array(
-                            'event_id'=>$event->id,
-                            'title'=>$event->title,
-                            'model'=>$model,
-                            'date_begin'=>$ticket[0]->date_begin,
-                            'date_end'=>$ticket[0]->date_end,
-                    ));
-                }else{
-                    if ($model==null){
-                        echo 'Вы не можете проверять билеты. Данное мероприятие сегодня не проходит';
-                    }else{
-                        if($model->status==1){
-                            $text = 'Вы успешно активировали билет.';
-                            if ($model->type=='reusable') $text .= 'проходов осталось: ' .$model->quantity;
-                            if ($model->type=='travel') $text .= 'Период действия: с '.Events::model()->normalViewDate($date_begin).' по '.Events::model()->normalViewDate($date_end);
-                            echo $text;
-                        }elseif(isset($model->status)){
-                            $text = 'Билет не действителен. статус: ';
-                            if ($model->status==4) $text .= 'Билет сегодня не действует';
-                            else $text .= TransactionLog::$status[$model->status];
-                            echo $text;
-                        }
+		$ticket = $this->loadTicket($id);
+		if(isset($_POST['TransactionLog'])){
+			$type = $ticket[0]->type;
+			$date_begin = $ticket[0]->date_begin;
+			$date_end = $ticket[0]->date_end;
+			/*if ((($type == 'travel' && ($date_begin > date('Y-m-d') && $date_end < date('Y-m-d'))) || ($type != 'travel' && $event->datetime != date('Y-m-d'))) && !$eventUniq->infinity_time)
+					$model=null;
+			else*/{
+				 $model = $this->entryTicket(trim($_POST['TransactionLog']['uniq']),$id);
+			}
+		}
+		if(!isset($_GET['ajax'])){
+			$this->render(Yii::app()->mf->siteType(). '/checkTicket',array(
+					'event_id'=>$event->id,
+					'title'=>$event->title,
+					'model'=>$model,
+					'date_begin'=>$ticket[0]->date_begin,
+					'date_end'=>$ticket[0]->date_end,
+			));
+		}else{
+			$isAdmin = Yii::app()->user->isAdmin();
+			$isOrg = Yii::app()->user->isOrganizer();
 
-                    }
-                }
+			if ($isAdmin===null || $isOrg===null)
+			{
+				echo 'Вы не можете проверять билеты. Данное мероприятие сегодня не проходит';
+			}else{
+				if($model->status==1){
+					$text = 'Вы успешно активировали билет.';
+					if ($model->type=='reusable') $text .= 'проходов осталось: ' .$model->quantity;
+					if ($model->type=='travel') $text .= 'Период действия: с '.Events::model()->normalViewDate($date_begin).' по '.Events::model()->normalViewDate($date_end);
+					echo $text;
+				}elseif(isset($model->status)){
+					$text = 'Билет не действителен. статус: ';
+					if ($model->status==4) $text .= 'Билет сегодня не действует';
+					else $text .= TransactionLog::$status[$model->status];
+					echo $text;
+				}
+
+			}
+		}
 	}
 
         /**

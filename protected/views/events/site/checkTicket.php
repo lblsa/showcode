@@ -15,11 +15,13 @@ $this->menu=array(
 
 <div class="main_form_wrapper list_buy_events">
     <div id="list_tickets">
-        <h1 align="center">Проверка билетов на мероприятие:<br /> <?php echo $title; ?></h1>
-        <?php if ($model==null): ?>
+        <h1 align="center">Проверка билетов на мероприятие:<br /> <?php echo $title; ?></h1>			
+		<?php $isAdmin = Yii::app()->user->isAdmin();?>
+		<?php $isOrg = Yii::app()->user->isOrganizer();?>
+
+        <?php if ($isAdmin===null || $isOrg===null): ?>	
                 <p style="color:red;">Вы не можете проверять билеты. Данное мероприятие сегодня не проходит.</p>
         <?php else: ?>
-
                 <div class="form_main">
 
                     <?php
