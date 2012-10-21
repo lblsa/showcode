@@ -191,7 +191,7 @@ class Contacts extends CActiveRecord
 		return array(
 			'contact_id' => 'Отзыв',
 			'user_id' => 'Пользователь',
-                        'datetime' => 'Дата и время',
+            'datetime' => 'Дата и время',
 			'email' => 'Email',
 			'type' => 'Тип',
 			'message' => 'Сообщение',
@@ -213,7 +213,7 @@ class Contacts extends CActiveRecord
 
 		$criteria->compare('contact_id',$this->contact_id);
 		$criteria->compare('user_id',$this->user_id);
-                $criteria->compare('datetime',$this->datetime,true);
+        $criteria->compare('datetime',$this->datetime,true);
 		$criteria->compare('email',$this->email,true);
 		$criteria->compare('type',$this->type,true);
 		$criteria->compare('message',$this->message,true);

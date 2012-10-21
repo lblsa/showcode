@@ -151,7 +151,7 @@ class ContactsController extends Controller
 	 */
 	public function actionIndex()
 	{
-            $this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column2';
+        $this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column2';
 		//$dataProvider=new CActiveDataProvider('Contacts');
 		$this->render(Yii::app()->mf->siteType(). '/index',array(
 			'data'=>  Contacts::model()->findAll(),

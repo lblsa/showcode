@@ -6,6 +6,8 @@
 
 <td><?php echo CHtml::encode(Contacts::$type[$data->type]); ?></td>
 
+<td><?php echo CHtml::encode($data->message); ?></td>
+
 <td><?php echo CHtml::encode(Events::normalViewDate($data->datetime)); ?></td>
 
 <!--
