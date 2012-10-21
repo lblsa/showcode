@@ -856,7 +856,7 @@ class TransactionLog extends CActiveRecord
 		if(!empty($id_user))
 			$criteria->compare('user_id',$id_user);
 		$criteria->order = 'datetime DESC';
-
+		
 		if(!Yii::app()->mf->isMobile())
 		{
 			$count = TransactionLog::model()->count($criteria);

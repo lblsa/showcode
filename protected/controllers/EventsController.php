@@ -1047,42 +1047,40 @@ class EventsController extends Controller
 	 * @param string $id id мероприятия
 	 */
 	public function actionProtectionEmail($id)
-        {
-            if(isset($_POST['email'])){
-                if($_POST['email'] || strlen($_POST['email']) > 5){
-                    $event = $this->loadModel($id);
-                    $tickets = TransactionLog::model()->findAll(array('condition'=>'event_id=:event_id','params'=>array(':event_id'=>$id)));
-                    $text = $event->getTextEmailSendListTickets($tickets);
-                    Yii::app()->mf->mail_html($_POST['email'],'noreply@'.$_SERVER[HTTP_HOST],Yii::app()->name,$text,'Список билетов на мероприятие «' .$event->title. '»');
+    {
+		if(isset($_POST['email'])){
+			if($_POST['email'] || strlen($_POST['email']) > 5){
+				$event = $this->loadModel($id);
+				$tickets = TransactionLog::model()->findAll(array('condition'=>'event_id=:event_id','params'=>array(':event_id'=>$id)));
+				$text = $event->getTextEmailSendListTickets($tickets);
+				Yii::app()->mf->mail_html($_POST['email'],'noreply@'.$_SERVER[HTTP_HOST],Yii::app()->name,$text,'Список билетов на мероприятие «' .$event->title. '»');
 
-                    $tr = TransactionLog::model()->findAll(array(
-			'select'=>'`column`, `place`',
-			'condition'=>'event_id=:event_id and status != 2',
-                        'params'=>array(':event_id'=>$id)
-                    ));
-                    for ($i=0;$i<count($tr);$i++)
-                    {
-                            $buy_place[] = ($tr[$i]->column-1)*$model->place + $tr[$i]->place;
-                    }
+				$tr = TransactionLog::model()->findAll(array(
+						'select'=>'`column`, `place`',
+						'condition'=>'event_id=:event_id and status != 2',
+						'params'=>array(':event_id'=>$id)
+					));
+				for ($i=0;$i<count($tr);$i++)
+				{
+						$buy_place[] = ($tr[$i]->column-1)*$model->place + $tr[$i]->place;
+				}
 
-                    $this->render(Yii::app()->mf->siteType(). '/view',array(
-			'model'=>$event,
-			'ticket'=>$this->loadTicket($id),
-			'log'=>new TransactionLog,
-			'buy_place'=>$buy_place,
-                    ));
-                }else
-                    $errors = 1;
-            }
-            $event = $this->loadModel($id);
-            $organizator = Yii::app()->user;
-            $this->render(Yii::app()->mf->siteType(). '/protectionEmail',
-                    array(
-                        'id'=>$id,
-                        'event' => $event,
-                        'user' => $organizator,
-                        'error' => $errors
-                    ));
-
-        }
+				$this->render(Yii::app()->mf->siteType(). '/view',array(
+						'model'=>$event,
+						'ticket'=>$this->loadTicket($id),
+						'log'=>new TransactionLog,
+						'buy_place'=>$buy_place,
+					));
+			}else
+				$errors = 1;
+		}
+		$event = $this->loadModel($id);
+		$organizator = Yii::app()->user;
+		$this->render(Yii::app()->mf->siteType(). '/protectionEmail', array(
+			'id'=>$id,
+			'event' => $event,
+			'user' => $organizator,
+			'error' => $errors
+		));
+    }
 }
