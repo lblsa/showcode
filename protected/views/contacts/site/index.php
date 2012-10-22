@@ -19,6 +19,7 @@ $this->menu=array(
                 <td><?php echo CHtml::encode($data[0]->getAttributeLabel('user_id')); ?></td>
                 <td><?php echo CHtml::encode($data[0]->getAttributeLabel('email')); ?></td>
                 <td><?php echo CHtml::encode($data[0]->getAttributeLabel('type')); ?></td>
+                <td><?php echo CHtml::encode($data[0]->getAttributeLabel('message')); ?></td>
                 <td><?php echo CHtml::encode($data[0]->getAttributeLabel('datetime')); ?></td>
                 <td><?php echo CHtml::encode($data[0]->getAttributeLabel('isread')); ?></td>
             </tr>
