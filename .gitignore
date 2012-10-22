@@ -8,3 +8,4 @@ weba
 .htaccess
 --index.html
 test.html
+protected/config/main.php
