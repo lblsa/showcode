@@ -11,7 +11,11 @@ RewriteCond %{REQUEST_FILENAME} !-d
 # otherwise forward it to index.php
 RewriteRule . index.php
 
-RewriteCond %{HTTP_HOST} ^www.showcode.ru
-RewriteRule ^(.*)$ http://showcode.ru/$1 [R=301,L]
+#RewriteRule ^(.*)$ http://showcode.azurewebsites.net/$1 [R=301,L]
 
-Redirect /zoo http://showcode.ru/events/view/3a5095f1
+#Redirect /zoo http://showcode.azurewebsites.net/events/view/3a5095f1
+
+RewriteCond %{SERVER_PORT} !^443$
+RewriteCond %{REQUEST_URI} checkout|create|login|user
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI}
+#RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
