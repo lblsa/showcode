@@ -60,85 +60,88 @@ class TransactionLogController extends Controller
 	 * Выводит все записи
 	 */
 	public function actionIndex()
-	{
-            $this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column2';
-            $criteria=new CDbCriteria();
-            $criteria->addCondition('status = 1');
+    {
+        $this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column2';
+        $id_user = yii::app()->user->id;
 
-            if (!yii::app()->user->isAdmin())
-            {
-                    //Выводим все купленные билеты пользователя, или все купленные билеты на созданное тобой мероприятие.
-                    /*$event = Events::model()->findAllBySql('select id from tbl_events where author=' .yii::app()->user->id. ' group by id');
-                    if (count($event)>0)
-                    {
-                            $events_id=' or event_id IN (';
-                            foreach ($event as $v)
-                                    $events_id.='"'.$v->id.'",';
-                            $events_id = substr($events_id, 0, strlen($events_id)-1);
-                            $events_id.=')';
-                    }*/
-                $criteria->addCondition('user_id = ' .yii::app()->user->id. $events_id, 'AND');
-            }
-            $criteria->order = 'datetime DESC';
+        $criteria=new CDbCriteria();
 
-            if(!Yii::app()->mf->isMobile()){
-                $count = TransactionLog::model()->count($criteria);
-                $pages=new CPagination($count);
+        if (!yii::app()->user->isAdmin())
+        {
+            //Выводим все купленные билеты пользователя, или все купленные билеты на созданное тобой мероприятие.
+            /*$event = Events::model()->findAllBySql('select id from tbl_events where author=' .yii::app()->user->id. ' group by id');
+              if (count($event)>0)
+              {
+              $events_id=' or event_id IN (';
+              foreach ($event as $v)
+              $events_id.='"'.$v->id.'",';
+              $events_id = substr($events_id, 0, strlen($events_id)-1);
+              $events_id.=')';
+              }*/
+            $criteria->addCondition('user_id = ' .yii::app()->user->id. $events_id, 'AND');
+        }
+        $criteria->condition = 'status = 1';
+        $criteria->compare('user_id',$id_user);
+        $criteria->order = 'datetime DESC';
 
-                // results per page
-                $pages->pageSize=10;
-                $pages->applyLimit($criteria);
+        if(!Yii::app()->mf->isMobile()){
+            $count = TransactionLog::model()->count($criteria);
+            $pages=new CPagination($count);
 
-                $dataProvider=new CActiveDataProvider('TransactionLog', array(
-                    'criteria'=>$criteria,
-                ));
-            }
-            $this->render(Yii::app()->mf->siteType(). '/index',array(
-                'data'=>  TransactionLog::model()->findAll($criteria),
-                'pages' => $pages,
-            ));
-	}
+            // results per page
+            $pages->pageSize=10;
+            $pages->applyLimit($criteria);
+
+            $dataProvider=new CActiveDataProvider('TransactionLog', array(
+                        'criteria'=>$criteria,
+                        ));
+        }
+        $this->render(Yii::app()->mf->siteType(). '/index',array(
+                    'data'=>  TransactionLog::model()->findAll($criteria),
+                    'pages' => $pages,
+                    ));
+    }
 
 	/**
 	 * Выводит Билет на дисплей.
 	 * @param integer $id уникальный номер билета.
 	 */
 	public function actionView($id)
-	{
-            $this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column2';
-                $model = $this->loadModel($id);
-                if(isset($_POST['Card'])){
-                    $model->buyIsDone();
-                    $model = $this->loadModel($id);
-                }
+    {
+        $this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column2';
+        $model = $this->loadModel($id);
+        if(isset($_POST['Card'])){
+            $model->buyIsDone();
+            $model = $this->loadModel($id);
+        }
 
-		$ticket = Tickets::model()->findByPk($model->ticket_id);
-		$event = Events::model()->find(array('select'=>'datetime,id,address','condition'=>'id=:event_id','params'=>array(':event_id'=>$model->event_id)));
-                $eventUniq = $event->uniqium;
+        $ticket = Tickets::model()->findByPk($model->ticket_id);
+        $event = Events::model()->find(array('select'=>'datetime,id,address','condition'=>'id=:event_id','params'=>array(':event_id'=>$model->event_id)));
+        $eventUniq = $event->uniqium;
 
-                if(isset($_GET['preview'])){
-                    $this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column0';
-                    $this->render('mobile/viewMobile',array(
-                            'model'=>$model,
-                            'ticket'=>$ticket,
-                            'event'=>$event,
-                            'datetime'=>Events::normalViewDate($event->datetime),
-                            'date_begin'=>Events::normalViewDate($ticket->date_begin),
-                            'date_end'=>Events::normalViewDate($ticket->date_end),
-                            'eventUniq'=>$eventUniq
-                            ));
-                }else{
-                    $this->render(Yii::app()->mf->siteType(). '/view',array(
-                            'model'=>$model,
-                            'event'=>$event,
-                            'ticket'=>$ticket,
-                            'datetime'=>Events::normalViewDate($event->datetime),
-                            'date_begin'=>Events::normalViewDate($ticket->date_begin),
-                            'date_end'=>Events::normalViewDate($ticket->date_end),
-                            'eventUniq'=>$eventUniq
-                            ));
-                }
-	}
+        if(isset($_GET['preview'])){
+            $this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column0';
+            $this->render('mobile/viewMobile',array(
+                        'model'=>$model,
+                        'ticket'=>$ticket,
+                        'event'=>$event,
+                        'datetime'=>Events::normalViewDate($event->datetime),
+                        'date_begin'=>Events::normalViewDate($ticket->date_begin),
+                        'date_end'=>Events::normalViewDate($ticket->date_end),
+                        'eventUniq'=>$eventUniq
+                        ));
+        }else{
+            $this->render(Yii::app()->mf->siteType(). '/view',array(
+                        'model'=>$model,
+                        'event'=>$event,
+                        'ticket'=>$ticket,
+                        'datetime'=>Events::normalViewDate($event->datetime),
+                        'date_begin'=>Events::normalViewDate($ticket->date_begin),
+                        'date_end'=>Events::normalViewDate($ticket->date_end),
+                        'eventUniq'=>$eventUniq
+                        ));
+        }
+    }
 
 	/**
 	 * Creates a new model.
