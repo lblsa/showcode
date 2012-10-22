@@ -20,6 +20,8 @@
                 <td><?php echo CHtml::encode($data[0]->getAttributeLabel('total')); ?></td>
                 <td><?php echo CHtml::encode($data[0]->getAttributeLabel('datetime')); ?></td>
                 <td><?php echo CHtml::encode($data[0]->getAttributeLabel('user_id')); ?></td>
+                <td><?php echo CHtml::encode($data[0]->getAttributeLabel('mail')); ?></td>
+                <td><?php echo CHtml::encode($data[0]->getAttributeLabel('phone')); ?></td>
                 <td><?php echo CHtml::encode($data[0]->getAttributeLabel('payment')); ?></td>
                 <td><?php echo CHtml::encode($data[0]->getAttributeLabel('status')); ?></td>
             </tr>

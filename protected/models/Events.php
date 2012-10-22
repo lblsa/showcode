@@ -512,30 +512,35 @@ class Events extends CActiveRecord
         /**
 	 * Возвращает верстку текста для электронной почты при отправке списка билетов.
 	 */
-	public function getTextEmailSendListTickets($tickets){
-            $text = '';
-            $text = $text.'<table cellspasing="0" border="0" cellpadding="0" width="697px" style="margin: 0pt; padding: 0pt; background-color: rgb(255, 255, 255); border-collapse: collapse;">';
-            $text = $text.'<tr height="138px">';
-            $text = $text.'<td><img src="http://' .$_SERVER['HTTP_HOST']. '/images/email/logo_empty.jpg" alt="Showcode." title="Showcode." style="margin: 0pt; padding: 0pt; border: 0pt none; display: block;"></td>';
-            $text = $text.'</tr>';
-            $text = $text.'<tr height="41px">';
-            $text = $text.'<td><p style="font-family:Arial, Helvetica, sans-serif; font-size:24px; font-weight:normal; font-style:normal; color:#333;">Здравствуйте, '.Yii::app()->user->name.'.</p></td>';
-            $text = $text.'</tr>';
-            $text = $text.'<tr>';
-            $text = $text.'<td style="background-color:#e5e5e5;"><p style="padding:16px 10px; font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal; color:#333;">Вы запросили список всех билетов для мероприятия под названием «<a target="_blank" title="' .$this->title. '" href="http://' .$_SERVER['HTTP_HOST']. '/events/view/' .$this->id. '">' .$this->title. '</a>»</p></td>';
-            $text = $text.'</tr>';
-            $text = $text.'<tr>';
-            $text = $text.'<td style="padding-top:15px; padding-bottom:15px; border-bottom-width:1px; border-bottom-color:#999999; border-bottom-style:solid;">';
-            $text = $text.'<table cellspasing="0" border="0" cellpadding="5" width="" style="text-align: center; margin: 0pt; padding: 20px 0; background-color: rgb(255, 255, 255); border-collapse: collapse;">';
+    public function getTextEmailSendListTickets($tickets)
+    {
+        $text = '';
+        $text = $text.'<table cellspasing="0" border="0" cellpadding="0" width="697px" style="margin: 0pt; padding: 0pt; background-color: rgb(255, 255, 255); border-collapse: collapse;">';
+        $text = $text.'<tr height="138px">';
+               $text = $text.'<td><img src="/images/email/logo_empty.jpg" alt="Showcode." title="Showcode." style="margin: 0pt; padding: 0pt; border: 0pt none; display: block;"></td>';
+        $text = $text.'</tr>';
+        $text = $text.'<tr height="41px">';
+        $text = $text.'<td><p style="font-family:Arial, Helvetica, sans-serif; font-size:24px; font-weight:normal; font-style:normal; color:#333;">Здравствуйте, '.Yii::app()->user->name.'.</p></td>';
+        $text = $text.'</tr>';
+        $text = $text.'<tr>';
+        $text = $text.'<td style="background-color:#e5e5e5;"><p style="padding:16px 10px; font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal; color:#333;">Вы запросили список всех билетов для мероприятия под названием «<a target="_blank" title="' .$this->title. '" href="http://' .$_SERVER['HTTP_HOST']. '/events/view/' .$this->id. '">' .$this->title. '</a>»</p></td>';
+        $text = $text.'</tr>';
+        $text = $text.'<tr>';
+        $text = $text.'<td style="padding-top:15px; padding-bottom:15px; border-bottom-width:1px; border-bottom-color:#999999; border-bottom-style:solid;">';
+        $text = $text.'<table cellspasing="0" border="0" cellpadding="5" width="" style="text-align: center; margin: 0pt; padding: 20px 0; background-color: rgb(255, 255, 255); border-collapse: collapse;">';            
+        if(!empty($tickets))
+        {
             $text = $text.'<tr style="border: 1px solid #000;">';
-                $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .$tickets[0]->getAttributeLabel('user_id'). '</td>';
-                $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .$tickets[0]->getAttributeLabel('status'). '</td>';
-                $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .$tickets[0]->getAttributeLabel('quantity'). '</td>';
-                $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .$tickets[0]->getAttributeLabel('total'). '</td>';
-                $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .$tickets[0]->getAttributeLabel('column'). '</td>';
-                $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .$tickets[0]->getAttributeLabel('place'). '</td>';
-                $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .$tickets[0]->getAttributeLabel('uniq'). '</td>';
-                $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .$tickets[0]->getAttributeLabel('payment'). '</td>';
+            $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .$tickets[0]->getAttributeLabel('user_id'). '</td>';
+            $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .$tickets[0]->getAttributeLabel('mail'). '</td>';
+            $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .$tickets[0]->getAttributeLabel('phone'). '</td>';
+            $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .$tickets[0]->getAttributeLabel('status'). '</td>';
+            $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .$tickets[0]->getAttributeLabel('quantity'). '</td>';
+            $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .$tickets[0]->getAttributeLabel('total'). '</td>';
+            $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .$tickets[0]->getAttributeLabel('column'). '</td>';
+            $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .$tickets[0]->getAttributeLabel('place'). '</td>';
+            $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .$tickets[0]->getAttributeLabel('uniq'). '</td>';
+            $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .$tickets[0]->getAttributeLabel('payment'). '</td>';
             $text = $text.'</tr>';
             foreach($tickets AS $i => $ticket){
                 $text = $text.'<tr style="border-bottom: 1px solid #000;">';
@@ -543,6 +548,8 @@ class Events extends CActiveRecord
                         $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' . Yii::app()->user->getAuthorName($ticket->user_id). '</td>';
                     else
                         $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .$ticket->family. '</td>';
+                    $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .$ticket->mail. '</td>';
+                    $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .$ticket->phone. '</td>';
                     $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .TransactionLog::$status[$ticket->status]. '</td>';
                     $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .$ticket->quantity. '</td>';
                     $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .$ticket->total. '</td>';
@@ -552,14 +559,21 @@ class Events extends CActiveRecord
                     $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .TransactionLog::$payment_type[$ticket->payment]. '</td>';
                 $text = $text.'</tr>';
             }
-            $text = $text.'</table>';
-            $text = $text.'</td>';
+        }
+        else
+        {
+            $text = $text.'<tr style="border: 1px solid #000;">';
+            $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">Нет купленных билетов на данное мероприятие.</td>';
             $text = $text.'</tr>';
-            $text = $text.'<tr>';
-            $text = $text.'<td style="padding-top:5px;"><p style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal; color:#333;">С уважением, администрация сайта <a target="_blank" href="' .$_SERVER['HTTP_HOST']. '" title="">ShowCode.ru</a>.</p></td>';
-            $text = $text.'</tr>';
-            $text = $text.'</table>';
+        }
+        $text = $text.'</table>';
+        $text = $text.'</td>';
+        $text = $text.'</tr>';
+        $text = $text.'<tr>';
+        $text = $text.'<td style="padding-top:5px;"><p style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal; color:#333;">С уважением, администрация сайта <a target="_blank" href="' .$_SERVER['HTTP_HOST']. '" title="">ShowCode.ru</a>.</p></td>';
+        $text = $text.'</tr>';
+        $text = $text.'</table>';
 
-            return $text;
-	}
+        return $text;
+    }
 }

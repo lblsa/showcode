@@ -40,9 +40,10 @@
 <?php if($data->user_id):?>
     <td><?php echo CHtml::encode(Yii::app()->user->getAuthorName($data->user_id)); ?></td>
 <?php else:?>
-    <td><?php echo CHtml::encode($data->family).'<br/>'.'Тел.:&nbsp;+'.CHtml::encode($data->phone); ?></td>
+    <td><?php echo CHtml::encode($data->family); ?></td>
 <?php endif; ?>
-
+    <td><?php echo CHtml::encode($data->mail); ?></td>
+    <td><?php echo CHtml::encode($data->phone); ?></td>
 <?php if($data->type != 'free'):?>
     <td><?php echo CHtml::encode(TransactionLog::$payment_type[$data->payment]); ?></td>
 <?php else: ?>
