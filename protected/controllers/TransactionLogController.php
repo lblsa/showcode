@@ -30,7 +30,7 @@ class TransactionLogController extends Controller
 	{
 		return array(
 			array('allow',  	// разрешает всем пользователям выполнять действия delete.
-				'actions'=>array('GetQrCodeTicket','paymentClient'),
+				'actions'=>array('GetQrCodeTicket','paymentClient', 'ajaxShosTickets'),
                                 'users'=>array('*','@'),
 			),
 
@@ -62,44 +62,7 @@ class TransactionLogController extends Controller
 	public function actionIndex()
     {
         $this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column2';
-        $id_user = yii::app()->user->id;
-
-        $criteria=new CDbCriteria();
-
-        if (!yii::app()->user->isAdmin())
-        {
-            //Выводим все купленные билеты пользователя, или все купленные билеты на созданное тобой мероприятие.
-            /*$event = Events::model()->findAllBySql('select id from tbl_events where author=' .yii::app()->user->id. ' group by id');
-              if (count($event)>0)
-              {
-              $events_id=' or event_id IN (';
-              foreach ($event as $v)
-              $events_id.='"'.$v->id.'",';
-              $events_id = substr($events_id, 0, strlen($events_id)-1);
-              $events_id.=')';
-              }*/
-            $criteria->addCondition('user_id = ' .yii::app()->user->id. $events_id, 'AND');
-        }
-        $criteria->condition = 'status = 1';
-        $criteria->compare('user_id',$id_user);
-        $criteria->order = 'datetime DESC';
-
-        if(!Yii::app()->mf->isMobile()){
-            $count = TransactionLog::model()->count($criteria);
-            $pages=new CPagination($count);
-
-            // results per page
-            $pages->pageSize=10;
-            $pages->applyLimit($criteria);
-
-            $dataProvider=new CActiveDataProvider('TransactionLog', array(
-                        'criteria'=>$criteria,
-                        ));
-        }
-        $this->render(Yii::app()->mf->siteType(). '/index',array(
-                    'data'=>  TransactionLog::model()->findAll($criteria),
-                    'pages' => $pages,
-                    ));
+        $this->render(Yii::app()->mf->siteType(). '/index');
     }
 
 	/**

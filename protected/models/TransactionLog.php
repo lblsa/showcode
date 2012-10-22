@@ -836,4 +836,44 @@ class TransactionLog extends CActiveRecord
 
             header("Location: ".$vpcURL);
         }
+
+        public function getData($flag, $id_user)
+        {
+            $criteria=new CDbCriteria();    
+
+            if($flag==1)
+            {
+                //Выводим все купленные билеты на созданное тобой мероприятие.
+                $myEvents = Events::model()->findAllByAttributes(array('author'=>$id_user));
+
+                foreach ($myEvents as $myEvent)
+                {
+                    $evid = $myEvent->id;
+                    $criteria->compare('event_id',$evid);
+                }
+            }
+            $criteria->compare('status',1);     
+            if(!empty($id_user))
+                $criteria->compare('user_id',$id_user);
+            $criteria->order = 'datetime DESC';
+
+            if(!Yii::app()->mf->isMobile())
+            {
+                $count = TransactionLog::model()->count($criteria);
+                $pages=new CPagination($count);
+
+                // results per page
+                $pages->pageSize=10;
+                $pages->applyLimit($criteria);
+
+                $dataProvider=new CActiveDataProvider('TransactionLog', array(
+                            'criteria'=>$criteria,
+                            ));
+            }
+
+            $render_data['data'] = TransactionLog::model()->findAll($criteria);
+            $render_data['pages'] = $pages;
+
+            return $render_data;
+        }
 }
