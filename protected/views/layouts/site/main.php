@@ -15,13 +15,19 @@
 	<!--link rel="stylesheet" type="text/css" href="<?php //echo Yii::app()->request->baseUrl; ?>/css/main.css" />
 	<link rel="stylesheet" type="text/css" href="<?php //echo Yii::app()->request->baseUrl; ?>/css/form.css" /-->
 
-	<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery-1.6.4.js"></script>
+	<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery-1.8.2.js"></script>
+	<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/feedback.js"></script>
+	
+	<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/bootstrap/bootstrap.js"></script>
+	<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/bootstrap/bootstrap.min.js"></script>
 
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
         <!-- Meta viewport for iOS systems -->
         <meta name="viewport" content="width=1012" />
         <link rel="shortcut icon" href="<?php echo Yii::app()->request->baseUrl; ?>/images/favicon.ico" type="image/x-icon" />
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/base.css" />
+		
+		<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap/bootstrapmy.css" />
         <!--<link rel="shortcut icon" href="<?php echo Yii::app()->request->baseUrl; ?>/images/favicon.ico" />-->
         <!-- JS content slider (bxSlider) -->
         <!-- <script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script> -->
@@ -35,6 +41,7 @@
 <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/cufon/MetaPro-Medium_500.font.js"></script>
 <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/cufon/MetaPro-Normal_400.font.js"></script>
 <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/cufon/Book_Antiqua_700-Book_Antiqua_italic_400.font.js"></script>
+
 <script type="text/javascript">
 	Cufon.replace('#tickets', {fontFamily: "MetaPro-Medium" });
 	Cufon.replace('#tickets span', {fontFamily: "MetaPro-Normal" });
@@ -122,6 +129,24 @@
             lineHeight:'10px',
             color:'#ffffff'
         });
+		
+	//для отзывов
+	function send_feedback()
+	{
+		//alert('lol');
+		mess = $('textarea.feedback_message').val();
+		url = document.location.href;
+		
+		if(!mess)
+			alert('Сообщение не может быть пустым');
+		else
+			$.get("<?php echo CHtml::normalizeUrl(array('site/ajaxFeed'))?>", { 'mess' : mess, 'url' : url }, onAjaxSuccessFeed);
+	}
+	
+	function onAjaxSuccessFeed(data)
+	{
+		alert('Сообщение отправлено');
+	}
 </script>
 </head>
 <body>

@@ -221,4 +221,19 @@ class SiteController extends Controller
             $this->redirect(Yii::app()->homeUrl);
         }
 */
+
+	//для быстрых отзывов
+	public function actionAjaxFeed($mess, $url)
+	{
+		$user = User::model()->findByAttributes(array('user_id'=>Yii::app()->user->id))->name;
+		$email = User::model()->findByAttributes(array('user_id'=>Yii::app()->user->id))->email;
+		
+		$to  = 'x+1226812676402@mail.asana.com';
+		$title = 'Отзыв';
+		
+		$mess ='Письмо от пользователя'.$user.' email: '.$email.' 
+		Адрес страницы: '.$url.' 
+		'.$mess;
+		mail($to, $title, $mess);
+	}
 }
