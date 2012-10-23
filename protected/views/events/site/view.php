@@ -168,7 +168,7 @@ Yii::app()->clientScript->registerScript('name_js1','
 	});
 ');
 
-Yii::app()->clientScript->registerScriptFile('http://userapi.com/js/api/openapi.js?34', CClientScript::POS_HEAD);
+Yii::app()->clientScript->registerScriptFile('https://userapi.com/js/api/openapi.js?34', CClientScript::POS_HEAD);
 $id_api_vk = intval(Yii::app()->params["vk_id"]);
 Yii::app()->clientScript->registerScript('vkontakte_like','
 	VK.init({apiId: '.$id_api_vk.', onlyWidgets: true});
@@ -514,7 +514,7 @@ if (Yii::app()->user->isAdmin() || Yii::app()->user->isCreator($model->id))
 		<td> <div id="vk_like"></div> </td>
 		<td>
 			<!--<div id="fb-root"></div><div class="fb-like" data-href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/events/view/<?php echo $model->id; ?>" data-send="false" data-width="300" data-show-faces="false"></div>-->
-			<iframe src="//www.facebook.com/plugins/like.php?href=http://<?php echo $_SERVER['HTTP_HOST']; ?>/events/view/<?php echo $model->id; ?>&amp;send=false&amp;layout=standard&amp;width=350&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:350px; height:35px;" allowTransparency="true"></iframe>
+			<iframe src="//www.facebook.com/plugins/like.php?href=https://<?php echo $_SERVER['HTTP_HOST']; ?>/events/view/<?php echo $model->id; ?>&amp;send=false&amp;layout=standard&amp;width=350&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:350px; height:35px;" allowTransparency="true"></iframe>
 		</td>
 
 		<?php if ($model->facebook_eid): ?>
