@@ -6,7 +6,7 @@ $this->headering = 'Авторизация - '.Yii::app()->name;
 );*/
 
 /*
-Yii::app()->clientScript->registerScriptFile('http://userapi.com/js/api/openapi.js?34', CClientScript::POS_HEAD);*/
+Yii::app()->clientScript->registerScriptFile('https://userapi.com/js/api/openapi.js?34', CClientScript::POS_HEAD);*/
 /*Yii::app()->clientScript->registerScript('loginPhone','
 	$("#loginPhone").change(function(){
             console.log(this.value);

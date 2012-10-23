@@ -9,6 +9,13 @@
         <?php endif; ?>
     </h1>
 
+	<div>
+		<span style="font-size: 150%; margin-right: 20px;">Высылать статистику на email</span> 
+		<?php echo CHtml::dropDownList('mailer', $selectStat, array('0'=>'Не высылать', '1'=>'Ежедневно', '2'=>'Еженедельно', '3'=>'Ежемесячно')); ?>
+		<?php echo CHtml::Button('Применить',array('id'=>'submit_stat', 'style'=>'margin-left: 20px;')); ?>
+	</div>
+	
+	
     <div id="list_tickets">
         <div class="search-form">
             <?php $this->renderPartial(Yii::app()->mf->siteType(). '/_search',array(
@@ -34,3 +41,12 @@
         </div>
     </div>
 </div>
+<div id="test"></div>
+<script type="text/javascript">
+	$('#submit_stat').click(function(){
+		val = $('#mailer option:selected').val();
+		event_id = '<?php echo $tickets->event_id; ?>';
+		
+		$.get("<?php echo CHtml::normalizeUrl(array('statistics/ajaxSendStat'))?>", {'select' : val, 'event_id'  : event_id}, function(data){ alert(data);return true;	});
+	});
+</script>
