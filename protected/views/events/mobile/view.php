@@ -136,7 +136,7 @@ Yii::app()->clientScript->registerScript('name_js1','
         });
 ');
 /*
-Yii::app()->clientScript->registerScriptFile('http://userapi.com/js/api/openapi.js?34', CClientScript::POS_HEAD);
+Yii::app()->clientScript->registerScriptFile('https://userapi.com/js/api/openapi.js?34', CClientScript::POS_HEAD);
 Yii::app()->clientScript->registerScript('vkontakte_like','
 	VK.init({apiId:'. Yii::app()->params["vk_id"].', onlyWidgets: true});
 	VK.Widgets.Like("vk_like", {type: "button"});

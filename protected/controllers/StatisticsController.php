@@ -29,12 +29,12 @@ class StatisticsController extends Controller
     {
             return array(
                 array('allow',			// Для Admin разрешено: 'index', 'view', 'admin' и 'create'
-                    'actions'=>array('index'),
+                    'actions'=>array('index, ajaxSendStat'),
                     'expression' => 'yii::app()->user->isAdmin()',
                     //'expression' => array($this, 'isOrganizer'),
                 ),
                 array('allow',			//для создателей мероприятия разрешено редактировать его и проверять билеты.
-                        'actions'=>array('index'),
+                        'actions'=>array('index,ajaxSendStat'),
                         'expression' => 'yii::app()->user->isCreator($_POST["TransactionLog"]["event_id"])',
                         //'expression' => array($this, 'isCreator'),
                 ),
@@ -57,15 +57,20 @@ class StatisticsController extends Controller
             'mounths'=>'месяцам',
         );
 
+		$selectStat = User::model()->findByPk(Yii::app()->user->id)->send_stat;
+
         $tickets = new TransactionLog;
 
         if(isset($_POST['TransactionLog'])){
+		
+		
         	/**            Заполняется фильтр            */
-            $tickets->attributes = $_POST['TransactionLog'];
+            $tickets->attributes = $_POST['TransactionLog'];			
             $tickets->date_begin = $_POST['TransactionLog']['date_begin'];
             $tickets->date_end = $_POST['TransactionLog']['date_end'];
             $tickets->period = $_POST['TransactionLog']['period'];
-
+			
+			//echo '<pre>'; print_r($tickets->attributes); echo '</pre>';exit;
             if ($_POST['TransactionLog']['user_id'] != ''){
                 $eventsDropList = Events::model()->findAll('status = "published" AND author=:author', array(':author'=>$_POST['TransactionLog']['user_id']));
                 if(count($eventsDropList) == 0)
@@ -118,6 +123,7 @@ class StatisticsController extends Controller
             'eventsDropList'=>$eventsDropList,
             'users'=>$users,
             'daysPeriod'=>$dayTIMEarray,
+			'selectStat'=>$selectStat,
         ));
     }
 
@@ -182,4 +188,68 @@ class StatisticsController extends Controller
 		);
 	}
 	*/
+	
+	//рассылка статистики
+	public function SendMail($event_id)
+	{
+			$tickets = new TransactionLog;
+			$user_id = Yii::app()->user->id;
+			
+			$tickets->period = 'days';
+			$tickets->event_id = $event_id;
+			$tickets->user_id = $user_id;
+
+			$eventsDropList = Events::model()->findAll('status = "published" AND author=:author', array(':author'=>$user_id));
+			if(count($eventsDropList) == 0)
+			   $eventsDropList = new Events;
+			else
+				$eventsDropList = new Events;
+
+			/**            Массив дней            */
+			$exp = '';
+			$exp .= 'event_id IN (SELECT id FROM tbl_events WHERE author = "' .$user_id. '") AND ';
+			$exp .= 'event_id  = "' .$event_id. '" AND ';
+
+			$MinMaxDays = Yii::app()->db->createCommand('SELECT MAX(datetime) AS MaxDay, MIN(datetime) AS MinDay FROM tbl_transaction_log WHERE '.$exp.'1')->queryAll();
+
+			$dayTIMEarray = $this->getArrayDatePeriod('days', $MinMaxDays[0]['MinDay'], $MinMaxDays[0]['MaxDay']);
+
+			$users = User::model()->findByPk($user_id);
+			$users = Array($users);
+			
+			/*Список пользователей */
+			$usersDropList = User::model()->findAll('role <> :role', array(':role'=>'user'));
+			
+			//текст письма (статистика)
+			$data = $this->renderPartial(Yii::app()->mf->siteType(). '/_stat',array(
+							'model'=>$tickets,
+						  //  'sortDate'=>$sortDate,
+							'users'=>$users,
+							'events'=>$events,
+							'daysPeriod'=>$dayTIMEarray,
+							'event_id'=>$event_id,
+					), true);
+			
+			//отправляем письмо
+			$headers .= "Content-Type: text/html; charset=windows-1251";
+		
+			$to = User::model()->findByAttributes(array('user_id'=>Yii::app()->user->id))->email;
+			$title = 'Статистика  по мероприятию «'.Events::model()->getEventTitle($event_id).'»';
+			
+			mail($to, $title, $data, $headers);
+	}
+	
+	public function actionAjaxSendStat($select, $event_id)
+	{
+		//заносим в базу данные о рассылке
+		$sql = "update tbl_user set send_stat = ".$select." where user_id = ".Yii::app()->user->id;
+		$command = Yii::app()->db->createCommand($sql);
+		$command->execute();
+		
+		//генерируем и отправляем письмо
+		if($select!=0)
+		{
+			$this->SendMail($event_id);
+		}
+	}
 }

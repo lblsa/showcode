@@ -3,7 +3,7 @@
 /*$this->breadcrumbs=array(
 	'Login',
 );*/
-/*Yii::app()->clientScript->registerScriptFile('http://userapi.com/js/api/openapi.js?34', CClientScript::POS_HEAD);
+/*Yii::app()->clientScript->registerScriptFile('https://userapi.com/js/api/openapi.js?34', CClientScript::POS_HEAD);
 $id_api_vk = intval(Yii::app()->params["vk_id"]);
 Yii::app()->clientScript->registerScript('vkontakte_auth','
 	VK.init({apiId:'. $id_api_vk .'});

@@ -854,7 +854,7 @@ input#search_submit {
     z-index: 0;
 }
 
-#submit_save_button {
+#submit_save_button, #submit_stat {
     background: url(../images/bg/submit_save_button_bg.png) left top repeat-x;
     color: #FFF;
     cursor: pointer;

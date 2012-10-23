@@ -597,7 +597,7 @@ class User extends CActiveRecord
 			array('send_mail', 'boolean'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('user_id, email, password, name, role, organization, profile, phone, send_mail', 'safe', 'on'=>'search'),
+			array('user_id, email, password, name, role, organization, profile, phone, send_mailб send_stat', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -631,6 +631,7 @@ class User extends CActiveRecord
 			'profile' => 'Профиль',
 			'phone' => 'Мобильный телефон (10 цифр)',
 			'send_mail' => 'Присылать отзывы',
+			'send_stat' => 'Высылать статистику на e-mail',
 		);
 	}
 
@@ -653,6 +654,7 @@ class User extends CActiveRecord
 		$criteria->compare('organization',$this->organization,true);
 		$criteria->compare('profile',$this->profile,true);
 		$criteria->compare('send_mail',$this->send_mail,true);
+		$criteria->compare('send_stat',$this->send_stat,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
