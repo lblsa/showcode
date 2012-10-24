@@ -49,7 +49,7 @@ class SiteController extends Controller
 	 */
 	public function actionRecovery()
 	{
-            $this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column3';
+        $this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column3';
 		if(isset($_POST['phone']))
         {
             if(preg_match("~[\d]{10}~i", $_POST['phone'])){
@@ -140,33 +140,32 @@ class SiteController extends Controller
 	 */
 	public function actionLogin()
 	{
+		$this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column3';
+		$model=new LoginForm;
 
-            $this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column3';
-            $model=new LoginForm;
+		// if it is ajax validation request
+		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
+		{
+			echo CActiveForm::validate($model);
+			Yii::app()->end();
+		}
 
-            // if it is ajax validation request
-            if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
-            {
-                echo CActiveForm::validate($model);
-                Yii::app()->end();
-            }
+		// collect user input data
+		if(isset($_POST['LoginForm']))
+		{
+			$model->attributes=$_POST['LoginForm'];
 
-            // collect user input data
-            if(isset($_POST['LoginForm']))
-            {
-                $model->attributes=$_POST['LoginForm'];
+			$pass = $model->password;
+			$md5Pass = md5($model->password);
+			$model->password = $pass.'/'.$md5Pass;
+			// validate user input and redirect to the previous page if valid
+			if($model->validate() && $model->login())
+				$this->redirect(Yii::app()->user->returnUrl);
+			else
+				$model->password = $pass;
+		}
 
-                $pass = $model->password;
-                $md5Pass = md5($model->password);
-                $model->password = $pass.'/'.$md5Pass;
-                // validate user input and redirect to the previous page if valid
-                if($model->validate() && $model->login())
-                    $this->redirect(Yii::app()->user->returnUrl);
-                else
-                    $model->password = $pass;
-            }
-
-            $this->render(Yii::app()->mf->siteType(). '/login',array('model'=>$model));
+		$this->render(Yii::app()->mf->siteType(). '/login',array('model'=>$model));
 	}
 
 	/**
