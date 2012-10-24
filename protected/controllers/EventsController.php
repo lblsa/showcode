@@ -1077,53 +1077,52 @@ class EventsController extends Controller
 	
 	//рассылка оповещений
 	public function actionSendAlert($id)
-	{
-		$this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column3';
+    {
+        $this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column3';
 
-		if (isset($_POST))
-		{
-			$title = $_POST['title'];
-			
-			if(empty($title))
-				$title = "Информация о мероприятии 'название'";
-			$message = $_POST['text'];
-			
-			if (isset($_POST['mobile']))
-				$mobile = 1;
-			else
-				$mobile = 0;
-				
-			if (isset($_POST['mail']))
-				$mail = 1;
-			else
-				$mail = 0;
-			
-			$transactions = TransactionLog::model()->findAllByAttributes(array('event_id'=>$id));			
+        // Значения по умолчанию
+        $mobile = 0;
+        $mail = 0;
+        $title = "Информация о мероприятии 'название'";
 
-			$data = array();
-			
-			foreach ($transactions as $transaction)
-			{
-				if ($mobile==1)
-					$data[] = $transaction->phone;
-				if ($mail==1)
-					$data[] = $transaction->mail;				
-			}
+        if (isset($_POST))
+        {
+            if(!empty($title))
+                $title = $_POST['title'];
 
-			//чтобы 2 раза не высылать
-			$data=array_unique($data);
-			
-			foreach ($data as $item)
-			{
-				//шлем спам :)
-				if ($mobile==1)
-					User::model()->sendMessenge($message, $item, 0);
-				if ($mail==1)
-				{
-					mail($item, $title, $message);
-				}
-			}
-		}
+            $message = $_POST['text'];
+
+            if (isset($_POST['mobile']))
+                $mobile = 1;
+
+            if (isset($_POST['mail']))
+                $mail = 1;
+
+            $transactions = TransactionLog::model()->findAllByAttributes(array('event_id'=>$id));			
+
+            $data = array();
+            $data['mobile'] = array();
+            $data['mail'] = array();
+
+            foreach ($transactions as $transaction)
+            {
+                if ($mobile==1)
+                    $data['mobile'][] = $transaction->phone;
+
+                if ($mail==1)
+                    $data['mail'][] = $transaction->mail;				
+            }
+
+            //чтобы 2 раза не высылать
+            $data=array_unique($data);
+
+            foreach ($data['mobile'] as $item)
+                User::model()->sendMessenge($message, $item, 0);
+
+            foreach ($data['mail'] as $item)
+                mail($item, $title, $message);
+        }
+    }
 		
 		$this->render(Yii::app()->mf->siteType(). '/sendAlert');
 	}
