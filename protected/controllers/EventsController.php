@@ -1074,4 +1074,57 @@ class EventsController extends Controller
                     ));
 
     }
+	
+	//рассылка оповещений
+	public function actionSendAlert($id)
+	{
+		$this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column3';
+
+		if (isset($_POST))
+		{
+			$title = $_POST['title'];
+			
+			if(empty($title))
+				$title = "Информация о мероприятии 'название'";
+			$message = $_POST['text'];
+			
+			if (isset($_POST['mobile']))
+				$mobile = 1;
+			else
+				$mobile = 0;
+				
+			if (isset($_POST['mail']))
+				$mail = 1;
+			else
+				$mail = 0;
+			
+			$transactions = TransactionLog::model()->findAllByAttributes(array('event_id'=>$id));			
+
+			$data = array();
+			
+			foreach ($transactions as $transaction)
+			{
+				if ($mobile==1)
+					$data[] = $transaction->phone;
+				if ($mail==1)
+					$data[] = $transaction->mail;				
+			}
+
+			//чтобы 2 раза не высылать
+			$data=array_unique($data);
+			
+			foreach ($data as $item)
+			{
+				//шлем спам :)
+				if ($mobile==1)
+					User::model()->sendMessenge($message, $item, 0);
+				if ($mail==1)
+				{
+					mail($item, $title, $message);
+				}
+			}
+		}
+		
+		$this->render(Yii::app()->mf->siteType(). '/sendAlert');
+	}
 }
