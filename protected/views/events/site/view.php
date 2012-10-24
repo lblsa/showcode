@@ -1,3 +1,23 @@
+<style>
+	#sendAlert
+	{
+		height: 40px;
+		border: none;
+		color: white;
+		font- size: 200%;
+		padding: 5px;
+		background: #FF2600;
+		background: -moz-linear-gradient(top, #FF2600, #2B0F00);
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FF2600), color-stop(100%,#2B0F00));
+		background: -webkit-linear-gradient(top, #FF2600, #2B0F00);
+		background: -o-linear-gradient(top, #FF2600, #2B0F00);
+		background: -ms-linear-gradient(top, #FF2600, #2B0F00);
+		background: linear-gradient(top, #FF2600, #2B0F00);
+		border-radius: 10px;
+		cursor: pointer;
+	}
+</style>
+
 <?php $this->pageTitle=Yii::app()->name.' - Мероприятие "'.$model->title.'"' ?>
 
 <?php
@@ -294,21 +314,21 @@ if (yii::app()->user->isCreator($model->id) && $model->status == 'published')
                 );
 
             }
-            echo '<div class="description_event_wrapper" id="qr-events">';
-            echo '<div class="description_event">';
-            echo '<!-- image -->';
-            echo '<div class="full_image">'.CHtml::image($model->logo, $model->title).'</div>';
-            echo '<!-- full text information about event -->';
-echo '<div class="full_text_info_about_event'.$uniqEvent->prefix_class.'">';
-        //Выводится информация о мероприятии
-        $this->widget('zii.widgets.CDetailView', array(
-            'data' => $model,
-            'attributes' => $attributes,
-            'tagName' => 'div',
-            'itemTemplate' => "<div><span>{label}:</span>{value}</div>\n",
-            'itemCssClass' => array('event-title-zoo',''),
-        ));
     ?>
+
+<div class="description_event_wrapper" id="qr-events">
+	<div class="description_event">
+		<div class="full_image"><?php echo CHtml::image($model->logo, $model->title);?></div>
+			<div class="full_text_info_about_event<?php echo $uniqEvent->prefix_class; ?>">
+			   <?php        
+					//Выводится информация о мероприятии
+					$this->widget('zii.widgets.CDetailView', array(
+						'data' => $model,
+						'attributes' => $attributes,
+						'tagName' => 'div',
+						'itemTemplate' => "<div><span>{label}:</span>{value}</div>\n",
+						'itemCssClass' => array('event-title-zoo',''),
+					)); ?>
 <?php else: ?>
     <?php
         $attributes = array(
@@ -470,12 +490,14 @@ echo '<div class="full_text_info_about_event'.$uniqEvent->prefix_class.'">';
 		)
 	); ?>
     <?php endif; ?>
+	<div style="margin: 10px;"><?php echo Chtml::Button('РАССЫЛКА СООБЩЕНИЙ', array('id'=>'sendAlert'));?></div>
 </div>
 </div>
 
 
 <!--Выводится информация о билетах-->
-<div style="clear: all">
+<div style="clear: left">
+	
     <?php $this->renderPartial(Yii::app()->mf->siteType(). '/_ticket', array('ticket'=>$ticket,'uniqEvent'=>$uniqEvent)); ?>
 </div>
 <?php
@@ -513,8 +535,8 @@ if (Yii::app()->user->isAdmin() || Yii::app()->user->isCreator($model->id))
 	<tr>
 		<td> <div id="vk_like"></div> </td>
 		<td>
-			<!--<div id="fb-root"></div><div class="fb-like" data-href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/events/view/<?php echo $model->id; ?>" data-send="false" data-width="300" data-show-faces="false"></div>-->
-			<iframe src="//www.facebook.com/plugins/like.php?href=https://<?php echo $_SERVER['HTTP_HOST']; ?>/events/view/<?php echo $model->id; ?>&amp;send=false&amp;layout=standard&amp;width=350&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:350px; height:35px;" allowTransparency="true"></iframe>
+			<?/*<div id="fb-root"></div><div class="fb-like" data-href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/events/view/<?php echo $model->id; ?>" data-send="false" data-width="300" data-show-faces="false"></div>*/?>
+			<iframe src="http://www.facebook.com/plugins/like.php?href=https://<?php echo $_SERVER['HTTP_HOST']; ?>/events/view/<?php echo $model->id; ?>&amp;send=false&amp;layout=standard&amp;width=350&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:350px; height:35px;" allowTransparency="true"></iframe>
 		</td>
 
 		<?php if ($model->facebook_eid): ?>
@@ -701,7 +723,7 @@ if (Yii::app()->user->isAdmin() || Yii::app()->user->isCreator($model->id))
                                     <td><input value="credit_card" id="TransactionLog_payment_0" name="TransactionLog[payment]" type="radio" <?php if ($log->payment == 'credit_card') echo 'checked'; ?> ></td>
                                     <td><label for="TransactionLog_payment_0"><img src="/images/card.png" alt="credit_card"></label></td>
                                     <td><label for="TransactionLog_payment_0">Кредитная карта</label></td>
-                                </tr
+                                </tr>
                                 <tr>
                                     <td><input value="qiwi" id="TransactionLog_payment_1" name="TransactionLog[payment]" type="radio" <?php if ($log->payment == 'qiwi') echo 'checked'; ?> ></td>
                                     <td><label for="TransactionLog_payment_1"><img src="/images/qiwi.gif" alt="qiwi"></label></td>
@@ -733,4 +755,12 @@ if (Yii::app()->user->isAdmin() || Yii::app()->user->isCreator($model->id))
 </div>
 </div>
 
+
+<script type="text/javascript">
+	$('#sendAlert').click(function(){
+
+		document.location.href = "<?php echo CHtml::normalizeUrl(array('events/sendAlert', 'id'=>$model->id))?>"
+	
+	});
+</script>
 

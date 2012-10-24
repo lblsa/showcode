@@ -123,7 +123,7 @@ class User extends CActiveRecord
 	 * Make sure you call the parent implementation so that the event is raised properly.
 	 * На данном этапе пользователю отправляется пароль.
 	 */
-	public function sendMessenge($message, $phone=NULL)
+	public function sendMessenge($message, $phone=NULL, $flag = 1)
 	{
 		if (isset($message)){
 			//Отправляем пользователю смс.
@@ -137,10 +137,13 @@ class User extends CActiveRecord
 				$PASSWORD_SMS = 'MoZBdJsXG8';
 
 				$r = smsapi_push_msg_nologin($EMAIL_SMS, $PASSWORD_SMS, $p, $message, array("unicode"=>"1"));
-
-                //отправляем уведомление, что появился новый пользователь
-                $message = 'В системе зарегистрировался новый пользователь. Телефон: '.$this->phone;
-				Yii::app()->mf->mail_html('showcode@googlegroups.com','noreply@'.$_SERVER[HTTP_HOST],Yii::app()->name,$message,'В системе ' .Yii::app()->name. ' новый пользователь!');
+				
+				if($flag==1)
+				{ 
+					//отправляем уведомление, что появился новый пользователь
+					$message = 'В системе зарегистрировался новый пользователь. Телефон: '.$this->phone;
+					Yii::app()->mf->mail_html('showcode@googlegroups.com','noreply@'.$_SERVER[HTTP_HOST],Yii::app()->name,$message,'В системе ' .Yii::app()->name. ' новый пользователь!');
+				}
 			}
 		}
 	}
