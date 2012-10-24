@@ -43,5 +43,5 @@ $this->menu=array(
 <?php $pages3 = $t3['pages'];?>
 <?php $this->renderPartial(Yii::app()->mf->siteType().'/_ticket_list', array('data' => $data3, 'pages' => $pages3, 'flag' => 1, 'id_user' => ''));?>
 </div>
-<? endif;?>
+<?php endif;?>
 </div>

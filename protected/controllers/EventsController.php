@@ -355,7 +355,7 @@ class EventsController extends Controller
 			'log'=>$log,
 			'buy_place'=>$buy_place,
 			'facebook_event'=>$facebook_event,
-                        'uniqEvent'=>$model->uniqium
+            'uniqEvent'=>$model->uniqium
 		));
 	}
 
@@ -1122,7 +1122,6 @@ class EventsController extends Controller
             foreach ($data['mail'] as $item)
                 mail($item, $title, $message);
         }
-    }
 		
 		$this->render(Yii::app()->mf->siteType(). '/sendAlert');
 	}

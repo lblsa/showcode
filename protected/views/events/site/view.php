@@ -533,9 +533,9 @@ if (Yii::app()->user->isAdmin() || Yii::app()->user->isCreator($model->id))
 
 <table id="social_networks_likes">
 	<tr>
+    <!--div id="fb-root"></div><div class="fb-like" data-href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/events/view/<?php echo $model->id; ?>" data-send="false" data-width="300" data-show-faces="false"></div-->
 		<td> <div id="vk_like"></div> </td>
 		<td>
-			<?/*<div id="fb-root"></div><div class="fb-like" data-href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/events/view/<?php echo $model->id; ?>" data-send="false" data-width="300" data-show-faces="false"></div>*/?>
 			<iframe src="http://www.facebook.com/plugins/like.php?href=https://<?php echo $_SERVER['HTTP_HOST']; ?>/events/view/<?php echo $model->id; ?>&amp;send=false&amp;layout=standard&amp;width=350&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:350px; height:35px;" allowTransparency="true"></iframe>
 		</td>
 
