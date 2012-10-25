@@ -365,7 +365,7 @@ class EventsController extends Controller
 	 */
 	public function actionCreate()
 	{
-                $this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column3';
+        $this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column3';
 		$this->datepicker();
 		$model=new Events;
 
@@ -374,6 +374,8 @@ class EventsController extends Controller
 		if(isset($_POST['Events']))
 		{
 			$model->attributes=$_POST['Events'];
+			$model->active = $_POST['Events']['active'];
+			
 			$model->id = sprintf('%x',crc32($model->title.time()));
 			$valid=true;
 			$item = Array();
@@ -452,7 +454,9 @@ class EventsController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		if(isset($_POST['Events']))
 		{
-			$model->attributes=$_POST['Events'];
+			
+			$model->attributes=$_POST['Events'];			
+			$model->active = $_POST['Events']['active'];
 			$model->delete_logo=$_POST['Events']['delete_logo'];
 
 			$tickets1s = Array();

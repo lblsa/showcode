@@ -230,7 +230,7 @@ class Events extends CActiveRecord
                 'tooLarge'=>'Изображение должно быть не больше 1024 * 1280 точек и не больше 2 МБ',
 				),*/
 			// По следующим атрибутам осуществляется поиск:
-			array('title, description, datetime, author, status, logo, facebook_eid,address', 'safe', 'on'=>'search'),
+			array('title, description, datetime, author, status, logo, facebook_eid,address, active', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -273,6 +273,7 @@ class Events extends CActiveRecord
 			'delete_logo' => 'Удалить логотип',
 			'addEventFacebook' => 'Добавить событие в Facebook',
 			'online' => 'Использовать оффлайн алгоритм проверки по ЭЦП',
+			'active' => 'Активное мероприятие',
 		);
 	}
 
@@ -299,6 +300,7 @@ class Events extends CActiveRecord
 			$criteria->compare('author',Yii::app()->user->id,true);
 		$criteria->compare('status',$this->status,true);
 		$criteria->compare('logo',$this->logo,true);
+		$criteria->compare('active',$this->active,true);
                 $criteria->order = 'datetime DESC';
 
 		return new CActiveDataProvider($this, array(
