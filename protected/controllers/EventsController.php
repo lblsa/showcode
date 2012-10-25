@@ -41,7 +41,7 @@ class EventsController extends Controller
 				//'expression' => array($this, 'isOrganizer'),
 			),
 			array('allow',			//для создателей мероприятия разрешено редактировать его и проверять билеты.
-				'actions'=>array('admin','update','checkTicket','passedList','public','protectionEmail'),
+				'actions'=>array('admin','update','checkTicket','passedList','public','protectionEmail', 'sendAlert'),
 				'expression' => 'yii::app()->user->isCreator($_GET["id"])',
 				//'expression' => array($this, 'isCreator'),
 			),
@@ -139,15 +139,15 @@ class EventsController extends Controller
                                 $a->password = md5($yourpass);
                                 $a->save();
                                 if($a->email){
-                                    $text = $a->getTextEmailAboutRegistration($yourpass);
-                                    Yii::app()->mf->mail_html($a->email,'noreply@'.$_SERVER[HTTP_HOST],Yii::app()->name,$text,'Регистрация в ' .Yii::app()->name. '!');
+                                    //$text = $a->getTextEmailAboutRegistration($yourpass);
+                                    //Yii::app()->mf->mail_html($a->email,'noreply@'.$_SERVER[HTTP_HOST],Yii::app()->name,$text,'Регистрация в ' .Yii::app()->name. '!');
                                     $user = User::model()->find('`email`=:email and `phone`=:phone', array(':phone'=>$a->phone, ':email'=>$a->email));
                                 }else{
                                     $user = User::model()->find('`phone`=:phone', array(':phone'=>$a->phone));
                                 }
 
-                                $message = Yii::app()->name. '.Пароль:' .$yourpass;
-                                $a->sendMessenge($message, $a->phone);
+                                //$message = Yii::app()->name. '.Пароль:' .$yourpass;
+                                //$a->sendMessenge($message, $a->phone);
                             }
 			}
 

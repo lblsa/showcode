@@ -490,7 +490,9 @@ echo '<div class="full_text_info_about_event'.$uniqEvent->prefix_class.'">';
 		)
 	); ?>
     <?php endif; ?>
-	<div style="margin: 10px;"><?php echo Chtml::Button('РАССЫЛКА СООБЩЕНИЙ', array('id'=>'sendAlert'));?></div>
+	 <?php if (Yii::app()->user->isAdmin() || Yii::app()->user->isCreator($model->id)): ?>
+		<div style="margin: 10px;"><?php echo Chtml::Button('РАССЫЛКА СООБЩЕНИЙ', array('id'=>'sendAlert'));?></div>
+	<?php endif;?>
 </div>
 </div>
 
