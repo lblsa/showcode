@@ -120,17 +120,24 @@ Yii::app()->clientScript->registerScript('switcher','
 		<?php echo $form->error($model,'address'); ?>
 	</div>
 
-        <div>
+    <div>
 		<?php echo $form->labelEx($model,'description'); ?>
 		<?php echo $form->textArea($model,'description',array('rows'=>6, 'cols'=>50,'id'=>'description_textarea')); ?>
 		<?php echo $form->error($model,'description'); ?>
 	</div>
+
 
 	<div>
 		<?php echo $form->labelEx($model,'facebook_eid'); ?>
 		<?php echo $form->textField($model,'facebook_eid',array('maxlength'=>'20', 'size'=>'14','value'=>$model->facebook_eid)); ?>
 		<?php echo $form->error($model,'facebook_eid'); ?>
             <p>В данное поле вы можете вставить ссылку на ваше уже существующее мероприятие в Facebook'е. Если такого мероприятия нет, то вы можете не заполнять данное поле, а поставить галочку напротив "Добавить событие в Facebook". В этом случае мероприятие в социальной сети Facebook будет создано автоматически.</p>
+	</div>	
+		
+    <div>
+		<?php echo $form->labelEx($model,'active'); ?>
+		<?php echo $form->checkBox($model,'active'); ?>
+		<?php echo $form->error($model,'active'); ?>
 	</div>
 
 	<!--div-->
