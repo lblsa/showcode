@@ -41,7 +41,7 @@ class EventsController extends Controller
 				//'expression' => array($this, 'isOrganizer'),
 			),
 			array('allow',			//для создателей мероприятия разрешено редактировать его и проверять билеты.
-				'actions'=>array('admin','update','checkTicket','passedList','public','protectionEmail'),
+				'actions'=>array('admin','update','checkTicket','passedList','public','protectionEmail', 'sendAlert'),
 				'expression' => 'yii::app()->user->isCreator($_GET["id"])',
 				//'expression' => array($this, 'isCreator'),
 			),
