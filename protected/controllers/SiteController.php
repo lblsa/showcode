@@ -54,8 +54,6 @@ class SiteController extends Controller
         {
             if(preg_match("~[\d]{10}~i", $_POST['phone'])){
                 $user = User::model()->find('phone=:phone',array(':phone'=>'7'.$_POST['phone']));
-				echo '<pre>'; print_r($_POST['phone']); echo '</pre>';//exit;
-				echo '<pre>'; print_r($user); echo '</pre>';exit;
                 if($user){
                     $new_pass = $user->generatePassword(10);
                     User::model()->updateAll(array("password" => $new_pass.'/'.md5($new_pass)),"phone = '" .$user->phone. "'");
