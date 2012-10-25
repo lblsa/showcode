@@ -1,8 +1,15 @@
 <style>
-#my_tick, #my_event, #all_tick
+#my_tick, #my_event, #all_tick_0, #all_tick_1, #all_tick_2
 {
-    margin-right: 10px;
-    margin-bottom: 10px;
+	height: 15px;
+	width: 20px;
+	padding-top: 15px;
+}
+
+.main_form_wrapper, .list_buy_events
+{
+	padding-left: 25px;
+	padding-right: 0px;
 }
 </style>
 <?php $this->pageTitle=Yii::app()->name.' - Список ваших билетов' ?>
@@ -13,35 +20,69 @@ $this->breadcrumbs=array(
 
 $this->menu=array(
 );
+
+$tickList = array('1'=>'Список моих купленных билетов', '2'=>'Список билетов на мои мероприятия');
+if(Yii::app()->user->isAdmin())
+	$tickList[] = 'Список всех билетов';
 ?>
 <div class="main_form_wrapper list_buy_events">
-<div>
-<?php //echo CHtml::button('Показать мои купленные билеты', array('id'=>'my_tick'));?>
-<?php //echo CHtml::checkBox('my_tick');?>
-</div>
-<h1 style="margin-bottom: 5px;">Список моих купленных билетов</h1>
-<div id="my_tick_list">
-<?php $t = TransactionLog::model()->getData(0, yii::app()->user->id);?>
-<?php $data = $t['data'];?>
-<?php $pages = $t['pages'];?>
-<?php $this->renderPartial(Yii::app()->mf->siteType().'/_ticket_list', array('data' => $data, 'pages' => $pages, 'flag' => 0, 'id_user' => yii::app()->user->id));?>
-</div>  
+	<h1 style="margin-bottom: 5px;"> <?php echo CHtml::radioButtonList('all_tick', $ch, $tickList);?></h1>
+	<div id="all_tick_list"  style="display: none;">
 
-<h1 style="margin-bottom: 5px;">Список билетов на мои мероприятия</h1>  
-<div id="my_ev_tick_list">
-<?php $t2 = TransactionLog::model()->getData(1, yii::app()->user->id);?>
-<?php $data2 = $t2['data'];?>
-<?php $pages2 = $t2['pages'];?>
-<?php $this->renderPartial(Yii::app()->mf->siteType().'/_ticket_list', array('data' => $data2, 'pages' => $pages2, 'flag' => 1, 'id_user' => yii::app()->user->id));?>
+	</div>
 </div>
 
-<?php if(yii::app()->user->isAdmin()):?>
-<h1 style="margin-bottom: 5px;">Список всех билетов</h1>    
-<div id="all_tick_list">
-<?php $t3 = TransactionLog::model()->getData(1, '');?>
-<?php $data3 = $t3['data'];?>
-<?php $pages3 = $t3['pages'];?>
-<?php $this->renderPartial(Yii::app()->mf->siteType().'/_ticket_list', array('data' => $data3, 'pages' => $pages3, 'flag' => 1, 'id_user' => ''));?>
-</div>
-<? endif;?>
-</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		
+		<?php if($ch==1):?>
+			$.get("<?php echo CHtml::normalizeUrl(array('transactionLog/ajaxTicketList'))?>", {'flag' : 0, 'user_id' : <?php echo Yii::app()->user->id;?>, 'num' : 1, 'page' : <?php echo $pages;?>},  function(data){
+				
+				$('#all_tick_list').empty();
+				$(data).appendTo('#all_tick_list');
+				$('#all_tick_list').fadeIn(900);
+			});	
+		<?php endif;?>
+		<?php if($ch==3):?>
+			$.get("<?php echo CHtml::normalizeUrl(array('transactionLog/ajaxTicketList'))?>", {'flag' : 1, 'user_id' : <?php echo Yii::app()->user->id;?>, 'num' : 2, 'page' : <?php echo $pages;?>},  function(data){
+				
+				$('#all_tick_list').empty();
+				$(data).appendTo('#all_tick_list');
+				$('#all_tick_list').fadeIn(900);
+			});	
+		<?php endif;?>
+		<?php if($ch==3):?>
+			$.get("<?php echo CHtml::normalizeUrl(array('transactionLog/ajaxTicketList'))?>", {'flag' : 1, 'user_id' : '', 'num' : 3, 'page' : <?php echo $pages;?>},  function(data){
+				
+				$('#all_tick_list').empty();
+				$(data).appendTo('#all_tick_list');
+				$('#all_tick_list').fadeIn(900);
+			});	
+		<?php endif;?>
+		
+		$('#all_tick_0').click(function(){
+			$.get("<?php echo CHtml::normalizeUrl(array('transactionLog/ajaxTicketList'))?>", {'flag' : 0, 'user_id' : <?php echo Yii::app()->user->id;?>, 'num' : 1, 'page' : <?php echo $pages;?>},  function(data){
+				$('#all_tick_list').empty();
+				$(data).appendTo('#all_tick_list');
+				$('#all_tick_list').fadeIn(900);
+			});		
+		});
+		
+		$('#all_tick_1').click(function(){
+			$.get("<?php echo CHtml::normalizeUrl(array('transactionLog/ajaxTicketList'))?>", {'flag' : 1, 'user_id' : <?php echo Yii::app()->user->id;?>, 'num' : 2, 'page' : <?php echo $pages;?>},  function(data){
+				
+				$('#all_tick_list').empty();
+				$(data).appendTo('#all_tick_list');
+				$('#all_tick_list').fadeIn(900);
+			});		
+		});
+		
+		$('#all_tick_2').click(function(){
+			$.get("<?php echo CHtml::normalizeUrl(array('transactionLog/ajaxTicketList'))?>", {'flag' : 1, 'user_id' : '', 'num' : 3, 'page' : <?php echo $pages;?>},  function(data){
+				$('#all_tick_list').empty();
+				$(data).appendTo('#all_tick_list');
+				$('#all_tick_list').fadeIn(900);
+			});		
+		});
+	});
+</script>
