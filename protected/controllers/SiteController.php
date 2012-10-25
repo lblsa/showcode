@@ -54,7 +54,6 @@ class SiteController extends Controller
         {
             if(preg_match("~[\d]{10}~i", $_POST['phone'])){
                 $user = User::model()->find('phone=:phone',array(':phone'=>'7'.$_POST['phone']));
-
                 if($user){
                     $new_pass = $user->generatePassword(10);
                     User::model()->updateAll(array("password" => $new_pass.'/'.md5($new_pass)),"phone = '" .$user->phone. "'");
@@ -68,10 +67,10 @@ class SiteController extends Controller
                     $user->sendMessenge($message, $user->phone);
                     $this->render(Yii::app()->mf->siteType(). '/recovery',array('answer'=>1,'phone'=>$user->phone));
                 }else{
-                    $this->render(Yii::app()->mf->siteType(). '/recovery',array('error_user'=>1,'phone'=>'7'.$_POST['phone']));
+                    $this->render(Yii::app()->mf->siteType(). '/recovery',array('error_user'=>1,'phone'=>$_POST['phone']));
                 }
             }else{
-                $this->render(Yii::app()->mf->siteType(). '/recovery',array('error_phone'=>1,'phone'=>'7'.$_POST['phone']));
+                $this->render(Yii::app()->mf->siteType(). '/recovery',array('error_phone'=>1,'phone'=>$_POST['phone']));
             }
         }
 		else
