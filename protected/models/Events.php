@@ -272,7 +272,7 @@ class Events extends CActiveRecord
 			'general_key' => 'Общий ключ',
 			'delete_logo' => 'Удалить логотип',
 			'addEventFacebook' => 'Добавить событие в Facebook',
-			'online' => 'Будет доступна online',
+			'online' => 'Использовать оффлайн алгоритм проверки по ЭЦП',
 		);
 	}
 
