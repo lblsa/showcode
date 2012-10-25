@@ -30,7 +30,7 @@ class TransactionLogController extends Controller
 	{
 		return array(
 			array('allow',  	// разрешает всем пользователям выполнять действия delete.
-				'actions'=>array('GetQrCodeTicket','paymentClient', 'ajaxShosTickets'),
+				'actions'=>array('GetQrCodeTicket','paymentClient', 'ajaxTicketList'),
                                 'users'=>array('*','@'),
 			),
 
@@ -62,8 +62,32 @@ class TransactionLogController extends Controller
 	public function actionIndex()
     {
         $this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column2';
-        $this->render(Yii::app()->mf->siteType(). '/index');
+		
+		//echo '<pre>'; print_r($_GET); echo '</pre>';exit;
+		
+		$ch = 0;
+		
+		$pages = (int)$_GET['page'];
+		
+		if($_GET['num']==1)
+			$ch = 1;
+		if($_GET['num']==2)
+			$ch = 2;
+		if($_GET['num']==3)
+			$ch = 3;
+		
+        $this->render(Yii::app()->mf->siteType(). '/index', array('pages'=>$pages, 'ch'=>$ch, 'flag'=>$flag, 'user_id'=>$user_id));
     }
+	
+	//список билетов
+	public function actionAjaxTicketList($flag, $user_id, $num, $page)
+	{
+		$t = TransactionLog::model()->getData($flag, $user_id);
+		$data = $t['data'];
+		$pages = $t['pages'];
+		$pages->validateCurrentPage = $page;
+		$this->renderPartial(Yii::app()->mf->siteType().'/_ticket_list', array('data' => $data, 'pages' => $pages, 'flag' => 1, 'id_user' => '', 'num'=>$num));
+	}
 
 	/**
 	 * Выводит Билет на дисплей.
