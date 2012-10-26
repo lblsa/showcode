@@ -2,18 +2,21 @@
 	#sendAlert
 	{
 		height: 40px;
+		width: 180px;
 		border: none;
-		color: white;
-		font- size: 200%;
-		padding: 5px;
-		background: #FF2600;
+		color: #bf5000;
+		font- wight: bold;
+		font-size: 142%;
+		padding-left: 1px;
+		/*background: #FF2600;
 		background: -moz-linear-gradient(top, #FF2600, #2B0F00);
 		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FF2600), color-stop(100%,#2B0F00));
 		background: -webkit-linear-gradient(top, #FF2600, #2B0F00);
 		background: -o-linear-gradient(top, #FF2600, #2B0F00);
 		background: -ms-linear-gradient(top, #FF2600, #2B0F00);
 		background: linear-gradient(top, #FF2600, #2B0F00);
-		border-radius: 10px;
+		border-radius: 10px;*/
+		background: url('/images/button_bg.png');
 		cursor: pointer;
 	}
 </style>
@@ -329,7 +332,7 @@ echo '<div class="full_text_info_about_event'.$uniqEvent->prefix_class.'">';
 	); ?>
     <?php endif; ?>
 	 <?php if (Yii::app()->user->isAdmin() || Yii::app()->user->isCreator($model->id)): ?>
-		<div style="margin: 10px;"><?php echo Chtml::Button('РАССЫЛКА СООБЩЕНИЙ', array('id'=>'sendAlert'));?></div>
+		<div style="margin-top: 10px;"><?php echo Chtml::Button('Рассылка оповещений', array('id'=>'sendAlert'));?></div>
 	<?php endif;?>
 </div>
 </div>

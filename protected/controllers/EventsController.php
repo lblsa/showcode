@@ -1081,52 +1081,63 @@ class EventsController extends Controller
 	
 	//рассылка оповещений
 	public function actionSendAlert($id)
-    {
-        $this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column3';
-
-        // Значения по умолчанию
-        $mobile = 0;
-        $mail = 0;
-        $title = "Информация о мероприятии 'название'";
-
-        if (isset($_POST))
-        {
-            if(!empty($title))
-                $title = $_POST['title'];
-
-            $message = $_POST['text'];
-
-            if (isset($_POST['mobile']))
-                $mobile = 1;
-
-            if (isset($_POST['mail']))
-                $mail = 1;
-
-            $transactions = TransactionLog::model()->findAllByAttributes(array('event_id'=>$id));			
-
-            $data = array();
-            $data['mobile'] = array();
-            $data['mail'] = array();
-
-            foreach ($transactions as $transaction)
-            {
-                if ($mobile==1)
-                    $data['mobile'][] = $transaction->phone;
-
-                if ($mail==1)
-                    $data['mail'][] = $transaction->mail;				
-            }
-
-            //чтобы 2 раза не высылать
-            $data=array_unique($data);
-
-            foreach ($data['mobile'] as $item)
-                User::model()->sendMessenge($message, $item, 0);
-
-            foreach ($data['mail'] as $item)
-                mail($item, $title, $message);
-        }
+	{
+		$this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column3';
 		
-		$this->render(Yii::app()->mf->siteType(). '/sendAlert');
+		$transactions = TransactionLog::model()->findAllByAttributes(array('event_id'=>$id));	
+		
+		$i = 0;
+		$data = array();
+		
+		foreach ($transactions as $transaction)
+		{
+			$data[$i]['phone'] = $transaction->phone;
+			$data[$i]['mail'] = $transaction->mail;			
+			$data[$i]['family'] = $transaction->family;			
+			$data[$i]['user_id'] = $transaction->user_id;			
+			$i++;
+		}
+
+		//чтобы 2 раза не высылать
+		$data=array_unique($data);
+
+		if (!empty($_POST))
+		{
+			$title = $_POST['title'];
+			
+			if(empty($title))
+				$title = "Информация о мероприятии 'название'";
+			$message = $_POST['text'];
+			
+			if (isset($_POST['mobile']))
+				$mobile = 1;
+			else
+				$mobile = 0;
+				
+			if (isset($_POST['mail']))
+				$mail = 1;
+			else
+				$mail = 0;
+			
+			$users = $_POST['user'];
+			
+			foreach ($users as $user_id)
+			{
+				$transactions = TransactionLog::model()->findByAttributes(array('event_id'=>$id, 'user_id'=>$user_id));			
+
+				if ($mobile==1)
+				{
+					$phone = $transactions->phone;
+					User::model()->sendMessenge($message, $phone, 0);
+				}
+				if ($mail==1)
+				{
+					$email = $transactions->mail;		
+					mail($email, $title, $message);
+				}
+			}
+		}
+		
+		$this->render(Yii::app()->mf->siteType(). '/sendAlert', array('data'=>$data));
 	}
 }
