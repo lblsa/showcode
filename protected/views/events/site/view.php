@@ -27,173 +27,12 @@ if($model->place)
 	$places = $model->place;
 else
 	$places = 0;
-
-Yii::app()->clientScript->registerScript('name_js1','
-	var count_place = '.$places.';
-	var places = Array();
-	var placesCount = 0;
-	$("#button_bye").click(function()
-	{
-            $("body").css("overflow","hidden")
-            $("div.payment").show();
-            $("#button_bye").hide();
-            return false;
-	});
-        $("#buy_close").click(function()
-	{
-            $("body").css("overflow","");
-            $("div.payment").hide();
-            $("#button_bye").show();
-            return false;
-	});
-
-        $("#mapLocation").click(function()
-	{
-            $("body").css("overflow","hidden")
-            $("div#map-zoo").css("visibility","visible");
-            return false;
-	});
-        $("#buy_close-zoo").click(function()
-	{
-            $("body").css("overflow","");
-            $("div#map-zoo").css("visibility","hidden");
-            return false;
-	});
-
-	if ($("#click").val()=="click")
-		$("#button_bye").click();
-
-	$("#TransactionLog_quantity").keyup(function()
-	{
-		var q = parseInt($("#TransactionLog_quantity").val());
-		var radio_inputs = $(".grid-view input");
-		for(var i = 0; i < radio_inputs.length; i++){
-			if(radio_inputs[i].checked){
-				var elem = radio_inputs[i];
-			}
-		}
-		if(elem){
-			var price = parseInt($(elem).attr("price"));
-			var quantity_max = parseInt($(elem).attr("quantity"));
-
-			if (q >= 0)
-				$("input[name=summ]").val(q*price);
-			if (q > quantity_max || !q)
-			{
-				$("#TransactionLog_quantity").val(0);
-				$("input[name=summ]").val(0);
-			}
-		}else{
-
-                    $("#TransactionLog_quantity").val(0);
-                    $("input[name=summ]").val(0);
-                    alert("Выберите билет");
-		}
-	});
-
-	$("#htmlcode").click(function()
-	{
-		$("#htmlcode").attr("rows","9");
-	});
-
-	$("td.place").click(function(){
-		var place = this;
-		var placeClass = place.className;
-		var iplace = parseInt($(place).attr("place"));
-		var icolumn = parseInt($(place).attr("column"));
-		var id = (icolumn - 1) * count_place + iplace;
-		if (!places["order_" + id]) {
-			if (placesCount < 5) {
-				if (placeClass == "place") {
-					place.className = "place select_place";
-					$(place).css("background", "#429FCC");
-				}
-				places["order_" + id] = {"place": iplace, "column": icolumn};
-				placesCount++;
-			} else {
-				alert("\u041C\u043E\u0436\u043D\u043E \u0437\u0430\u0431\u0440\u043E\u043D\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u043D\u0435 \u0431\u043E\u043B\u0435\u0435 5 \u043C\u0435\u0441\u0442");
-			}
-		} else {
-			if (placeClass == "place select_place") {
-				place.className = "place";
-				$(place).css("background", "#FFF");
-			}
-			places["order_" + id] = null;
-			placesCount--;
-		}
-	});
-
-	$("td.place").mouseover(function(){
-		if(placesCount > 0){
-			var darw = true;
-			for(var id in places){
-				if (!places[id] || (places[id]["place"] != $(this).attr("place") && places[id]["column"] != $(this).attr("column")))
-					darw = true;
-				else{
-					darw = false;
-					break;
-				}
-			}
-			if(darw){
-				$(this).css("background", "#AAE6FF");
-			}
-		}else{
-			$(this).css("background", "#AAE6FF");
-		}
-	});
-
-	$("td.place").mouseout(function(){
-		if(placesCount > 0){
-			var darw = true;
-			for(var id in places){
-				if (!places[id] || (places[id]["place"] != $(this).attr("place") && places[id]["column"] != $(this).attr("column")))
-					darw = true;
-				else{
-					darw = false;
-					break;
-				}
-			}
-			if(darw){
-				$(this).css("background", "#FFF");
-			}
-		}else{
-			$(this).css("background", "#FFF");
-		}
-	});
-
-	$("input[name=\"TransactionLog[payment]\"]").click(function(){
-	if ($("#isPlace").val()==1 && placesCount < 1)
-	{
-		alert("Сначала выберете место!");
-		$(this).removeAttr("checked");
-	}});
-
-        $("input[name=\"TransactionLog[ticket_id]\"]").click(function(){
-	if ($("#isPlace").val()==1 && placesCount < 1)
-	{
-		alert("Сначала выберете место!");
-		$(this).removeAttr("checked");
-	}});
-
-	$("#submit_save_button").click(function(){
-		if(placesCount > 0){
-			var html = "";
-			for(var id in places){
-				html = "";
-				html += "<input id=\"TransactionLog_place\" type=\"hidden\" name=\"TransactionLog[place][]\" value=\""+places[id]["place"]+"\">";
-				html += "<input id=\"TransactionLog_column\" type=\"hidden\" name=\"TransactionLog[column][]\" value=\""+places[id]["column"]+"\">";
-				$("#TransactionLog_event_id").after(html);
-			}
-		}
-	});
-');
-
 Yii::app()->clientScript->registerScriptFile('https://userapi.com/js/api/openapi.js?34', CClientScript::POS_HEAD);
 $id_api_vk = intval(Yii::app()->params["vk_id"]);
-Yii::app()->clientScript->registerScript('vkontakte_like','
+/*Yii::app()->clientScript->registerScript('vkontakte_like','
 	VK.init({apiId: '.$id_api_vk.', onlyWidgets: true});
 	VK.Widgets.Like("vk_like", {type: "button"});
-');
+');*/
 /*
 Yii::app()->clientScript->registerScript('facebook_like','
 	(function(d){
@@ -204,9 +43,6 @@ Yii::app()->clientScript->registerScript('facebook_like','
 	}(document));
 ');*/
 ?>
-
-
-
 
 <?php
 $this->breadcrumbs=array(
@@ -233,9 +69,11 @@ else if(yii::app()->user->isAdmin() || yii::app()->user->isOrganizer())
 }
 if (yii::app()->user->isAdmin() || yii::app()->user->isCreator($model->id))
         if($model->status != 'published')
-            $this->menu[]=array('label'=>'Удалить мероприятие', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Вы действительно хотите удалить мероприятие?'));
+            $this->menu[]=array('label'=>'Удалить мероприятие', 'url'=>'', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Вы действительно хотите удалить мероприятие?'));
         else
             $this->menu[]=array('label'=>'Статистика', 'url'=>'#', 'linkOptions'=>array('submit'=>array('/statistics'),'params'=>array('TransactionLog[user_id]' => $model->author,'TransactionLog[event_id]'=>$model->id,'TransactionLog[period]'=>'weeks','TransactionLog[date_begin]'=> date('d.m.Y', mktime(0, 0, 0, date("m")-2, date("d"), date("Y"))),'TransactionLog[date_end]'=>date('d.m.Y'))));
+			
+            //$this->menu[]=array('label'=>'Статистика', 'url'=>array('/statistics', 'TransactionLog[user_id]' => $model->author,'TransactionLog[event_id]'=>$model->id,'TransactionLog[period]'=>'weeks','TransactionLog[date_begin]'=> date('d.m.Y', mktime(0, 0, 0, date("m")-2, date("d"), date("Y"))),'TransactionLog[date_end]'=>date('d.m.Y')));
 
 if (yii::app()->user->isCreator($model->id) && $model->status == 'published')
 {
@@ -763,6 +601,175 @@ if (Yii::app()->user->isAdmin() || Yii::app()->user->isCreator($model->id))
 
 		document.location.href = "<?php echo CHtml::normalizeUrl(array('events/sendAlert', 'id'=>$model->id))?>"
 	
+	});
+	
+	var count_place = <?php echo $places;?>;
+	var places = Array();
+	var placesCount = 0;
+	$("#button_bye").click(function()
+	{
+		active = <?php echo $model->active;?>;
+		if(active!=1)
+		{
+			alert('Вы не можете купить билет на данное мероприятие, так как оно не является активным!');
+			return;
+		}
+		else
+		{
+			$("body").css("overflow","hidden")
+			$("div.payment").show();
+			$("#button_bye").hide();
+			return false;
+		}
+	});
+	
+    $("#buy_close").click(function()
+	{
+		$("body").css("overflow","");
+		$("div.payment").hide();
+		$("#button_bye").show();
+		return false;
+	});
+	
+	$("#mapLocation").click(function()
+	{
+		$("body").css("overflow","hidden")
+		$("div#map-zoo").css("visibility","visible");
+		return false;
+	});
+    
+	$("#buy_close-zoo").click(function()
+	{
+		$("body").css("overflow","");
+		$("div#map-zoo").css("visibility","hidden");
+		return false;
+	});
+
+	if ($("#click").val()=="click")
+		$("#button_bye").click();
+
+	$("#TransactionLog_quantity").keyup(function()
+	{
+		var q = parseInt($("#TransactionLog_quantity").val());
+		var radio_inputs = $(".grid-view input");
+		for(var i = 0; i < radio_inputs.length; i++){
+			if(radio_inputs[i].checked){
+				var elem = radio_inputs[i];
+			}
+		}
+		if(elem){
+			var price = parseInt($(elem).attr("price"));
+			var quantity_max = parseInt($(elem).attr("quantity"));
+
+			if (q >= 0)
+				$("input[name=summ]").val(q*price);
+			if (q > quantity_max || !q)
+			{
+				$("#TransactionLog_quantity").val(0);
+				$("input[name=summ]").val(0);
+			}
+		}else{
+
+                    $("#TransactionLog_quantity").val(0);
+                    $("input[name=summ]").val(0);
+                    alert("Выберите билет");
+		}
+	});
+
+	$("#htmlcode").click(function()
+	{
+		$("#htmlcode").attr("rows","9");
+	});
+
+	$("td.place").click(function(){
+		var place = this;
+		var placeClass = place.className;
+		var iplace = parseInt($(place).attr("place"));
+		var icolumn = parseInt($(place).attr("column"));
+		var id = (icolumn - 1) * count_place + iplace;
+		if (!places["order_" + id]) {
+			if (placesCount < 5) {
+				if (placeClass == "place") {
+					place.className = "place select_place";
+					$(place).css("background", "#429FCC");
+				}
+				places["order_" + id] = {"place": iplace, "column": icolumn};
+				placesCount++;
+			} else {
+				alert("\u041C\u043E\u0436\u043D\u043E \u0437\u0430\u0431\u0440\u043E\u043D\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u043D\u0435 \u0431\u043E\u043B\u0435\u0435 5 \u043C\u0435\u0441\u0442");
+			}
+		} else {
+			if (placeClass == "place select_place") {
+				place.className = "place";
+				$(place).css("background", "#FFF");
+			}
+			places["order_" + id] = null;
+			placesCount--;
+		}
+	});
+
+	$("td.place").mouseover(function(){
+		if(placesCount > 0){
+			var darw = true;
+			for(var id in places){
+				if (!places[id] || (places[id]["place"] != $(this).attr("place") && places[id]["column"] != $(this).attr("column")))
+					darw = true;
+				else{
+					darw = false;
+					break;
+				}
+			}
+			if(darw){
+				$(this).css("background", "#AAE6FF");
+			}
+		}else{
+			$(this).css("background", "#AAE6FF");
+		}
+	});
+
+	$("td.place").mouseout(function(){
+		if(placesCount > 0){
+			var darw = true;
+			for(var id in places){
+				if (!places[id] || (places[id]["place"] != $(this).attr("place") && places[id]["column"] != $(this).attr("column")))
+					darw = true;
+				else{
+					darw = false;
+					break;
+				}
+			}
+			if(darw){
+				$(this).css("background", "#FFF");
+			}
+		}else{
+			$(this).css("background", "#FFF");
+		}
+	});
+
+	$("input[name=\"TransactionLog[payment]\"]").click(function(){
+	if ($("#isPlace").val()==1 && placesCount < 1)
+	{
+		alert("Сначала выберете место!");
+		$(this).removeAttr("checked");
+	}});
+
+        $("input[name=\"TransactionLog[ticket_id]\"]").click(function(){
+	if ($("#isPlace").val()==1 && placesCount < 1)
+	{
+		alert("Сначала выберете место!");
+		$(this).removeAttr("checked");
+	}});
+
+	$("#submit_save_button").click(function(){
+		if(placesCount > 0){
+			var html = "";
+			for(var id in places){
+				html = "";
+				html += "<input id=\"TransactionLog_place\" type=\"hidden\" name=\"TransactionLog[place][]\" value=\""+places[id]["place"]+"\">";
+				html += "<input id=\"TransactionLog_column\" type=\"hidden\" name=\"TransactionLog[column][]\" value=\""+places[id]["column"]+"\">";
+				$("#TransactionLog_event_id").after(html);
+			}
+		}
 	});
 </script>
 

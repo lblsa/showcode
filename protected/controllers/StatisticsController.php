@@ -230,12 +230,13 @@ class StatisticsController extends Controller
 				), true);
 		
 		//отправляем письмо
-		$headers .= "Content-Type: text/html; charset=windows-1251";
+		$fromMail = 'noreply@'.$_SERVER[HTTP_HOST];
 	
 		$to = User::model()->findByAttributes(array('user_id'=>Yii::app()->user->id))->email;
 		$title = 'Статистика  по мероприятию «'.Events::model()->getEventTitle($event_id).'»';
 		
-		mail($to, $title, $data, $headers);
+		//mail($to, $title, $data, $headers);
+		Yii::app()->mf->mail_html($to,$fromMail,Yii::app()->name,$data,$title);
 	}
 	public function SendMail($event_id = 0, $user_id = 0)
 	{

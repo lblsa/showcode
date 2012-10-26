@@ -47,6 +47,6 @@
 		val = $('#mailer option:selected').val();
 		event_id = '<?php echo $tickets->event_id; ?>';
 		
-		$.get("<?php echo CHtml::normalizeUrl(array('statistics/ajaxSendStat'))?>", {'select' : val, 'event_id'  : event_id}, function(data){ alert(data);return true;	});
+		$.get("<?php echo CHtml::normalizeUrl(array('statistics/ajaxSendStat'))?>", {'select' : val, 'event_id'  : event_id}, function(data){ return true;	});
 	});
 </script>
