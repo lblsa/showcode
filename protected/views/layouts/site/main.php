@@ -291,7 +291,7 @@
     <!-- Additional call Google Analitics-->
     <script type="text/javascript">
       var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-32225755-1']);
+      _gaq.push(['_setAccount', 'UA-35615279-1']);
       _gaq.push(['_trackPageview']);
 
       (function() {
