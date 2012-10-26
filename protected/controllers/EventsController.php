@@ -1083,8 +1083,25 @@ class EventsController extends Controller
 	public function actionSendAlert($id)
 	{
 		$this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column3';
+		
+		$transactions = TransactionLog::model()->findAllByAttributes(array('event_id'=>$id));	
+		
+		$i = 0;
+		$data = array();
+		
+		foreach ($transactions as $transaction)
+		{
+			$data[$i]['phone'] = $transaction->phone;
+			$data[$i]['mail'] = $transaction->mail;			
+			$data[$i]['family'] = $transaction->family;			
+			$data[$i]['user_id'] = $transaction->user_id;			
+			$i++;
+		}
 
-		if (isset($_POST))
+		//чтобы 2 раза не высылать
+		$data=array_unique($data);
+
+		if (!empty($_POST))
 		{
 			$title = $_POST['title'];
 			
@@ -1102,33 +1119,35 @@ class EventsController extends Controller
 			else
 				$mail = 0;
 			
-			$transactions = TransactionLog::model()->findAllByAttributes(array('event_id'=>$id));			
-
-			$data = array();
+			$users = $_POST['user'];
 			
-			foreach ($transactions as $transaction)
+			foreach ($users as $user_id)
 			{
-				if ($mobile==1)
-					$data[] = $transaction->phone;
-				if ($mail==1)
-					$data[] = $transaction->mail;				
-			}
+				$transactions = TransactionLog::model()->findByAttributes(array('event_id'=>$id, 'user_id'=>$user_id));			
 
-			//чтобы 2 раза не высылать
-			$data=array_unique($data);
-			
-			foreach ($data as $item)
-			{
-				//шлем спам :)
-				if ($mobile==1)
-					User::model()->sendMessenge($message, $item, 0);
-				if ($mail==1)
+				//$data = array();
+				
+				//foreach ($transactions as $transaction)
 				{
-					mail($item, $title, $message);
+					if ($mobile==1)
+						$phone = $transactions->phone;
+					if ($mail==1)
+						$email = $transactions->mail;				
+				}
+
+				//foreach ($data as $item)
+				{
+					//шлем спам :)
+					if ($mobile==1)
+						User::model()->sendMessenge($message, $phone, 0);
+					if ($mail==1)
+					{
+						mail($email, $title, $message);
+					}
 				}
 			}
 		}
 		
-		$this->render(Yii::app()->mf->siteType(). '/sendAlert');
+		$this->render(Yii::app()->mf->siteType(). '/sendAlert', array('data'=>$data));
 	}
 }
