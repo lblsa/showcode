@@ -612,6 +612,7 @@ if (Yii::app()->user->isAdmin() || Yii::app()->user->isCreator($model->id))
 	$("#button_bye").click(function()
 	{
 		active = <?php echo $model->active;?>;
+		cTickets = <?php echo $ticket[0]->quantity?>;
 		if(active!=1)
 		{
 			alert('Вы не можете купить билет на данное мероприятие, так как оно не является активным!');
@@ -619,10 +620,19 @@ if (Yii::app()->user->isAdmin() || Yii::app()->user->isCreator($model->id))
 		}
 		else
 		{
-			$("body").css("overflow","hidden")
-			$("div.payment").show();
-			$("#button_bye").hide();
-			return false;
+			if(cTickets==0)
+			{
+				alert('Билеты на данное мероприятие закончились!');
+				return;
+			}
+			else
+			{
+				$("body").css("overflow","hidden")
+				$("div.payment").show();
+				$("#button_bye").hide();
+				return false;			
+			}
+
 		}
 	});
 	
