@@ -1,5 +1,6 @@
 <div id="authorization_form">
-    <?php echo CHtml::beginForm(array('site/login'),'post', array('id'=>'login-form')); ?>
+    <?php //echo CHtml::beginForm(array('site/login'),'post', array('id'=>'login-form')); ?>
+	<?php echo "<form action = 'https://".$_SERVER[HTTP_HOST]."/site/login' id = 'login-form' method='post'>";?>
         <div id="login">
             <p>
                 <?php //echo CHtml::label('Номер телефона','LoginForm_phone'); ?>
@@ -17,5 +18,6 @@
                 <?php //echo CHtml::error($model,'password'); ?>
             </p>
         </div>        
-    <?php echo CHtml::endForm(); ?>
+    <?php //echo CHtml::endForm(); ?>
+	</form>
 </div>
