@@ -1125,25 +1125,15 @@ class EventsController extends Controller
 			{
 				$transactions = TransactionLog::model()->findByAttributes(array('event_id'=>$id, 'user_id'=>$user_id));			
 
-				//$data = array();
-				
-				//foreach ($transactions as $transaction)
+				if ($mobile==1)
 				{
-					if ($mobile==1)
-						$phone = $transactions->phone;
-					if ($mail==1)
-						$email = $transactions->mail;				
+					$phone = $transactions->phone;
+					User::model()->sendMessenge($message, $phone, 0);
 				}
-
-				//foreach ($data as $item)
+				if ($mail==1)
 				{
-					//шлем спам :)
-					if ($mobile==1)
-						User::model()->sendMessenge($message, $phone, 0);
-					if ($mail==1)
-					{
-						mail($email, $title, $message);
-					}
+					$email = $transactions->mail;		
+					mail($email, $title, $message);
 				}
 			}
 		}
