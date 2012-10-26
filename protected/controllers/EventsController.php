@@ -355,7 +355,7 @@ class EventsController extends Controller
 			'log'=>$log,
 			'buy_place'=>$buy_place,
 			'facebook_event'=>$facebook_event,
-                        'uniqEvent'=>$model->uniqium
+            'uniqEvent'=>$model->uniqium
 		));
 	}
 
