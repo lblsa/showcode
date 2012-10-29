@@ -1,24 +1,37 @@
 <style>
-	#sendAlert
+
+	.edit_event_buttons
 	{
-		height: 40px;
-		width: 180px;
-		border: none;
-		color: #bf5000;
-		font- wight: bold;
-		font-size: 142%;
-		padding-left: 1px;
-		/*background: #FF2600;
-		background: -moz-linear-gradient(top, #FF2600, #2B0F00);
-		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FF2600), color-stop(100%,#2B0F00));
-		background: -webkit-linear-gradient(top, #FF2600, #2B0F00);
-		background: -o-linear-gradient(top, #FF2600, #2B0F00);
-		background: -ms-linear-gradient(top, #FF2600, #2B0F00);
-		background: linear-gradient(top, #FF2600, #2B0F00);
-		border-radius: 10px;*/
-		background: url('/images/button_bg.png');
-		cursor: pointer;
+		position: static;
+		width: 280px;
+		margin-left: 60px;
+		text-align: left;
+		margin-top: 0;
+		padding-top: 0;
+		top: 0;
+		
 	}
+	.edit_event_buttons a
+	{
+		display: block;
+		background: url('/images/bg/button_slider_bg.png');
+		text-align: left;
+		margin-top: 5px;
+		line-height: 0px;
+	}
+	
+	div.detail-view
+	{
+		margin: 0;
+		padding: 0;
+		float: left;
+	}
+	
+	.buy_ticket_and_back_to_events
+	{
+		margin-top: 30px;
+	}
+	
 </style>
 
 <?php $this->pageTitle=Yii::app()->name.' - Мероприятие "'.$model->title.'"' ?>
@@ -84,8 +97,9 @@ if (yii::app()->user->isCreator($model->id) && $model->status == 'published')
 	$this->menu[]=array('label'=>'Проверка билетов', 'url'=>array('checkTicket', 'id'=>$model->id));
     $this->menu[]=array('label'=>'Письмо с билетами', 'url'=>array('protectionEmail', 'id'=>$model->id));
 }
+if(Yii::app()->user->isAdmin() || Yii::app()->user->isCreator($model->id))
+	$this->menu[]=array('label'=>'Рассылка оповещений', 'url'=>'', 'linkOptions'=>array('id'=>'sendAlert'));
 ?>
-
 <!--<h2>Просмотр события: <?php //echo $model->title; ?></h2>-->
 
 <?php if(!$uniqEvent): ?>
@@ -299,7 +313,9 @@ echo '<div class="full_text_info_about_event'.$uniqEvent->prefix_class.'">';
         ));
     ?>
 <?php endif; ?>
+<div id="clone_menu" style="float: left">
 
+</div>
 <div class="clear"></div>
 <!-- links -->
 <div class="buy_ticket_and_back_to_events<?php echo $uniqEvent->prefix_class ?>">
@@ -331,9 +347,6 @@ echo '<div class="full_text_info_about_event'.$uniqEvent->prefix_class.'">';
 		)
 	); ?>
     <?php endif; ?>
-	 <?php if (Yii::app()->user->isAdmin() || Yii::app()->user->isCreator($model->id)): ?>
-		<div style="margin-top: 10px;"><?php echo Chtml::Button('Рассылка оповещений', array('id'=>'sendAlert'));?></div>
-	<?php endif;?>
 </div>
 </div>
 
@@ -606,12 +619,17 @@ if (Yii::app()->user->isAdmin() || Yii::app()->user->isCreator($model->id))
 	
 	});
 	
+	$(document).ready(function(){
+		$('.edit_event_buttons').appendTo('#clone_menu');
+	});
+	
 	var count_place = <?php echo $places;?>;
 	var places = Array();
 	var placesCount = 0;
 	$("#button_bye").click(function()
 	{
 		active = <?php echo $model->active;?>;
+		cTickets = <?php echo $ticket[0]->quantity?>;
 		if(active!=1)
 		{
 			alert('Вы не можете купить билет на данное мероприятие, так как оно не является активным!');
@@ -619,10 +637,19 @@ if (Yii::app()->user->isAdmin() || Yii::app()->user->isCreator($model->id))
 		}
 		else
 		{
-			$("body").css("overflow","hidden")
-			$("div.payment").show();
-			$("#button_bye").hide();
-			return false;
+			if(cTickets==0)
+			{
+				alert('Билеты на данное мероприятие закончились!');
+				return;
+			}
+			else
+			{
+				$("body").css("overflow","hidden")
+				$("div.payment").show();
+				$("#button_bye").hide();
+				return false;			
+			}
+
 		}
 	});
 	
