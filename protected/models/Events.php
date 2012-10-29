@@ -218,7 +218,7 @@ class Events extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('title, description, status, date, time,address', 'required', 'message'=>'Не может быть пустым'),
+			array('title, status, date, time', 'required', 'message'=>'Не может быть пустым'),
 			array('column, place, facebook_eid', 'numerical', 'integerOnly'=>true, 'message'=>'Вводите только числа'),
 			array('column, place', 'length', 'max'=>3),
 			array('addEventFacebook', 'boolean'),
@@ -258,7 +258,7 @@ class Events extends CActiveRecord
 			'title' => 'Название',
 			'uniq' => 'Уникальный ключ',
 			'description' => 'Описание',
-                        'address' => 'Адрес',
+            'address' => 'Адрес',
 			'datetime' => 'Дата и время',
 			'date' => 'Дата',
 			'time' => 'Время',
