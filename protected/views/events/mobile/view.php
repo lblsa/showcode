@@ -342,7 +342,7 @@ if (Yii::app()->user->isAdmin() || Yii::app()->user->isCreator($model->id))
 -->
 
 
-<?php if($model->status=='published'):?>
+<?php if($model->active==1):?>
                 <a id="button_bye" data-role="button" href="#bar">Купить билеты</a>
 <div data-role="page" id="bar">
 	<?php			//Начинается форма покупки

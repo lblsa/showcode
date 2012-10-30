@@ -1,4 +1,9 @@
-
+<style>
+	div.type_ticket, div.number
+	{
+		margin-top: 10px;
+	}
+</style>
 <?php $this->pageTitle=Yii::app()->name.' - Редактирование мероприятия: "'.$model->title.'"' ?>
 <?php
 $this->breadcrumbs=array(

@@ -116,7 +116,7 @@ class EventsController extends Controller
 	{
 		$this->datepicker();
 		$model=$this->loadModel($id);
-		if($model->status != 'published' && !Yii::app()->user->isAdmin() && !Yii::app()->user->isOrganizer()){
+		if($model->status != 1 && !Yii::app()->user->isAdmin() && !Yii::app()->user->isOrganizer()){
 			if(Yii::app()->user->isGuest)
 					$this->redirect('/site/login');
 			else
@@ -721,7 +721,8 @@ class EventsController extends Controller
 			case events:
 			default:
 				if(!Yii::app()->user->isAdmin()){
-                                        $criteria->addSearchCondition('status','published');
+                                        //$criteria->addSearchCondition('status','published');
+                                        $criteria->addSearchCondition('active', 1);
 					//$criteria->addSearchCondition('MONTH(datetime)',$now_month);
                                         $criteria->join = "LEFT JOIN `tbl_event_uniq` ON `id` = `tbl_event_uniq`.`event_id`";
 					$criteria->addCondition('(datetime >= now() AND datetime <= (now() + INTERVAL 1 MONTH)) OR tbl_event_uniq.infinity_time=1');
@@ -1173,7 +1174,7 @@ class EventsController extends Controller
 	 */
 	public function actionPublic($id)
         {
-            Events::model()->updateByPk($id, array('status'=>'published'));
+            Events::model()->updateByPk($id, array('active'=>1));
 
             $this->render(Yii::app()->mf->siteType(). '/public',array('id'=>$id));
         }

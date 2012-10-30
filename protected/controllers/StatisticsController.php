@@ -72,7 +72,7 @@ class StatisticsController extends Controller
 			
 			//echo '<pre>'; print_r($tickets->attributes); echo '</pre>';exit;
             if ($_POST['TransactionLog']['user_id'] != ''){
-                $eventsDropList = Events::model()->findAll('status = "published" AND author=:author', array(':author'=>$_POST['TransactionLog']['user_id']));
+                $eventsDropList = Events::model()->findAll('active = 1 AND author=:author', array(':author'=>$_POST['TransactionLog']['user_id']));
                 if(count($eventsDropList) == 0)
                     $eventsDropList = new Events;
             }else{
@@ -198,7 +198,7 @@ class StatisticsController extends Controller
 		$tickets->event_id = $event_id;
 		$tickets->user_id = $user_id;
 
-		$eventsDropList = Events::model()->findAll('status = "published" AND author=:author', array(':author'=>$user_id));
+		$eventsDropList = Events::model()->findAll('active = 1 AND author=:author', array(':author'=>$user_id));
 		if(count($eventsDropList) == 0)
 		   $eventsDropList = new Events;
 		else
