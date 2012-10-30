@@ -143,6 +143,9 @@ class User extends CActiveRecord
 					//отправляем уведомление, что появился новый пользователь
 					$message = 'В системе зарегистрировался новый пользователь. Телефон: '.$this->phone;
 					Yii::app()->mf->mail_html('showcode@googlegroups.com','noreply@'.$_SERVER[HTTP_HOST],Yii::app()->name,$message,'В системе ' .Yii::app()->name. ' новый пользователь!');
+					Yii::app()->mf->mail_html('vladimir.stasevich@gmail.com','noreply@'.$_SERVER[HTTP_HOST],Yii::app()->name,$message,'В системе ' .Yii::app()->name. ' новый пользователь!');
+					Yii::app()->mf->mail_html('isezonov@gmail.com','noreply@'.$_SERVER[HTTP_HOST],Yii::app()->name,$message,'В системе ' .Yii::app()->name. ' новый пользователь!');
+					Yii::app()->mf->mail_html('roman.efimushkin@gmail.com','noreply@'.$_SERVER[HTTP_HOST],Yii::app()->name,$message,'В системе ' .Yii::app()->name. ' новый пользователь!');
 				}
 			}
 		}
