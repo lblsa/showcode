@@ -854,7 +854,7 @@ input#search_submit {
     z-index: 0;
 }
 
-#submit_save_button, #submit_stat {
+#submit_save_button, #submit_stat, #set_org {
     background: url(../images/bg/submit_save_button_bg.png) left top repeat-x;
     color: #FFF;
     cursor: pointer;
@@ -1982,4 +1982,13 @@ td.place.select_mouse{background: #AAE6FF}
     display: block;
     height: 18px;
     width: 18px;
+}
+
+#orgs div
+{
+	padding: 0 0 0 20px;
+	margin: 0;
+	background: url('/images/x.png') 0px 5px no-repeat;
+	width: auto;
+	cursor: pointer;
 }

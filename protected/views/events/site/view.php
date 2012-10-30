@@ -349,7 +349,37 @@ echo '<div class="full_text_info_about_event'.$uniqEvent->prefix_class.'">';
     <?php endif; ?>
 </div>
 </div>
-
+<h2 style="color: #D5D5D5; font-size: 14px;">
+	Организаторы мароприятия:
+</h2>
+<div style="clear: left; margin-bottom: 10px;" id="list_tickets">
+	<table>
+	<tr class="title_table">
+		<td>
+			№
+		</td>
+		<td >
+			Имя Фамилия Отчество
+		</td>
+		<td>
+			Телефон
+		</td>
+	</tr>
+	<?php foreach ($values as $key=>$org):?>
+		<tr>	
+			<td>
+				<?php echo $key + 1;?>
+			</td>
+			<td>
+				<?php echo $org['name'];?>
+			</td>
+			<td>
+				<?php echo $org['phone'];?>
+			</td>		
+		</tr>
+		<?php endforeach;?>
+	</table>	
+</div>
 
 <!--Выводится информация о билетах-->
 <div style="clear: left">

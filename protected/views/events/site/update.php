@@ -1,3 +1,4 @@
+
 <?php $this->pageTitle=Yii::app()->name.' - Редактирование мероприятия: "'.$model->title.'"' ?>
 <?php
 $this->breadcrumbs=array(
@@ -20,6 +21,9 @@ $this->menu=array(
 									'model'=>$model,
 									'tickets1'=>$tickets1,
 									'ticket'=>$ticket,
+									'modelOrg'=>$modelOrg,
+									'ids' =>$ids,
+									'values' =>$values,
 									//'tickets2'=>$tickets2,
 									//'tickets3'=>$tickets3,
 									)); ?>
