@@ -229,14 +229,24 @@ class StatisticsController extends Controller
 						'event_id'=>$event_id,
 				), true);
 		
+		echo '<pre>'; print_r($data); echo '</pre>';
 		//отправляем письмо
 		$fromMail = 'noreply@'.$_SERVER[HTTP_HOST];
 	
 		$to = User::model()->findByAttributes(array('user_id'=>Yii::app()->user->id))->email;
 		$title = 'Статистика  по мероприятию «'.Events::model()->getEventTitle($event_id).'»';
 		
-		//mail($to, $title, $data, $headers);
-		Yii::app()->mf->mail_html($to,$fromMail,Yii::app()->name,$data,$title);
+		$eol="\n";
+		# Common Headers
+		$headers .= "From: {Yii::app()->name} <{$fromMail}>".$eol;
+		$headers .= "Reply-To: {Yii::app()->name} <{$fromMail}>".$eol;
+		# Boundary for marking the split & Multitype Headers
+		$mime_boundary=md5(time());
+		$headers .= 'MIME-Version: 1.0'.$eol;
+		$headers .= "Content-Type: text/html; charset=utf-8".$eol;
+		
+		mail($to, $title, $data, $headers);
+		//Yii::app()->mf->mail_html($to,$fromMail,Yii::app()->name,$data,$title);
 	}
 	public function SendMail($event_id = 0, $user_id = 0)
 	{
