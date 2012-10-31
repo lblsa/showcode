@@ -69,6 +69,7 @@ class MyFunctions extends CApplicationComponent
 		# SEND THE EMAIL
 		$headers = iconv("utf-8","Windows-1251",$headers);
 		$message = iconv("utf-8","Windows-1251",$message);
+		
 		if (Yii::app()->params['isWeb'])
 			mail($to_addr, $title, $message, $headers, $returnPath);
 	}

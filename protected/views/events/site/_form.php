@@ -1,83 +1,8 @@
 <?php
-Yii::app()->clientScript->registerScript('switcher','
-	$("input.datepicker").datepicker({minDate:"0"});
-
-	$("#Events_time,#Tickets_time_begin,#Tickets_time_end").keyup(function(){
-		putsTime(this);
-	});
-
-        function putsTime(item){
-            if(item.view == window)
-                item = this;
-            time = $(item).val();
-
-            if (time.length==1 && time>2 || time.length==2 && time>23 || time.length==4 && time.substr(3,1)>5)
-            {
-                    $(item).val(time.substr(0,time.length-1));
-            }
-            if (time.length==2 && time<=23)
-            {
-                    $(item).val(time+":");
-            }
-        }
-
-	$("#Tickets_type").change(function(){
-		if ($(this).val() == "free"){
-                    $("#price")[0].value = 0;
-                    $("#price")[0].readOnly = true;
-		}else{
-                    $("#price")[0].readOnly = false;
-		}
-                if ($(this).val() == "travel")
-                        $("div.switcher").show();
-                else{
-                        $("div.switcher").hide();
-                }
-	}).change();
-
-	$("#Events_column,#Events_place").change(function(){
-		column = $("#Events_column").val();
-		place = $("#Events_place").val();
-		if(column == "" && place == ""){
-			$("#number")[0].readOnly = false;
-		}else{
-			if(column != "" && place != ""){
-				$("#number")[0].value = parseInt(column) * parseInt(place);
-			}
-			$("#number")[0].readOnly = true;
-		}
-	}).change();
-
-	$("#add_tickets").click(function(){
-		new_fieldset = $("div#first_field").clone();
-		new_fieldset.removeAttr("id");
-		new_fieldset.insertBefore($("#add_tickets").parent());
-		input_id = new_fieldset.find("input#Tickets_ticket_id");
-		if(input_id){
-			input_id.val("");
-		}
-		new_count = parseInt($("#count_tickets").val()) + 1;
-		$("#count_tickets").val(new_count);
-		new_link = document.createElement("p");
-		new_link.innerHTML = "<a class=\"delete_tickets\">Удалить билет</a>";
-		new_link.children[0].addEventListener ("click",DELETE_TICKETS,false);
-		$(new_link).insertAfter(new_fieldset.children().last());
-                input_time = new_fieldset.find("input#Tickets_time_begin");
-                input_time[0].addEventListener ("keyup",putsTime,false);
-                input_time = new_fieldset.find("input#Tickets_time_end");
-                input_time[0].addEventListener ("keyup",putsTime,false);
-	});
-
-
-	function DELETE_TICKETS(){
-		bilet = $(this).parents("div")[0];
-		$(bilet).remove();
-		new_count = parseInt($("#count_tickets").val()) - 1;
-		$("#count_tickets").val(new_count);
-	};
-
-');
+	Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/jquery-ui-1.9.1.custom.js');
+	Yii::app()->clientScript->registerCssFile(Yii::app()->request->baseUrl.'/css/jquery-ui-1.9.1.custom.css');
 ?>
+
 <h2>Событие</h2>
 
 <div class="form_main">
@@ -86,7 +11,7 @@ Yii::app()->clientScript->registerScript('switcher','
  $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'events-form',
 	'enableAjaxValidation'=>false,
-	'htmlOptions'=>array('enctype'=>'multipart/form-data'),
+	'htmlOptions'=>array('enctype'=>'multipart/form-data', 'onsubmit'=>'sendOrg()'),
 )); ?>
 	<?php if(!$model->isNewRecord && $model->facebook_eid): ?>
 		<p>При изменении данных данного мероприятия, эти данные не будут обновлены в соотвествующем мероприятии в Facebook'е.</p>
@@ -119,13 +44,22 @@ Yii::app()->clientScript->registerScript('switcher','
 		<?php echo $form->textField($model,'address',array('id'=>'adrress_input')); ?>
 		<?php echo $form->error($model,'address'); ?>
 	</div>
-
-    <div>
+	
+	   <div>
 		<?php echo $form->labelEx($model,'description'); ?>
 		<?php echo $form->textArea($model,'description',array('rows'=>6, 'cols'=>50,'id'=>'description_textarea')); ?>
 		<?php echo $form->error($model,'description'); ?>
 	</div>
-
+	
+	<div>
+		<span style="font-size: 13px; color: #CCC; margin-right: 10px;">
+			Огранизаторы мероприятия
+		</span>
+		<?php echo CHtml::activeTextField($modelOrg, 'id_org', array()); ?>
+		<input type='hidden' name='Orgs' value='' id = "orgs_list"/>
+	</div>
+	<div id="orgs">
+	</div>
 
 	<div>
 		<?php echo $form->labelEx($model,'facebook_eid'); ?>
@@ -347,3 +281,182 @@ Yii::app()->clientScript->registerScript('switcher','
 <?php $this->endWidget(); ?>
 
 </div><!-- form -->
+
+<script type="text/javascript">
+	
+	var ids = [];
+	var values = [];
+	
+	<?php if(!empty($ids) && !empty($values)):?>
+		<?php for($i = 0; $i<count($ids); $i++):?>
+			ids[<?php echo $i?>] = <?php echo $ids[$i]; ?>;
+			values[<?php echo $i?>] = '<?php echo $values[$i]; ?>';
+		<?php endfor;?>
+		newData();
+	<?php endif; ?>	
+	
+	$(document).ready(function(){
+	
+		$("input.datepicker").datepicker({
+			minDate:"0",
+			dateFormat:"dd.mm.yy",
+		});
+
+		$("#Events_time,#Tickets_time_begin,#Tickets_time_end").keyup(function(){
+			putsTime(this);
+		});
+
+		function putsTime(item){
+			if(item.view == window)
+				item = this;
+			time = $(item).val();
+
+			if (time.length==1 && time>2 || time.length==2 && time>23 || time.length==4 && time.substr(3,1)>5)
+			{
+					$(item).val(time.substr(0,time.length-1));
+			}
+			if (time.length==2 && time<=23)
+			{
+					$(item).val(time+":");
+			}
+		}
+
+		$("#Tickets_type").change(function(){
+			if ($(this).val() == "free"){
+						$("#price")[0].value = 0;
+						$("#price")[0].readOnly = true;
+			}else{
+						$("#price")[0].readOnly = false;
+			}
+					if ($(this).val() == "travel")
+							$("div.switcher").show();
+					else{
+							$("div.switcher").hide();
+					}
+		}).change();
+
+		$("#Events_column,#Events_place").change(function(){
+			column = $("#Events_column").val();
+			place = $("#Events_place").val();
+			if(column == "" && place == ""){
+				$("#number")[0].readOnly = false;
+			}else{
+				if(column != "" && place != ""){
+					$("#number")[0].value = parseInt(column) * parseInt(place);
+				}
+				$("#number")[0].readOnly = true;
+			}
+		}).change();
+
+		$("#add_tickets").click(function(){
+			new_fieldset = $("div#first_field").clone();
+			new_fieldset.removeAttr("id");
+			new_fieldset.insertBefore($("#add_tickets").parent());
+			input_id = new_fieldset.find("input#Tickets_ticket_id");
+			if(input_id){
+				input_id.val("");
+			}
+			new_count = parseInt($("#count_tickets").val()) + 1;
+			$("#count_tickets").val(new_count);
+			new_link = document.createElement("p");
+			new_link.innerHTML = "<a class=\"delete_tickets\">Удалить билет</a>";
+			new_link.children[0].addEventListener ("click",DELETE_TICKETS,false);
+			$(new_link).insertAfter(new_fieldset.children().last());
+					input_time = new_fieldset.find("input#Tickets_time_begin");
+					input_time[0].addEventListener ("keyup",putsTime,false);
+					input_time = new_fieldset.find("input#Tickets_time_end");
+					input_time[0].addEventListener ("keyup",putsTime,false);
+		});
+		
+		function DELETE_TICKETS(){
+			bilet = $(this).parents("div")[0];
+			$(bilet).remove();
+			new_count = parseInt($("#count_tickets").val()) - 1;
+			$("#count_tickets").val(new_count);
+		};
+		
+
+		
+		$(function() {
+			function split( val ) {
+				return val.split( /,\s*/ );
+			}
+			function extractLast( term ) {
+				return split( term ).pop();
+			}
+			
+			$( "#EventOrg_id_org" )
+				// don't navigate away from the field on tab when selecting an item
+				.bind( "keydown", function( event ) {
+					if ( event.keyCode === $.ui.keyCode.TAB &&
+							$( this ).data( "autocomplete" ).menu.active ) {
+						event.preventDefault();
+					}
+				})
+				.autocomplete({
+					source: function( request, response ) {
+						$.getJSON( "<?php echo Yii::app()->createUrl('events/searchOrg'); ?>", {
+							term: extractLast( request.term )
+						}, response );
+					},
+					search: function() {
+						// custom minLength
+						var term = extractLast( this.value );
+						if ( term.length < 0 ) {
+							return false;
+						}
+					},
+					focus: function() {
+						// prevent value inserted on focus
+						return false;
+					},
+					select: function( event, ui ) {
+						//var terms = split( this.value );
+						// remove the current input
+						//terms.pop();
+						// add the selected item
+						//terms.push( ui.item.value );
+						ids.push(ui.item.id);
+						values.push(ui.item.value);
+						// add placeholder to get the comma-and-space at the end
+						//terms.push( "" );
+						//this.value = terms.join( ", " );
+						//alert(ids);
+						//alert(values);
+						newData();
+						this.value = '';
+						return false;
+					}
+				});
+			});	
+	   });
+	   
+	function newData()
+	{
+		html = '';		
+		
+		for(i = 0; i<ids.length; i++)
+		{
+			html += '<div onclick = "removeData(' + ids[i] + ')">' + values[i]  + '</div>';
+		}
+		
+		$('#orgs').fadeOut(300, function(){
+			$('#orgs').html(html).fadeIn(900);
+		});
+	}
+
+	function removeData(id)
+	{
+		index = ids.indexOf(id);
+		ids.splice(index, 1);
+		values.splice(index, 1);
+		newData();
+	}
+	
+	function sendOrg()
+	{
+		newId = ids.join(", ");
+		$('#orgs_list').attr('value', newId);
+		return true;
+	}
+</script>

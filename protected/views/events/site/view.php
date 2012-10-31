@@ -71,27 +71,28 @@ $this->breadcrumbs=array(
     $this->menu=array(
         array('label'=>'Создать мероприятие', 'url'=>array('create')),
     );*/
-if((yii::app()->user->isAdmin() || yii::app()->user->isOrganizer()) && $model->status != 'published'){
+/*if((yii::app()->user->isAdmin() || yii::app()->user->isOrganizer()) && $model->status != 'published'){
     $this->menu=array(
         array('label'=>'Опубликовать', 'url'=>array('public', 'id'=>$model->id)),
         array('label'=>'Редактировать', 'url'=>array('update', 'id'=>$model->id)),
         array('label'=>'Управление мероприятиями', 'url'=>array('admin')),
     );
 }
-else if(yii::app()->user->isAdmin() || yii::app()->user->isOrganizer())
+else*/
+if(yii::app()->user->isAdmin() || yii::app()->user->isOrganizer())
 {
     $this->menu[] = array('label'=>'Редактировать', 'url'=>array('update', 'id'=>$model->id));
     $this->menu[] = array('label'=>'Управление мероприятиями', 'url'=>array('admin'));
 }
 if (yii::app()->user->isAdmin() || yii::app()->user->isCreator($model->id))
-        if($model->status != 'published')
+        if($model->active != 1)
             $this->menu[]=array('label'=>'Удалить мероприятие', 'url'=>'', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Вы действительно хотите удалить мероприятие?'));
         else
-            $this->menu[]=array('label'=>'Статистика', 'url'=>'#', 'linkOptions'=>array('submit'=>array('/statistics'),'params'=>array('TransactionLog[user_id]' => $model->author,'TransactionLog[event_id]'=>$model->id,'TransactionLog[period]'=>'weeks','TransactionLog[date_begin]'=> date('d.m.Y', mktime(0, 0, 0, date("m")-2, date("d"), date("Y"))),'TransactionLog[date_end]'=>date('d.m.Y'))));
+            $this->menu[]=array('label'=>'Статистика', 'url'=>'#', 'linkOptions'=>array('submit'=>array('/statistics'),'params'=>array('TransactionLog[user_id]' => $model->author,'TransactionLog[event_id]'=>$model->id,'TransactionLog[period]'=>'weeks','TransactionLog[date_begin]'=> @date('d.m.Y', mktime(0, 0, 0, @date("m")-2, @date("d"), @date("Y"))),'TransactionLog[date_end]'=>@date('d.m.Y'))));
 			
             //$this->menu[]=array('label'=>'Статистика', 'url'=>array('/statistics', 'TransactionLog[user_id]' => $model->author,'TransactionLog[event_id]'=>$model->id,'TransactionLog[period]'=>'weeks','TransactionLog[date_begin]'=> date('d.m.Y', mktime(0, 0, 0, date("m")-2, date("d"), date("Y"))),'TransactionLog[date_end]'=>date('d.m.Y')));
 
-if (yii::app()->user->isCreator($model->id) && $model->status == 'published')
+if (yii::app()->user->isCreator($model->id) && $model->active == 1)
 {
 	$this->menu[]=array('label'=>'Билеты', 'url'=>array('/ticket/admin', 'id'=>$model->id));
 	$this->menu[]=array('label'=>'Проверка билетов', 'url'=>array('checkTicket', 'id'=>$model->id));
@@ -319,7 +320,7 @@ echo '<div class="full_text_info_about_event'.$uniqEvent->prefix_class.'">';
 <div class="clear"></div>
 <!-- links -->
 <div class="buy_ticket_and_back_to_events<?php echo $uniqEvent->prefix_class ?>">
-    <?php if($model->status=='published'):?>
+    <?php if($model->active==1):?>
         <?php if($ticket[0]['type'] == 'free'): ?>
             <?php echo CHtml::link(CHtml::image('/images/button_visit.png'), '#',array('id'=>'button_bye')); ?>
         <?php else: ?>
@@ -349,7 +350,37 @@ echo '<div class="full_text_info_about_event'.$uniqEvent->prefix_class.'">';
     <?php endif; ?>
 </div>
 </div>
-
+<h2 style="color: #D5D5D5; font-size: 14px;">
+	Организаторы мароприятия:
+</h2>
+<div style="clear: left; margin-bottom: 10px;" id="list_tickets">
+	<table>
+	<tr class="title_table">
+		<td>
+			№
+		</td>
+		<td >
+			Имя Фамилия Отчество
+		</td>
+		<td>
+			Телефон
+		</td>
+	</tr>
+	<?php foreach ($values as $key=>$org):?>
+		<tr>	
+			<td>
+				<?php echo $key + 1;?>
+			</td>
+			<td>
+				<?php echo $org['name'];?>
+			</td>
+			<td>
+				<?php echo $org['phone'];?>
+			</td>		
+		</tr>
+		<?php endforeach;?>
+	</table>	
+</div>
 
 <!--Выводится информация о билетах-->
 <div style="clear: left">
@@ -409,7 +440,7 @@ if (Yii::app()->user->isAdmin() || Yii::app()->user->isCreator($model->id))
 
 
 <a name="formticketsbuy"></a>
-<?php if($model->status=='published'):?>
+<?php if($model->active==1):?>
 <div class="payment" style="display:none;">
     <div class="form_main" id="form_tickets_buy">
     <?php echo CHtml::button('',array('id'=>'buy_close','class'=>'buy_close')); ?>
