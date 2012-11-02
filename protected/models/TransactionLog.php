@@ -163,7 +163,7 @@ class TransactionLog extends CActiveRecord
                             //Создаём RSA подпись
                             $RSA = new RSA();
                             $event = Events::model()->findByPk($this->event_id, array('select' => 'id,title,datetime,close_key,general_key,online'));
-                            if(!$event->online){
+                            if($event->online){
                                     $message='event_id=' .$event->id. '&datetime=' .$event->datetime. '&quantity=' .$this->quantity. '&uniq=' .$this->uniq;
                                     $this->rsa= $RSA->encrypt ($message, $event->close_key, $event->general_key, 90);		// и коэф. сложности кодирования(настраивается в зависимости от величины входящих простых чисел)
                             }

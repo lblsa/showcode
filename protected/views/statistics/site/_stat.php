@@ -1,3 +1,4 @@
+<meta charset="utf-8">
 <h1>
 	Статистика  по мероприятию «<?php echo Events::model()->getEventTitle($event_id); ?>»
 </h1>

@@ -16,6 +16,8 @@
 	<link rel="stylesheet" type="text/css" href="<?php //echo Yii::app()->request->baseUrl; ?>/css/form.css" /-->
 
 	<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery-1.8.2.js"></script>
+
+	
 	<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/feedback.js"></script>
 	
 	<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/bootstrap/bootstrap.js"></script>

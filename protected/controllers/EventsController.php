@@ -116,13 +116,33 @@ class EventsController extends Controller
 	{
 		$this->datepicker();
 		$model=$this->loadModel($id);
-                if($model->status != 'published' && !Yii::app()->user->isAdmin() && !Yii::app()->user->isOrganizer()){
-                    if(Yii::app()->user->isGuest)
-                            $this->redirect('/site/login');
-                    else
-                            $this->redirect('/events');
-                }
+		if($model->status != 1 && !Yii::app()->user->isAdmin() && !Yii::app()->user->isOrganizer()){
+			if(Yii::app()->user->isGuest)
+					$this->redirect('/site/login');
+			else
+					$this->redirect('/events');
+		}
 		$buy_place = array();
+		
+		//получили данные о доп оргах
+		$modelOrgAll = EventOrg::model()->findAllByAttributes(array('id_event'=>$id));
+		
+		$ids = array();
+		$values = array();
+		
+		if(!empty($modelOrgAll))
+		{
+			foreach ($modelOrgAll as $key=>$orgs)
+			{
+				$user = User::model()->findByAttributes(array('user_id'=>$orgs->id_org));
+			
+				$ids[] = $orgs->id_org;
+				$values[$key]['name'] = $user->name;
+				$values[$key]['phone'] = $user->phone;
+			}
+		}
+		
+		
 		if(isset($_POST['TransactionLog']))
 		{
 			if (!isset(Yii::app()->user->id)){
@@ -355,7 +375,9 @@ class EventsController extends Controller
 			'log'=>$log,
 			'buy_place'=>$buy_place,
 			'facebook_event'=>$facebook_event,
-            'uniqEvent'=>$model->uniqium
+            'uniqEvent'=>$model->uniqium,
+			'ids' =>$ids,
+			'values' =>$values,
 		));
 	}
 
@@ -366,17 +388,40 @@ class EventsController extends Controller
 	public function actionCreate()
 	{
         $this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column3';
-		$this->datepicker();
+		//$this->datepicker();
 		$model=new Events;
-
+		
+		$modelOrg = new EventOrg;
+		
 		// Uncomment the following line if AJAX validation is needed
 		//$this->performAjaxValidation($model);
+		
+		$ids = array();
+		$values = array();
+		
 		if(isset($_POST['Events']))
 		{
 			$model->attributes=$_POST['Events'];
 			$model->active = $_POST['Events']['active'];
 			
 			$model->id = sprintf('%x',crc32($model->title.time()));
+			
+			if(!empty($_POST['Orgs']))
+			{
+				$orgs = $_POST['Orgs'];						
+				
+				$sql = "select user_id, name, phone from tbl_user where user_id in (".$orgs.")";
+				$command = Yii::app()->db->createCommand($sql);
+				$dataReader = $command->query();
+				$data = $dataReader->readAll();
+				
+				foreach ($data as $user)
+				{
+					$ids[] = $user['user_id'];
+					$values[] = $user['name'].' ('.$user['phone'].')';
+				}
+			}
+			
 			$valid=true;
 			$item = Array();
 			//for ($i = 0;$i < $_POST['Tickets']['count_tickets']; $i++)
@@ -423,6 +468,21 @@ class EventsController extends Controller
 	        	}
 				if ($valid and $model->save())
 				{
+					//сохраняем кучку оргов
+					if(!empty($_POST['Orgs']))
+					{
+						$orgs = $_POST['Orgs'];	
+						$id_orgs = array();
+						
+						$id_orgs = explode(", ", $orgs);
+						
+						foreach ($id_orgs as $id)
+						{
+							$modelOrg->id_org = $id;
+							$modelOrg->id_event = $model->id;
+							$modelOrg->save();
+						}					
+					}
 					$this->redirect(array('view','id'=>$model->id));
 				}
 			}
@@ -432,10 +492,48 @@ class EventsController extends Controller
 			$tickets1=new Tickets;
 			$model->time='12:00';
 		}
+		
 		$this->render(Yii::app()->mf->siteType(). '/create',array(
 			'model'=>$model,
 			'tickets1'=>$tickets1,
+			'modelOrg'=>$modelOrg,
+			'ids' =>$ids,
+			'values' =>$values,
 		));
+	}
+	
+	//ищем всех организаторов
+	public function actionSearchOrg($term)
+	{
+		if (!empty($term))
+		{
+			//$term = mysql_escape_string($term);
+			$user_id = Yii::app()->user->id;
+			
+			$name = explode(",", $term);
+			
+			$index = count($name);
+			
+			$sql = "select user_id, name as item, phone from tbl_user where role = 'organizer' and user_id<>".$user_id." and name like '%".mysql_escape_string($name[$index - 1])."%'";
+			$command = Yii::app()->db->createCommand($sql);
+			$dataReader = $command->query();
+			$users = $dataReader->readAll();		
+		
+			$result = array();
+			foreach ($users as $item)
+			{
+				$result[] = array(
+				'id' => $item['user_id'],
+				'label' => $item['item'],
+				'value' => $item['item'].' ('.$item['phone'].')',
+			);
+		}
+			echo json_encode($result);
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	/**
@@ -446,15 +544,33 @@ class EventsController extends Controller
 	public function actionUpdate($id)
 	{
         $this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column3';
-		$this->datepicker();
+		//$this->datepicker();
 		$model=$this->loadModel($id);
 		$tickets=$this->loadTicket($id);
-		$valid=true;
+		$valid=true;		
+		
+		$modelOrg = new EventOrg;
+		
+		//получили данные о доп оргах
+		$modelOrgAll = EventOrg::model()->findAllByAttributes(array('id_event'=>$id));
+		
+		$ids = array();
+		$values = array();
+		
+		if(!empty($modelOrgAll))
+		{
+			foreach ($modelOrgAll as $orgs)
+			{
+				$user = User::model()->findByAttributes(array('user_id'=>$orgs->id_org));
+			
+				$ids[] = $orgs->id_org;
+				$values[] = $user->name.' ('.$user->phone.')';
+			}
+		}
 
 		// Uncomment the following line if AJAX validation is needed
 		if(isset($_POST['Events']))
 		{
-			
 			$model->attributes=$_POST['Events'];			
 			$model->active = $_POST['Events']['active'];
 			$model->delete_logo=$_POST['Events']['delete_logo'];
@@ -500,6 +616,30 @@ class EventsController extends Controller
 	        	}
 				if ($valid and $model->save())
 				{
+					//обновляем кучку оргов
+					if(!empty($_POST['Orgs']))
+					{
+						$orgs = $_POST['Orgs'];	
+						$id_orgs = array();
+						
+						$id_orgs = explode(", ", $orgs);
+						
+						//удалили все, чтобы не мучаться с апдейтом
+						$sql = "delete from tbl_event_org where id_event = '".$model->id."'";
+						$command = Yii::app()->db->createCommand($sql);
+						$command->execute();
+						
+						//заново добавили
+						
+						//echo '<pre>'; print_r($id_orgs); echo '</pre>';exit;
+						foreach ($id_orgs as $id)
+						{
+							$sql = "insert into tbl_event_org (id_org, id_event) values (".$id.", '".$model->id."')";
+							$command = Yii::app()->db->createCommand($sql);
+							$command->execute();
+						}					
+					}
+					
 					$this->redirect(array('view','id'=>$model->id));
 				}
 			}
@@ -510,11 +650,14 @@ class EventsController extends Controller
 			$model->time=substr($model->datetime,11,5);
 			$tickets1=new Tickets;
 		}
-
+				
 		$this->render(Yii::app()->mf->siteType(). '/update',array(
 			'model'=>$model,
 			'tickets1'=>$tickets,
 			'ticket'=>$tickets1,
+			'modelOrg'=>$modelOrg,
+			'ids' =>$ids,
+			'values' =>$values,
 		));
 	}
 
@@ -578,7 +721,8 @@ class EventsController extends Controller
 			case events:
 			default:
 				if(!Yii::app()->user->isAdmin()){
-                                        $criteria->addSearchCondition('status','published');
+                                        //$criteria->addSearchCondition('status','published');
+                                        $criteria->addSearchCondition('active', 1);
 					//$criteria->addSearchCondition('MONTH(datetime)',$now_month);
                                         $criteria->join = "LEFT JOIN `tbl_event_uniq` ON `id` = `tbl_event_uniq`.`event_id`";
 					$criteria->addCondition('(datetime >= now() AND datetime <= (now() + INTERVAL 1 MONTH)) OR tbl_event_uniq.infinity_time=1');
@@ -1030,7 +1174,7 @@ class EventsController extends Controller
 	 */
 	public function actionPublic($id)
         {
-            Events::model()->updateByPk($id, array('status'=>'published'));
+            Events::model()->updateByPk($id, array('active'=>1));
 
             $this->render(Yii::app()->mf->siteType(). '/public',array('id'=>$id));
         }

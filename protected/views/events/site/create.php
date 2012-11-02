@@ -1,3 +1,4 @@
+
 <?php $this->pageTitle=Yii::app()->name.' - Создание мероприятия' ?>
 <?php
 $this->breadcrumbs=array(
@@ -16,6 +17,9 @@ $this->menu=array(
 <?php echo $this->renderPartial(Yii::app()->mf->siteType(). '/_form', array(
 									'model'=>$model,
 									'tickets1'=>$tickets1,
+									'modelOrg'=>$modelOrg,
+									'ids' =>$ids,
+									'values' =>$values,
 									//'tickets2'=>$tickets2,
 									//'tickets3'=>$tickets3,
 									)); ?>
