@@ -852,7 +852,7 @@ class TransactionLog extends CActiveRecord
                     $criteria->compare('event_id',$evid);
                 }
             }
-            $criteria->compare('status',1);     
+            //$criteria->compare('status',1);     
             if(!empty($id_user))
                 $criteria->compare('user_id',$id_user);
             $criteria->order = 'datetime DESC';

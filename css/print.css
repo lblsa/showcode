@@ -73,12 +73,19 @@
     .print_qr_code{
     	display: none!important;
     }
+	
+	.title_table
+	{
+		text-shadow: none;
+		font-weight: bold;
+	}
     
     table
     {
         background: white!important;
         border-collapse: collapse;
         width: 95%;
+		text-shadow: none !important;
     }
 
     table td
@@ -88,17 +95,19 @@
         font-size: 0.9em;
         border: 1px #999999 solid;
         padding: 0.3em;
+		text-shadow: none !important;
     }
 
     table td.first_column
-    {
+	{
     	width: 25%;
         background: #000000;
         text-align: center;
         color:#ffffff;
+		font-weight: bold;
     }
     table td a
-    {
+	{
         color: #000!important;
         text-decoration: none!important;
     }
