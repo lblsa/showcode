@@ -25,6 +25,7 @@
 		margin: 0;
 		padding: 0;
 		float: left;
+		width: 180px;
 	}
 	
 	.buy_ticket_and_back_to_events
