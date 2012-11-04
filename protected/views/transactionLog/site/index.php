@@ -43,7 +43,7 @@ if(Yii::app()->user->isAdmin())
 				$('#all_tick_list').fadeIn(900);
 			});	
 		<?php endif;?>
-		<?php if($ch==3):?>
+		<?php if($ch==2):?>
 			$.get("<?php echo CHtml::normalizeUrl(array('transactionLog/ajaxTicketList'))?>", {'flag' : 1, 'user_id' : <?php echo Yii::app()->user->id;?>, 'num' : 2, 'page' : <?php echo $pages;?>},  function(data){
 				
 				$('#all_tick_list').empty();

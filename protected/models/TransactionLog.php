@@ -839,40 +839,43 @@ class TransactionLog extends CActiveRecord
 
         public function getData($flag, $id_user)
         {
-            $criteria=new CDbCriteria();    
-
-            if($flag==1)
+            $criteria=new CDbCriteria();  
+			
+			if($flag==1 && !empty($id_user))
             {
-                //Выводим все купленные билеты на созданное тобой мероприятие.
+				//Выводим все купленные билеты на созданное тобой мероприятие.
                 $myEvents = Events::model()->findAllByAttributes(array('author'=>$id_user));
-
+				
+				$evid = Array();
                 foreach ($myEvents as $myEvent)
                 {
-                    $evid = $myEvent->id;
-                    $criteria->compare('event_id',$evid);
-                }
+                    $evid[] = "event_id = '".$myEvent->id."'";					
+                }				
+			
+				$event_id = implode(' or ', $evid);
+				$criteria->condition = $event_id;
             }
-            //$criteria->compare('status',1);     
-            if(!empty($id_user))
-                $criteria->compare('user_id',$id_user);
-            $criteria->order = 'datetime DESC';
+			else
+			{
+				if($flag==0 && !empty($id_user))
+				{
+					$criteria->compare('user_id',$id_user);
+				}
+			} 
+			$criteria->order = 'datetime DESC';
+			
+			if(!Yii::app()->mf->isMobile())
+			{
+				$count = TransactionLog::model()->count($criteria);
+				$pages=new CPagination($count);
 
-            if(!Yii::app()->mf->isMobile())
-            {
-                $count = TransactionLog::model()->count($criteria);
-                $pages=new CPagination($count);
-
-                // results per page
-                $pages->pageSize=10;
-                $pages->applyLimit($criteria);
-
-                $dataProvider=new CActiveDataProvider('TransactionLog', array(
-                            'criteria'=>$criteria,
-                            ));
-            }
-
-            $render_data['data'] = TransactionLog::model()->findAll($criteria);
-            $render_data['pages'] = $pages;
+				// results per page
+				$pages->pageSize=10;
+				$pages->applyLimit($criteria);
+			}
+			
+			$render_data['data'] = TransactionLog::model()->findAll($criteria);
+			$render_data['pages'] = $pages;
 
             return $render_data;
         }
