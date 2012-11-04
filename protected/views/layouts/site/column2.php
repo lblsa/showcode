@@ -2,9 +2,9 @@
 <div class="logotype">
             <?php echo CHtml::link('','/') ?>
         </div>
-<div class="appstore_butn_type_page">
+<!--<div class="appstore_butn_type_page">
 		<a href="http://itunes.apple.com/app/showcode/id498976996?mt=8" target="_blank" title="Приложение Showcode доступно в App Store"></a>
-	</div>
+	</div>-->
 <div id="wrapper_inner" class="template_without_search">
     <!-- CONTENT:begin -->
         <div id="content">
