@@ -93,7 +93,7 @@ if (yii::app()->user->isAdmin() || yii::app()->user->isCreator($model->id))
 			
             //$this->menu[]=array('label'=>'Статистика', 'url'=>array('/statistics', 'TransactionLog[user_id]' => $model->author,'TransactionLog[event_id]'=>$model->id,'TransactionLog[period]'=>'weeks','TransactionLog[date_begin]'=> date('d.m.Y', mktime(0, 0, 0, date("m")-2, date("d"), date("Y"))),'TransactionLog[date_end]'=>date('d.m.Y')));
 
-if (yii::app()->user->isCreator($model->id) && $model->active == 1)
+if (yii::app()->user->isCreator($model->id) /*&& $model->active == 1*/)
 {
 	$this->menu[]=array('label'=>'Билеты', 'url'=>array('/ticket/admin', 'id'=>$model->id));
 	$this->menu[]=array('label'=>'Проверка билетов', 'url'=>array('checkTicket', 'id'=>$model->id));
