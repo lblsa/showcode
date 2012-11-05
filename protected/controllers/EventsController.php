@@ -514,7 +514,7 @@ class EventsController extends Controller
 			
 			$index = count($name);
 			
-			$sql = "select user_id, name as item, phone from tbl_user where role = 'organizer' and user_id<>".$user_id." and name like '%".mysql_escape_string($name[$index - 1])."%'";
+			$sql = "select user_id, name as item, phone from tbl_user where user_id<>".$user_id." and name like '%".mysql_escape_string($name[$index - 1])."%'";
 			$command = Yii::app()->db->createCommand($sql);
 			$dataReader = $command->query();
 			$users = $dataReader->readAll();		
