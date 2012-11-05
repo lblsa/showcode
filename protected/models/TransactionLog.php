@@ -196,7 +196,7 @@ class TransactionLog extends CActiveRecord
                             include_once("./phpqrcode/qrlib.php");
                             $errorCorrectionLevel = 'L';
                             $matrixPointSize = 6;
-                            if($event->online){
+                            if(!$event->online){
                                     $data='http://' .$_SERVER['HTTP_HOST']. '/ticket/view/' .$this->uniq;
                             }else{
                                     $data='http://' .$_SERVER['HTTP_HOST']. '/ticket/view/' .$this->uniq. '#rsa=' .$this->rsa;
