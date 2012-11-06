@@ -238,8 +238,8 @@ class StatisticsController extends Controller
 		
 		$eol="\n";
 		# Common Headers
-		$headers .= "From: {Yii::app()->name} <{$fromMail}>".$eol;
-		$headers .= "Reply-To: {Yii::app()->name} <{$fromMail}>".$eol;
+		$headers .= "From: <{$fromMail}>".$eol;
+		$headers .= "Reply-To: <{$fromMail}>".$eol;
 		# Boundary for marking the split & Multitype Headers
 		$mime_boundary=md5(time());
 		$headers .= 'MIME-Version: 1.0'.$eol;
