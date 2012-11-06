@@ -514,7 +514,7 @@ class EventsController extends Controller
 			
 			$index = count($name);
 			
-			$sql = "select user_id, name as item, phone from tbl_user where role = 'organizer' and user_id<>".$user_id." and name like '%".mysql_escape_string($name[$index - 1])."%'";
+			$sql = "select user_id, name as item, phone from tbl_user where user_id<>".$user_id." and name like '%".mysql_escape_string($name[$index - 1])."%'";
 			$command = Yii::app()->db->createCommand($sql);
 			$dataReader = $command->query();
 			$users = $dataReader->readAll();		
@@ -1201,13 +1201,37 @@ class EventsController extends Controller
                 {
                     $buy_place[] = ($tr[$i]->column-1)*$model->place + $tr[$i]->place;
                 }
+				
+				//получили данные о доп оргах
+				$modelOrgAll = EventOrg::model()->findAllByAttributes(array('id_event'=>$id));
+				
+				$ids = array();
+				$values = array();
+				
+				if(!empty($modelOrgAll))
+				{
+					foreach ($modelOrgAll as $key=>$orgs)
+					{
+						$user = User::model()->findByAttributes(array('user_id'=>$orgs->id_org));
+					
+						$ids[] = $orgs->id_org;
+						$values[$key]['name'] = $user->name;
+						$values[$key]['phone'] = $user->phone;
+					}
+				}
+				$log = new TransactionLog;
+				$ticket = $this->loadTicket($id);
+				$this->redirect(array('view', 'id'=>$id));
 
-                $this->render(Yii::app()->mf->siteType(). '/view',array(
-                            'model'=>$event,
-                            'ticket'=>$this->loadTicket($id),
-                            'log'=>new TransactionLog,
+               /* $this->render(array(Yii::app()->mf->siteType(). '/view',
+							'model'=>$event,
+                            'ticket'=>$ticket,
+                            'log'=>$log,
                             'buy_place'=>$buy_place,
-                            ));
+							'ids'=>$ids,
+							'values'=>$values,
+                        ));
+						*/
             }else
                 $errors = 1;
         }
