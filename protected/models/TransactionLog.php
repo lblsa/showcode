@@ -786,97 +786,131 @@ class TransactionLog extends CActiveRecord
             return $text;
 	}
 
-        /* Отправляем запрос в Bank Payment Client */
-        public function virtualPaymentClient(){
-            $Payment_Client_URL = "https://migs.mastercard.com.au/vpcpay"; // URL для доступа клиента-оплаты банка
-            $urlBack = 'http://'.$_SERVER['HTTP_HOST'].'/ticket/paymentClient';
-            $vpcURL = $Payment_Client_URL . "?";
+	/* Отправляем запрос в Bank Payment Client */
+	public function virtualPaymentClient(){
+		$Payment_Client_URL = "https://migs.mastercard.com.au/vpcpay"; // URL для доступа клиента-оплаты банка
+		$urlBack = 'http://'.$_SERVER['HTTP_HOST'].'/ticket/paymentClient';
+		$vpcURL = $Payment_Client_URL . "?";
 
-            $md5HashData = Yii::app()->params['bank_secure_hash_secret'];
-            //ksort ($_POST);
-            $uniqTransaktion = $this->uniq.'/'.substr(sprintf('%x',crc32(rand(10000000,99999999).time())),0,5);
+		$md5HashData = Yii::app()->params['bank_secure_hash_secret'];
+		//ksort ($_POST);
+		$uniqTransaktion = $this->uniq.'/'.substr(sprintf('%x',crc32(rand(10000000,99999999).time())),0,5);
 
-            if (strlen(Yii::app()->params['bank_access_code']) > 0){
-                $vpcURL .= urlencode('vpc_AccessCode') . '=' . urlencode(Yii::app()->params['bank_access_code']);
-                $md5HashData .= Yii::app()->params['bank_access_code'];
-            }
+		if (strlen(Yii::app()->params['bank_access_code']) > 0){
+			$vpcURL .= urlencode('vpc_AccessCode') . '=' . urlencode(Yii::app()->params['bank_access_code']);
+			$md5HashData .= Yii::app()->params['bank_access_code'];
+		}
 
-            if ($this->total > 0){
-                $vpcURL .= '&' . urlencode('vpc_Amount') . '=' . urlencode($this->total*100);
-            }
-            $md5HashData .= $this->total*100;
+		if ($this->total > 0){
+			$vpcURL .= '&' . urlencode('vpc_Amount') . '=' . urlencode($this->total*100);
+		}
+		$md5HashData .= $this->total*100;
 
-            $vpcURL .= '&' . urlencode('vpc_Command') . '=' . urlencode('pay');
-            $md5HashData .= 'pay';
-            $vpcURL .= '&' . urlencode('vpc_Locale') . '=' . urlencode('RU_ru');
-            $md5HashData .= 'RU_ru';
+		$vpcURL .= '&' . urlencode('vpc_Command') . '=' . urlencode('pay');
+		$md5HashData .= 'pay';
+		$vpcURL .= '&' . urlencode('vpc_Locale') . '=' . urlencode('RU_ru');
+		$md5HashData .= 'RU_ru';
 
-            if (strlen($uniqTransaktion) > 0){
-                $vpcURL .= '&' . urlencode('vpc_MerchTxnRef') . '=' . urlencode($uniqTransaktion);
-                $md5HashData .= $uniqTransaktion;
-            }
+		if (strlen($uniqTransaktion) > 0){
+			$vpcURL .= '&' . urlencode('vpc_MerchTxnRef') . '=' . urlencode($uniqTransaktion);
+			$md5HashData .= $uniqTransaktion;
+		}
 
-            if (strlen(Yii::app()->params['bank_merchant_id']) > 0){
-                $vpcURL .= '&' . urlencode('vpc_Merchant') . '=' . urlencode(Yii::app()->params['bank_merchant_id']);
-                $md5HashData .= Yii::app()->params['bank_merchant_id'];
-            }
+		if (strlen(Yii::app()->params['bank_merchant_id']) > 0){
+			$vpcURL .= '&' . urlencode('vpc_Merchant') . '=' . urlencode(Yii::app()->params['bank_merchant_id']);
+			$md5HashData .= Yii::app()->params['bank_merchant_id'];
+		}
 
-            if (strlen($uniqTransaktion) > 0){
-                $vpcURL .= '&' . urlencode('vpc_OrderInfo') . '=' . urlencode($uniqTransaktion);
-                $md5HashData .= $uniqTransaktion;
-            }
+		if (strlen($uniqTransaktion) > 0){
+			$vpcURL .= '&' . urlencode('vpc_OrderInfo') . '=' . urlencode($uniqTransaktion);
+			$md5HashData .= $uniqTransaktion;
+		}
 
-            $vpcURL .= '&' . urlencode('vpc_ReturnURL') . '=' . urlencode($urlBack);
-            $md5HashData .= $urlBack;
-            $vpcURL .= '&' . urlencode('vpc_Version') . '=' . urlencode('1');
-            $md5HashData .= '1';
+		$vpcURL .= '&' . urlencode('vpc_ReturnURL') . '=' . urlencode($urlBack);
+		$md5HashData .= $urlBack;
+		$vpcURL .= '&' . urlencode('vpc_Version') . '=' . urlencode('1');
+		$md5HashData .= '1';
 
-            if (strlen(Yii::app()->params['bank_secure_hash_secret']) > 0)
-                $vpcURL .= '&' . urlencode('vpc_SecureHash') . '=' . strtoupper(md5($md5HashData));
+		if (strlen(Yii::app()->params['bank_secure_hash_secret']) > 0)
+			$vpcURL .= '&' . urlencode('vpc_SecureHash') . '=' . strtoupper(md5($md5HashData));
 
-            header("Location: ".$vpcURL);
-        }
+		header("Location: ".$vpcURL);
+	}
 
-        public function getData($flag, $id_user)
-        {
-            $criteria=new CDbCriteria();  
+	public function getData($flag, $id_user)
+	{
+		$criteria=new CDbCriteria();  
+		
+		if($flag==1 && !empty($id_user))
+		{
+			//Выводим все купленные билеты на созданное тобой мероприятие.
+			$myEvents = Events::model()->findAllByAttributes(array('author'=>$id_user));
 			
-			if($flag==1 && !empty($id_user))
-            {
-				//Выводим все купленные билеты на созданное тобой мероприятие.
-                $myEvents = Events::model()->findAllByAttributes(array('author'=>$id_user));
-				
-				$evid = Array();
-                foreach ($myEvents as $myEvent)
-                {
-                    $evid[] = "event_id = '".$myEvent->id."'";					
-                }				
-			
-				$event_id = implode(' or ', $evid);
-				$criteria->condition = $event_id;
-            }
-			else
+			$evid = Array();
+			foreach ($myEvents as $myEvent)
 			{
-				if($flag==0 && !empty($id_user))
-				{
-					$criteria->compare('user_id',$id_user);
-				}
-			} 
-			$criteria->order = 'datetime DESC';
-			
-			if(!Yii::app()->mf->isMobile())
+				$evid[] = "event_id = '".$myEvent->id."'";					
+			}				
+		
+			$event_id = implode(' or ', $evid);
+			$criteria->condition = $event_id;
+		}
+		else
+		{
+			if($flag==0 && !empty($id_user))
 			{
-				$count = TransactionLog::model()->count($criteria);
-				$pages=new CPagination($count);
-
-				// results per page
-				$pages->pageSize=10;
-				$pages->applyLimit($criteria);
+				$criteria->compare('user_id',$id_user);
 			}
-			
-			$render_data['data'] = TransactionLog::model()->findAll($criteria);
-			$render_data['pages'] = $pages;
+		} 
+		$criteria->order = 'datetime DESC';
+		
+		if(!Yii::app()->mf->isMobile())
+		{
+			$count = TransactionLog::model()->count($criteria);
+			$pages=new CPagination($count);
 
-            return $render_data;
-        }
+			// results per page
+			$pages->pageSize=10;
+			$pages->applyLimit($criteria);
+		}
+		
+		$render_data['data'] = TransactionLog::model()->findAll($criteria);
+		$render_data['pages'] = $pages;
+
+		return $render_data;
+	
+	}
+	
+	public function searchForStat($user_id, $event_id, $lastDate, $now, $use = 0)
+	{
+		$criteria=new CDbCriteria(); 
+		
+		$criteria->select = "quantity, price";
+		$criteria->compare('user_id',$user_id);			
+		$criteria->compare('event_id',$event_id);	
+		//считаем использованные
+		if($use==1)
+			$criteria->compare('status', 3);
+		if($lastDate!=$now)
+			$criteria->addBetweenCondition('datetime', $lastDate, $now, 'AND');	
+		else
+			$criteria->compare('datetime',$lastDate);	
+		
+		$data = $this->findAll($criteria); 
+		
+		$allPrice = 0;
+		$quantity = 0;
+		foreach ($data as $key=>$item)
+		{
+			$allPrice += $item->quantity*$item->price;
+			$quantity += $item->quantity;
+		}
+		
+		//echo '<pre>'; print_r($allPrice); echo '</pre>';exit;
+		$mass = array();		
+		$mass['allPrice'] = $allPrice;
+		$mass['quantity'] = $quantity;
+
+		return $mass;
+	}
 }

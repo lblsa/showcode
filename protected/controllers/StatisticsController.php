@@ -189,9 +189,11 @@ class StatisticsController extends Controller
 	}
 	*/
 	
-	//рассылка статистики
-	public function generateMail($event_id, $user_id)
+	public function actionTest()
 	{
+		$event_id = 'eabf880c';
+		$user_id = 90;
+		
 		$tickets = new TransactionLog;
 		
 		$tickets->period = 'days';
@@ -216,20 +218,85 @@ class StatisticsController extends Controller
 		$users = User::model()->findByPk($user_id);
 		$users = Array($users);
 		
-		/*Список пользователей */
-		$usersDropList = User::model()->findAll('role <> :role', array(':role'=>'user'));
+		//все переделываю...	
+		$event_id = 'eabf880c';
+		$user_id = 90;	
+			
+		//последний день рассылки передать в вызове
+		$sql = "select max(last_date) AS maxDate, send_stat from tbl_event_stat where user_id = ".$user_id." and event_id = '".$event_id."'";
+		$command = Yii::app()->db->createCommand($sql);
+		$dataReader = $command->query();
+		$data = $dataReader->read();			
+				
+		$lastDate = date('Y-m-d', strtotime($data['maxDate']));
+		$now = date('Y-m-d');
+		
+		$model = new TransactionLog;
+		$info = array();
+		//получаем дату создания события
+		$dateCreate = date('Y-m-d', strtotime(Events::model()->findByAttributes(array('id'=>$event_id))->datetime));
+		
+		//начало периода
+		$byeStart = $model->searchForStat($user_id, $event_id, $dateCreate, $lastDate);
+		$useStart = $model->searchForStat($user_id, $event_id, $dateCreate, $lastDate, 1);
+		$info['cByeStart'] = $byeStart['quantity'];
+		$info['cUseStart'] = $useStart['quantity'];
+		
+		//в зависимости от периода найти все билеты, попавшие в этот период, конец периода	
+		$byeEnd = $model->searchForStat($user_id, $event_id, $lastDate, $now);
+		$useEnd = $model->searchForStat($user_id, $event_id, $lastDate, $now, 1);
+		$info['cByeEnd'] = $byeEnd['quantity'];
+		$info['cUseEnd'] = $useEnd['quantity'];		
+		
+		//получам цену билета
+		$info['pByeStart'] = $byeStart['allPrice'];
+		$info['pUseStart'] = $useStart['allPrice'];
+		$info['pByeEnd'] = $byeEnd['allPrice'];
+		$info['pUseEnd'] = $useEnd['allPrice'];
+		
+		$this->render(Yii::app()->mf->siteType(). '/_stat',array(
+						'model'=>$model,
+						'event_id'=>$event_id,
+						'user_id'=>$user_id,
+						'info'=>$info,
+		));
+	}
+	
+	//рассылка статистики
+	public function generateMail($event_id, $user_id, $lastDate, $now)
+	{
+		$model = new TransactionLog;
+		$info = array();
+		//получаем дату создания события
+		$dateCreate = date('Y-m-d', strtotime(Events::model()->findByAttributes(array('id'=>$event_id))->datetime));
+		
+		//начало периода
+		$byeStart = $model->searchForStat($user_id, $event_id, $dateCreate, $lastDate);
+		$useStart = $model->searchForStat($user_id, $event_id, $dateCreate, $lastDate, 1);
+		$info['cByeStart'] = $byeStart['quantity'];
+		$info['cUseStart'] = $useStart['quantity'];
+		
+		//в зависимости от периода найти все билеты, попавшие в этот период, конец периода	
+		$byeEnd = $model->searchForStat($user_id, $event_id, $lastDate, $now);
+		$useEnd = $model->searchForStat($user_id, $event_id, $lastDate, $now, 1);
+		$info['cByeEnd'] = $byeEnd['quantity'];
+		$info['cUseEnd'] = $useEnd['quantity'];		
+		
+		//получам цену билета
+		$info['pByeStart'] = $byeStart['allPrice'];
+		$info['pUseStart'] = $useStart['allPrice'];
+		$info['pByeEnd'] = $byeEnd['allPrice'];
+		$info['pUseEnd'] = $useEnd['allPrice'];
 		
 		//текст письма (статистика)
 		$data = $this->renderPartial(Yii::app()->mf->siteType(). '/_stat',array(
-						'model'=>$tickets,
-					  //  'sortDate'=>$sortDate,
-						'users'=>$users,
-						'events'=>$events,
-						'daysPeriod'=>$dayTIMEarray,
+						'model'=>$model,
 						'event_id'=>$event_id,
-				), true);
+						'user_id'=>$user_id,
+						'info'=>$info,
+		), true);
 		
-		echo '<pre>'; print_r($data); echo '</pre>';
+		//echo '<pre>'; print_r($data); echo '</pre>';
 		//отправляем письмо
 		$fromMail = 'noreply@'.$_SERVER[HTTP_HOST];
 	
@@ -259,7 +326,7 @@ class StatisticsController extends Controller
 				$user_id = $item->user_id;
 				$event_id = $item->event_id;
 				$lastDate = date('d.m.y', strtotime($item->last_date));
-				$sendStat	 = $item->send_stat;
+				$sendStat = $item->send_stat;
 				$now = date('d.m.y');
 
 				$arr1 = explode('.', $lastDate);
@@ -274,9 +341,9 @@ class StatisticsController extends Controller
 						break;
 					case 1:
 					{
-						if($dif>1)
+						if($dif>=1 && $dif<7)
 						{
-							$this->generateMail($event_id, $user_id);
+							$this->generateMail($event_id, $user_id, $lastDate, $now);
 							
 							$sql = "update tbl_event_stat set last_date = '".date('Y-m-d')."' where user_id = ".$user_id." and event_id = ' ".$event_id." ' ";
 							$command = Yii::app()->db->createCommand($sql);
@@ -286,9 +353,9 @@ class StatisticsController extends Controller
 					}
 					case 2:
 					{
-						if($dif>7)
+						if($dif>=7 && $dif<30)
 						{
-							$this->generateMail($event_id, $user_id);
+							$this->generateMail($event_id, $user_id, $lastDate, $now);
 							
 							$sql = "update tbl_event_stat set last_date = '".date('Y-m-d')."' where user_id = ".$user_id." and event_id = ' ".$event_id." ' ";
 							$command = Yii::app()->db->createCommand($sql);
@@ -298,9 +365,9 @@ class StatisticsController extends Controller
 					}
 					case 3:
 					{
-						if($dif>30)
+						if($dif>=30)
 						{
-							$this->generateMail($event_id, $user_id);
+							$this->generateMail($event_id, $user_id, $lastDate, $now);
 							
 							$sql = "update tbl_event_stat set last_date = '".date('Y-m-d')."' where user_id = ".$user_id." and event_id = ' ".$event_id." ' ";
 							$command = Yii::app()->db->createCommand($sql);
@@ -311,8 +378,8 @@ class StatisticsController extends Controller
 				}				
 			}
 		}
-		else
-			$this->generateMail($event_id, $user_id);
+		//else
+			//$this->generateMail($event_id, $user_id, $lastDate, $now);
 	}
 	
 	public function actionSendStat()
