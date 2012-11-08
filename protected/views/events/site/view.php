@@ -80,10 +80,10 @@ $this->breadcrumbs=array(
     );
 }
 else*/
-if(yii::app()->user->isAdmin() || yii::app()->user->isOrganizer())
+if(yii::app()->user->isAdmin())
 {
-    $this->menu[] = array('label'=>'Редактировать', 'url'=>array('update', 'id'=>$model->id));
     $this->menu[] = array('label'=>'Управление мероприятиями', 'url'=>array('admin'));
+	$this->menu[]=array('label'=>'Список билетов', 'url'=>array('/ticket/admin', 'id'=>$model->id));
 }
 if (yii::app()->user->isAdmin() || yii::app()->user->isCreator($model->id))
         if($model->active != 1)
@@ -95,7 +95,7 @@ if (yii::app()->user->isAdmin() || yii::app()->user->isCreator($model->id))
 
 if (yii::app()->user->isCreator($model->id) /*&& $model->active == 1*/)
 {
-	$this->menu[]=array('label'=>'Билеты', 'url'=>array('/ticket/admin', 'id'=>$model->id));
+	$this->menu[] = array('label'=>'Редактировать', 'url'=>array('update', 'id'=>$model->id));	
 	$this->menu[]=array('label'=>'Проверка билетов', 'url'=>array('checkTicket', 'id'=>$model->id));
     $this->menu[]=array('label'=>'Письмо с билетами', 'url'=>array('protectionEmail', 'id'=>$model->id));
 }
