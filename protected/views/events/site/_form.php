@@ -416,6 +416,15 @@
 						//terms.pop();
 						// add the selected item
 						//terms.push( ui.item.value );
+						for(i = 0; i<ids.length; i++)
+						{
+							if (ids[i]==ui.item.id)
+							{
+								alert('Выбранный организатор уже присутствует в списке!');
+								this.value = '';
+								return false;
+							}
+						}
 						ids.push(ui.item.id);
 						values.push(ui.item.value);
 						// add placeholder to get the comma-and-space at the end
