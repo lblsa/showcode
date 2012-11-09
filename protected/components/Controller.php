@@ -24,17 +24,33 @@ class Controller extends CController
 
 	public $headering = '';
 
-        protected function beforeAction($action) {
-            $IP = $_SERVER["REMOTE_ADDR"];
-            $visitor_ban = Visitors::model()->find('ip=:ip', array(':ip'=>$IP));
-            if(intval($visitor_ban['BAN']) && $this->id.'/'.$action->id !== 'user/permissionDenied'){
-                if(date('Y-m-d H:i:s') < $visitor_ban['time_ban']){
-                    $this->redirect('/user/permissionDenied');
-                    return false;
-                }else{
-                    Visitors::model()->updateByPk($visitor_ban->id, array('count'=>0,'BAN' => 0, 'time_ban'=>NULL,'time_last_come'=>Yii::app()->mf->dateForMysql(date('Y-m-d')).' '.date('H:i:s')));
-                }
-            }
-            return true;
-        }
+	protected function beforeAction($action) 
+	{
+		$IP = $_SERVER["REMOTE_ADDR"];
+		$visitor_ban = Visitors::model()->find('ip=:ip', array(':ip'=>$IP));
+		if(intval($visitor_ban['BAN']) && $this->id.'/'.$action->id !== 'user/permissionDenied')
+		{
+			if(date('Y-m-d H:i:s') < $visitor_ban['time_ban'])
+			{
+				$this->redirect('/user/permissionDenied');
+				return false;
+			}
+			else
+			{
+				Visitors::model()->updateByPk($visitor_ban->id, array('count'=>0,'BAN' => 0, 'time_ban'=>NULL,'time_last_come'=>Yii::app()->mf->dateForMysql(date('Y-m-d')).' '.date('H:i:s')));
+			}
+		}
+		return true;
+	}
+	
+	public function getTextEmailSendListTickets($tickets, $event, $organizator)
+	{
+		$text = $this->renderPartial(Yii::app()->mf->siteType(). '/_emailTickers',array(
+								'tickets'=>$tickets,
+								'event'=>$event,
+								'organizator'=>$organizator,
+		), true);
+		
+		return $text;
+	}
 }
