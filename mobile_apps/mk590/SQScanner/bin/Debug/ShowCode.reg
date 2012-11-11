@@ -1,0 +1,17 @@
+[HKEY_CURRENT_USER\Software\Symbol\Startup\Programs\Prog11]
+"Name"="\Windows\wceload.exe"
+"Command"="/delete 0 /noaskdest \Application\ShowCode\NETCFv2.wce5.armv4i.cab"
+"Continue"=dword:1
+"ColdBootOnly"=dword:1
+
+[HKEY_CURRENT_USER\Software\Symbol\Startup\Programs\Prog12]
+"Name"="\Windows\wceload.exe"
+"Command"="/delete 0 /noaskdest \Application\ShowCode\symbol.all.arm.cab"
+"Continue"=dword:1
+"ColdBootOnly"=dword:1
+
+[HKEY_CURRENT_USER\Software\Symbol\Startup\Programs\Prog13]
+"Name"="\Windows\wceload.exe"
+"Command"="/delete 0 /noaskdest \Application\ShowCode\ShowCode.CAB"
+"Continue"=dword:1
+"ColdBootOnly"=dword:1

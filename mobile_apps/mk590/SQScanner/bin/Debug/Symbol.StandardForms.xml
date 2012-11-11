@@ -1,0 +1,578 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Symbol.StandardForms</name>
+    </assembly>
+    <members>
+        <member name="T:Symbol.Controls.CheckList">
+            <summary>
+            The CheckList class is derived from SymList. It provides the capability of 
+            displaying a list of checkboxes with associated labels. 
+            </summary>
+            <remarks>
+            This class is used by the BarcodeForms.Enabled decoders class in order to 
+            provide an easy way to select a decoder type and set whether or not it is 
+            enabled.
+            </remarks>
+        </member>
+        <member name="T:Symbol.Controls.SymList">
+            <summary>
+            The SymList class defines a list box that is used to host other controls.
+            </summary>
+            <remarks>
+            The SymList class is used as a base class for the CheckList and ComboList custom
+            controls. It can hold multiple controls on the same row. Any controls can be 
+            used.
+            </remarks>
+        </member>
+        <member name="M:Symbol.Controls.SymList.#ctor(System.String,System.Windows.Forms.Panel,System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            SymList constructor with settable parameters.
+            </summary>
+            <param name="sTitle">The title of the SymList control. Can be null or 
+            "" if not title is required.</param>
+            <param name="MainPanel">The panel in which the Symlist control will
+            reside.</param>
+            <param name="nRowHeight">The Height of each row in pixels.</param>
+            <param name="nBorderWidth">The border width in pixels.</param>
+            <param name="bRemoveBorder">Borders for internal controls will be removed
+            when this flag is set to true.</param>
+        </member>
+        <member name="M:Symbol.Controls.SymList.#ctor(System.String,System.Windows.Forms.Panel,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            SymList constructor with settable parameters.
+            </summary>
+            <param name="sTitle">The title of the SymList control. Can be null or 
+            "" if not title is required.</param>
+            <param name="MainPanel">The panel in which the Symlist control will
+            reside.</param>
+            <param name="nRowHeight">The Height of each row in pixels.</param>
+            <param name="nBorderWidth">The border width in pixels.</param>
+            <param name="nBorderHeight">The border height in pixels (not used).</param>
+            <param name="nTopOffset">The offset from the top of the screen (not used).</param>
+        </member>
+        <member name="M:Symbol.Controls.SymList.Add">
+            <summary>
+            Adds a new entry to the SymList control.
+            </summary>
+        </member>
+        <member name="M:Symbol.Controls.SymList.Add(System.Windows.Forms.Control[])">
+            <summary>
+            Adds a set of controls to the SymList control in horizontal direction.
+            </summary>
+            <param name="ctrls">An array of controls to be placed on a SymList row.</param>
+        </member>
+        <member name="M:Symbol.Controls.SymList.Remove">
+            <summary>
+            Removes the last row of controls from the SymList control.
+            </summary>
+        </member>
+        <member name="M:Symbol.Controls.SymList.Clear">
+            <summary>
+            Clears the SymList control of all items.
+            </summary>
+        </member>
+        <member name="M:Symbol.Controls.SymList.v_ValueChanged(System.Object,System.EventArgs)">
+            <summary>
+            Event notification handler for vertical scroll button.
+            </summary>
+            <param name="sender">The sender scroll bar.</param>
+            <param name="e">A standard event args object.</param>
+        </member>
+        <member name="P:Symbol.Controls.SymList.ClientWidth">
+            <summary>
+            The total size of the client area width
+            </summary>
+            <value>
+            An integer that contains the number of pixels in the client area width.
+            </value> 
+        </member>
+        <member name="P:Symbol.Controls.SymList.ClientHeight">
+            <summary>
+            Gets/Sets the client window size.
+            </summary>
+            <value>
+            An integer that contains the number of pixels in the client area height.
+            </value>
+        </member>
+        <member name="P:Symbol.Controls.SymList.VisibleRowCount">
+            <summary>
+            Returns the number of rows visible in the client area.
+            </summary>
+            <value>
+            The number of rows visible.
+            </value>
+        </member>
+        <member name="P:Symbol.Controls.SymList.SelectedRow">
+            <summary>
+            Gets/Sets the selected row in the symlist control.
+            </summary>
+        </member>
+        <member name="P:Symbol.Controls.SymList.TitleHeight">
+            <summary>
+            Height in of the SymList title.
+            </summary>
+            <value>
+            Height in pixels of the title. 0 if not present.
+            </value>
+        </member>
+        <member name="P:Symbol.Controls.SymList.IsVScrollBarNeeded">
+            <summary>
+            Determines the need for a scroll bar.
+            </summary>
+            <value>
+            A boolean flag that specifies whether or not a scroll bar is needed.
+            </value>
+        </member>
+        <member name="P:Symbol.Controls.SymList.VerticalScrollBar">
+            <summary>
+            Gets the vertical scroll bar assocated with SymList control.
+            </summary>
+            <value>
+            A VScrollBar object.
+            </value>
+        </member>
+        <member name="P:Symbol.Controls.SymList.VisiblePanel">
+            <summary>
+            Gets the VisiblePanel from the SymList control. This panel can be used to 
+            add new controls to the display.
+            </summary>
+            <value>
+            A Panel object that can be used to add new controls.
+            </value>
+        </member>
+        <member name="P:Symbol.Controls.SymList.Text">
+            <summary>
+            Set the title of the SymList control.
+            </summary>
+            <value>
+            A string that contains the SymList title.
+            </value>
+        </member>
+        <member name="M:Symbol.Controls.CheckList.#ctor(System.String,System.Windows.Forms.Panel,System.Windows.Forms.Panel)">
+            <summary>
+            The CheckList constructor takes in the title and two panels. The first is 
+            the main panel and the second is what it can expand too.
+            </summary>
+            <param name="sTitle">A string that contains the title of the checklist box.</param>
+            <param name="MainPanel">A panel where the initial control will be placed.</param>
+            <param name="ExpandPanel">A panel that contain information about the expanded
+            version of the panel.</param>
+        </member>
+        <member name="M:Symbol.Controls.CheckList.#ctor(System.String,System.Windows.Forms.Panel,System.Windows.Forms.Panel,System.Int32)">
+            <summary>
+            The CheckList constructor takes in the title and two panels. The first is 
+            the main panel and the second is what it can expand too.
+            </summary>
+            <param name="sTitle">A string that contains the title of the checklist box.</param>
+            <param name="MainPanel">A panel where the initial control will be placed.</param>
+            <param name="ExpandPanel">A panel that contain information about the expanded
+            version of the panel.</param>
+            <param name="nRowHeight">The RowHeight</param>
+        </member>
+        <member name="M:Symbol.Controls.CheckList.Add(System.String,System.Boolean)">
+            <summary>
+            Add a new row to the CheckBox list.
+            </summary>
+            <param name="sSymLabelText">The label of the check box.</param>
+            <param name="bChecked">The checked state of the check box.</param>
+        </member>
+        <member name="M:Symbol.Controls.CheckList.Add(System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Add a new row to the CheckBox list.
+            </summary>
+            <param name="sSymLabelText">The label of the check box.</param>
+            <param name="bChecked">The checked state of the check box.</param>
+            <param name="bShowCheck">A flag that specifies whether or not the 
+            check box should be shown.</param>
+        </member>
+        <member name="M:Symbol.Controls.CheckList.Remove">
+            <summary>
+            Removes the last row in the list.
+            </summary>
+        </member>
+        <member name="M:Symbol.Controls.CheckList.Clear">
+            <summary>
+            Clear all items in combo list control.
+            </summary>
+        </member>
+        <member name="M:Symbol.Controls.CheckList.GetLabel(System.Int32)">
+            <summary>
+            Returns the SymLabel object associated with the given index in the list
+            items.
+            </summary>
+            <param name="nIndex">The row index where the SymLabel resides.</param>
+            <returns>A SymLabel control object.</returns>
+        </member>
+        <member name="P:Symbol.Controls.CheckList.SelectedIndex">
+            <summary>
+            Returns the currently selected row index.
+            </summary>
+            <value>
+            A integer that contains the row index of the currently selected item.
+            </value>
+        </member>
+        <member name="P:Symbol.Controls.CheckList.SelectedLabel">
+            <summary>
+            Returns the currently selected label.
+            </summary>
+            <value>
+            A SymLabel object located in the currently row.
+            </value>
+        </member>
+        <member name="P:Symbol.Controls.CheckList.Expand">
+            <summary>
+            Gets/Sets expansion of panel.
+            </summary>
+            <value>
+            A boolean flag that specifies whether or not the main panel is expanded.
+            </value>
+        </member>
+        <member name="E:Symbol.Controls.CheckList.LabelStateChanged">
+            <summary>
+            Gets fired when the label changes highlight state.
+            </summary>
+        </member>
+        <member name="E:Symbol.Controls.CheckList.CheckStateChanged">
+            <summary>
+            Gets fired when the check box changes state.
+            </summary>
+        </member>
+        <member name="T:Symbol.StandardForms.SelectDevice">
+            <summary>
+            The SelectDevice class provides a dialog for displaying and selecting a
+            list of available Symbol.Device objects.
+            </summary>
+            <remarks>
+            This dialog is primarilly used in situations in which multiple device of the
+            same type can be accessed from the application. A SelectDevice dialog is 
+            displayed with the list of device choices and the end selects one of them to
+            be accessed.
+            </remarks>
+        </member>
+        <member name="M:Symbol.StandardForms.SelectDevice.DoScale">
+            <summary>
+            This function does the (initial) scaling of the form
+            by re-setting the related parameters (if required) and
+            then calling the Scale(...) internally. 
+            </summary>
+            
+        </member>
+        <member name="M:Symbol.StandardForms.SelectDevice.Scale(Symbol.StandardForms.SelectDevice)">
+            <summary>
+            This function scales the given Form and its child controls in order to
+            make them completely viewable, based on the screen width and height.
+            </summary>
+        </member>
+        <member name="M:Symbol.StandardForms.SelectDevice.Select(System.String,Symbol.Generic.Device[])">
+            <summary>
+            The static Select method is the recommended way to create the SelectDevice
+            dialog.
+            </summary>
+            <remarks>
+            This method will display the SelectDevice dialog and block until a 
+            selection has been made.
+            </remarks>
+            <param name="Title">A string that will be displayed as the title to the
+            SelectDevice dialog.</param>
+            <param name="AvailableDevices">An array of available Symbol.Device objects.
+            </param>
+            <returns>The selected device object.</returns>
+        </member>
+        <member name="M:Symbol.StandardForms.SelectDevice.Select(System.String,Symbol.Generic.Device[],System.Int32)">
+            <summary>
+            The static Select method is the recommended way to create the SelectDevice
+            dialog.
+            </summary>
+            <remarks>
+            This method will display the SelectDevice dialog and block until a 
+            selection has been made.
+            </remarks>
+            <param name="Title">A string that will be displayed as the title to the
+            SelectDevice dialog.</param>
+            <param name="AvailableDevices">An array of available Symbol.Device objects.
+            </param>
+            <param name="SelectIndex">The index of the initially selected device
+            object.</param>
+            <returns>The selected device object.</returns>
+        </member>
+        <member name="M:Symbol.StandardForms.SelectDevice.#ctor">
+            <summary>
+            Default SelectDevice constructor.
+            </summary>
+        </member>
+        <member name="M:Symbol.StandardForms.SelectDevice.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:Symbol.Controls.SymLabel">
+            <summary>
+            The SymLabel class provides a owner drawn label box.
+            </summary>
+            <remarks>
+            This SymLabel class is used by the CheckList control for the label portion of the 
+            control.
+            </remarks>
+        </member>
+        <member name="M:Symbol.Controls.SymLabel.#ctor(System.Boolean)">
+            <summary>
+            SymLabel constructor with settable border flag. 
+            </summary>
+            <remarks>
+            A default string of "Hello" is used as the label.
+            </remarks>
+            <param name="bBorder">A boolean flag that when set to true indicates that 
+            a border should be drawn around the label box.</param>
+        </member>
+        <member name="M:Symbol.Controls.SymLabel.#ctor(System.String,System.Drawing.Point,System.Drawing.Size,System.Boolean)">
+            <summary>
+            SymLabel constructor with settable text, size and border flag.
+            </summary>
+            <param name="text">The initial text of the label.</param>
+            <param name="loc">A Point structure that contains initial location
+            information.</param>
+            <param name="size">The initial size of the label.</param>
+            <param name="bBorder">A boolean flag that when set to true indicates that 
+            a border should be drawn around the label box.</param>
+        </member>
+        <member name="M:Symbol.Controls.SymLabel.OnPaintBackground(System.Windows.Forms.PaintEventArgs)">
+            <summary>
+            Draw the custom label box.
+            </summary>
+            <param name="e">A PaintEventArgs used to perform owner draw.</param>
+        </member>
+        <member name="P:Symbol.Controls.SymLabel.Highlight">
+            <summary>
+            Specifies whether or not the label box should be highlighted. (Inverse video)
+            </summary>
+            <value>
+            A boolean flag that when true indicates that the label box will be highlighted.
+            </value>
+        </member>
+        <member name="P:Symbol.Controls.SymLabel.Overhead">
+            <summary>
+            Provides the number of pixels used in x-direction calculations.
+            </summary>
+            <value>
+            An integer that specifies that amount of pixels that are not used by the text
+            string in the label box.
+            </value>
+        </member>
+        <member name="T:Symbol.StandardForms.GenericUI">
+            <summary>
+            The GenericUI class displays an Symbol.API object for editing.
+            </summary>
+            <remarks>
+            The GenericUI class is a dialog form that can be used to change or view
+            parameters (properties) that have been tagged in a Symbol.API derived object.
+            The static method Run() can be used to create the dialog.
+            </remarks>
+        </member>
+        <member name="M:Symbol.StandardForms.GenericUI.DoScale">
+            <summary>
+            This function does the (initial) scaling of the form
+            by re-setting the related parameters (if required) and
+            then calling the Scale(...) internally. 
+            </summary>
+            
+        </member>
+        <member name="M:Symbol.StandardForms.GenericUI.Scale(Symbol.StandardForms.GenericUI)">
+            <summary>
+            This function scales the given Form and its child controls in order to
+            make them completely viewable, based on the screen width and height.
+            </summary>
+        </member>
+        <member name="M:Symbol.StandardForms.GenericUI.Run(Symbol.API)">
+            <summary>
+            Static method that creates Generic UI dialog for given API object.
+            </summary>
+            <param name="APItoEdit">An Symbol.API derived object that contains property
+            attributes to display and/or edit.</param>
+        </member>
+        <member name="M:Symbol.StandardForms.GenericUI.#ctor(Symbol.API)">
+            <summary>
+            The GenericUI constructor with settable API object to edit.
+            </summary>
+            <remarks>
+            Commonly the Generic UI is created using the static Run method, not by
+            calling the constructor.
+            </remarks>
+            <param name="APItoEdit">The API derived object to edit or view.</param>
+        </member>
+        <member name="M:Symbol.StandardForms.GenericUI.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+        </member>
+        <member name="M:Symbol.StandardForms.GenericUI.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:Symbol.Controls.SymListNotify">
+            <summary>
+            A delegate used to signify the type of methods that can be used to capture
+            notification events provided by the SymList control.
+            </summary>
+        </member>
+        <member name="T:Symbol.Controls.SymListEventArgs">
+            <summary>
+            The SymListEventArgs is used to pass information when events are fired by the
+            SymList box.
+            </summary>
+            <remarks>
+            Not normally constructed by the user.
+            </remarks>
+        </member>
+        <member name="M:Symbol.Controls.SymListEventArgs.#ctor(System.Int32)">
+            <summary>
+            SymListEventArgs constructor with settable row.
+            </summary>
+            <param name="RowIndex">An integer that contains the row of the control
+            that generated the event.</param>
+        </member>
+        <member name="P:Symbol.Controls.SymListEventArgs.RowIndex">
+            <summary>
+            The RowIndex where the change took place.
+            </summary>
+            <value>
+            An integer that contains the row index that changed.
+            </value>
+        </member>
+        <member name="T:Symbol.StandardForms.About">
+            <summary>
+            The About standard forms class provides a dialog that can be used to display
+            version information as well as a disclaimer for the EMDK for .NET samples.
+            </summary>
+        </member>
+        <member name="M:Symbol.StandardForms.About.DoScale">
+            <summary>
+            This function does the (initial) scaling of the form
+            by re-setting the related parameters (if required) and
+            then calling the Scale(...) internally. 
+            </summary>
+            
+        </member>
+        <member name="M:Symbol.StandardForms.About.Scale(Symbol.StandardForms.About)">
+            <summary>
+            This function scales the given Form and its child controls in order to
+            make them completely viewable, based on the screen width and height.
+            </summary>
+        </member>
+        <member name="M:Symbol.StandardForms.About.#ctor">
+            <summary>
+            Default About class constructor.
+            </summary>
+        </member>
+        <member name="M:Symbol.StandardForms.About.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:Symbol.StandardForms.About.Run(System.String,System.String)">
+            <summary>
+            Static method that instantiates the About object.
+            </summary>
+            <param name="Title">The title of the about dialog.</param>
+            <param name="Description">The description displayed by the 
+            about dialog.</param>
+        </member>
+        <member name="M:Symbol.StandardForms.About.OnClosing(System.ComponentModel.CancelEventArgs)">
+            <summary>
+            Called before the dialog is destroyed so that resources can be cleaned up.
+            </summary>
+            <param name="e">A CancelEventArgs object that provides the capability 
+            of stopping the dialog from closing.</param>
+        </member>
+        <member name="T:Symbol.Controls.ComboList">
+            <summary>
+            Summary description for list.
+            </summary>
+        </member>
+        <member name="M:Symbol.Controls.ComboList.#ctor(System.String,System.Windows.Forms.Panel)">
+            <summary>
+            Constructor takes a panel
+            </summary>
+        </member>
+        <member name="M:Symbol.Controls.ComboList.#ctor(System.String,System.Windows.Forms.Panel,System.Int32)">
+            <summary>
+            Constructor takes a panel
+            </summary>
+        </member>
+        <member name="M:Symbol.Controls.ComboList.AddString(System.String,System.String,System.Boolean)">
+            <summary>
+            Adds a new row to the ComboList. This row will not be visible until the Update
+            method has been called.
+            </summary>
+            <param name="sLabelText">The text label for the row.</param>
+            <param name="s">The read only string that defines the property.</param>
+            <param name="bReadOnly">A boolean flag that specifies whether or not the
+            property is read only.</param>
+        </member>
+        <member name="M:Symbol.Controls.ComboList.AddCombo(System.String,System.String[],System.Int32,System.Boolean)">
+            <summary>
+            Adds a new row to the ComboList. This row will not be visible until the Update
+            method has been called.
+            </summary>
+            <param name="sLabelText">The text label for the row.</param>
+            <param name="ss">The list of combo items or button text.</param>
+            <param name="nIndex">The index of the selected item in the combo box.</param>
+            <param name="bReadOnly">A boolean flag that specifies whether or not the
+            property is read only.</param>
+        </member>
+        <member name="M:Symbol.Controls.ComboList.Remove">
+            <summary>
+            Removes the last row in the list.
+            </summary>
+        </member>
+        <member name="M:Symbol.Controls.ComboList.Clear">
+            <summary>
+            Clear all items in combo list control.
+            </summary>
+        </member>
+        <member name="M:Symbol.Controls.ComboList.UpdateControl">
+            <summary>
+            Draws all added items into control. Calculations are made to make sure label
+            is big enough to display text.
+            </summary>
+        </member>
+        <member name="M:Symbol.Controls.ComboList.GetLabel(System.Int32)">
+            <summary>
+            Returns the SymLabel at the given row index.
+            </summary>
+            <param name="nIndex">The index of the SymLabel.</param>
+            <returns>A SymLabel object at the index.</returns>
+        </member>
+        <member name="M:Symbol.Controls.ComboList.GetControl(System.Int32)">
+            <summary>
+            Returns the Control at the given row index.
+            </summary>
+            <param name="nIndex">The index of the Control.</param>
+            <returns>A Control object at the index.</returns>
+        </member>
+        <member name="M:Symbol.Controls.ComboList.BeginStringEdit(System.Int32)">
+            <summary>
+            Start the editing process of a string parameter.
+            </summary>
+            <param name="nIndex">The row index where the string resides.</param>
+            <returns>A boolean flag that specifies whether or not the edit box 
+            was successfully created. False is returned if one already exists.</returns>
+        </member>
+        <member name="M:Symbol.Controls.ComboList.EndStringEdit">
+            <summary>
+            Ends the string editing process. Should be called after the user has completed 
+            string input.
+            </summary>
+            <returns>The string that was input by the user.</returns>
+        </member>
+        <member name="E:Symbol.Controls.ComboList.Notify">
+            <summary>
+            Event that gets fired when changes to the combo list control occur.
+            </summary>
+        </member>
+    </members>
+</doc>
