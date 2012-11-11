@@ -1,0 +1,443 @@
+[
+  uuid(F736A91F-517F-4C8E-81ED-A45A91F34B25), 
+  version(1.1), 
+  helpstring("LanCOM Library")
+    
+]
+library LanCOM
+{
+
+  importlib("stdole2.tlb");
+
+  [
+    uuid(52D0C76F-CBE0-4A88-B808-B05D4BECC834), 
+    version(1.1), 
+    helpstring("Dispatch interface for TransData Object"), 
+    dual, 
+    oleautomation
+  ]
+   interface ITransData: IDispatch
+  {
+    [
+    propget, 
+    id(0x00000001)
+    ]
+    HRESULT _stdcall Amount([out, retval] BSTR * Value );
+    [
+    propput, 
+    id(0x00000001)
+    ]
+    HRESULT _stdcall Amount([in] BSTR Value );
+    [
+    propget, 
+    id(0x00000002)
+    ]
+    HRESULT _stdcall CurrencyCode([out, retval] BSTR * Value );
+    [
+    propput, 
+    id(0x00000002)
+    ]
+    HRESULT _stdcall CurrencyCode([in] BSTR Value );
+    [
+    propget, 
+    id(0x00000003)
+    ]
+    HRESULT _stdcall DateTimeHost([out, retval] BSTR * Value );
+    [
+    propput, 
+    id(0x00000003)
+    ]
+    HRESULT _stdcall DateTimeHost([in] BSTR Value );
+    [
+    propget, 
+    id(0x00000004)
+    ]
+    HRESULT _stdcall CardEntryMode([out, retval] long * Value );
+    [
+    propput, 
+    id(0x00000004)
+    ]
+    HRESULT _stdcall CardEntryMode([in] long Value );
+    [
+    propget, 
+    id(0x00000005)
+    ]
+    HRESULT _stdcall PAN([out, retval] BSTR * Value );
+    [
+    propput, 
+    id(0x00000005)
+    ]
+    HRESULT _stdcall PAN([in] BSTR Value );
+    [
+    propget, 
+    id(0x00000006)
+    ]
+    HRESULT _stdcall CardExpiryDate([out, retval] BSTR * Value );
+    [
+    propput, 
+    id(0x00000006)
+    ]
+    HRESULT _stdcall CardExpiryDate([in] BSTR Value );
+    [
+    propget, 
+    id(0x00000007)
+    ]
+    HRESULT _stdcall TRACK2([out, retval] BSTR * Value );
+    [
+    propput, 
+    id(0x00000007)
+    ]
+    HRESULT _stdcall TRACK2([in] BSTR Value );
+    [
+    propget, 
+    id(0x00000008)
+    ]
+    HRESULT _stdcall AuthorizationCode([out, retval] BSTR * Value );
+    [
+    propput, 
+    id(0x00000008)
+    ]
+    HRESULT _stdcall AuthorizationCode([in] BSTR Value );
+    [
+    propget, 
+    id(0x00000009)
+    ]
+    HRESULT _stdcall ReferenceNumber([out, retval] BSTR * Value );
+    [
+    propput, 
+    id(0x00000009)
+    ]
+    HRESULT _stdcall ReferenceNumber([in] BSTR Value );
+    [
+    propget, 
+    id(0x0000000A)
+    ]
+    HRESULT _stdcall ResponseCodeHost([out, retval] BSTR * Value );
+    [
+    propput, 
+    id(0x0000000A)
+    ]
+    HRESULT _stdcall ResponseCodeHost([in] BSTR Value );
+    [
+    propget, 
+    id(0x0000000B)
+    ]
+    HRESULT _stdcall TextResponse([out, retval] BSTR * Value );
+    [
+    propput, 
+    id(0x0000000B)
+    ]
+    HRESULT _stdcall TextResponse([in] BSTR Value );
+    [
+    propget, 
+    id(0x0000000C)
+    ]
+    HRESULT _stdcall DateTimeCRM([out, retval] BSTR * Value );
+    [
+    propput, 
+    id(0x0000000C)
+    ]
+    HRESULT _stdcall DateTimeCRM([in] BSTR Value );
+    [
+    propget, 
+    id(0x0000000D)
+    ]
+    HRESULT _stdcall TrxID([out, retval] long * Value );
+    [
+    propput, 
+    id(0x0000000D)
+    ]
+    HRESULT _stdcall TrxID([in] long Value );
+    [
+    propget, 
+    id(0x0000000E)
+    ]
+    HRESULT _stdcall OrigOperation([out, retval] long * Value );
+    [
+    propput, 
+    id(0x0000000E)
+    ]
+    HRESULT _stdcall OrigOperation([in] long Value );
+    [
+    propget, 
+    id(0x0000000F)
+    ]
+    HRESULT _stdcall OperationCode([out, retval] long * Value );
+    [
+    propput, 
+    id(0x0000000F)
+    ]
+    HRESULT _stdcall OperationCode([in] long Value );
+    [
+    propget, 
+    id(0x00000010)
+    ]
+    HRESULT _stdcall TrxIDCRM([out, retval] long * Value );
+    [
+    propput, 
+    id(0x00000010)
+    ]
+    HRESULT _stdcall TrxIDCRM([in] long Value );
+    [
+    propget, 
+    id(0x00000011)
+    ]
+    HRESULT _stdcall CRMID([out, retval] BSTR * Value );
+    [
+    propput, 
+    id(0x00000011)
+    ]
+    HRESULT _stdcall CRMID([in] BSTR Value );
+    [
+    propget, 
+    id(0x00000012)
+    ]
+    HRESULT _stdcall Status([out, retval] long * Value );
+    [
+    propput, 
+    id(0x00000012)
+    ]
+    HRESULT _stdcall Status([in] long Value );
+    [
+    propget, 
+    id(0x00000013)
+    ]
+    HRESULT _stdcall TrxIDHost([out, retval] long * Value );
+    [
+    propput, 
+    id(0x00000013)
+    ]
+    HRESULT _stdcall TrxIDHost([in] long Value );
+    [
+    propget, 
+    id(0x00000014)
+    ]
+    HRESULT _stdcall CommodityCode([out, retval] BSTR * Value );
+    [
+    propput, 
+    id(0x00000014)
+    ]
+    HRESULT _stdcall CommodityCode([in] BSTR Value );
+    [
+    propget, 
+    id(0x00000015)
+    ]
+    HRESULT _stdcall PaymentDetails([out, retval] BSTR * Value );
+    [
+    propput, 
+    id(0x00000015)
+    ]
+    HRESULT _stdcall PaymentDetails([in] BSTR Value );
+    [
+    propget, 
+    id(0x00000016)
+    ]
+    HRESULT _stdcall ProviderCode([out, retval] BSTR * Value );
+    [
+    propput, 
+    id(0x00000016)
+    ]
+    HRESULT _stdcall ProviderCode([in] BSTR Value );
+    [
+    propget, 
+    id(0x00000017)
+    ]
+    HRESULT _stdcall ProcessingFlag([out, retval] long * Value );
+    [
+    propput, 
+    id(0x00000017)
+    ]
+    HRESULT _stdcall ProcessingFlag([in] long Value );
+    [
+    propget, 
+    id(0x00000018)
+    ]
+    HRESULT _stdcall FileNameResult([out, retval] BSTR * Value );
+    [
+    propput, 
+    id(0x00000018)
+    ]
+    HRESULT _stdcall FileNameResult([in] BSTR Value );
+    [
+    propget, 
+    id(0x00000019)
+    ]
+    HRESULT _stdcall FileNameReport([out, retval] BSTR * Value );
+    [
+    propput, 
+    id(0x00000019)
+    ]
+    HRESULT _stdcall FileNameReport([in] BSTR Value );
+    [
+    propget, 
+    id(0x0000001A)
+    ]
+    HRESULT _stdcall FileName([out, retval] BSTR * Value );
+    [
+    propput, 
+    id(0x0000001A)
+    ]
+    HRESULT _stdcall FileName([in] BSTR Value );
+    [
+    propget, 
+    id(0x0000001C)
+    ]
+    HRESULT _stdcall PathParameters([out, retval] BSTR * Value );
+    [
+    propput, 
+    id(0x0000001C)
+    ]
+    HRESULT _stdcall PathParameters([in] BSTR Value );
+    [
+    propget, 
+    id(0x0000001D)
+    ]
+    HRESULT _stdcall CVV2([out, retval] BSTR * Value );
+    [
+    propput, 
+    id(0x0000001D)
+    ]
+    HRESULT _stdcall CVV2([in] BSTR Value );
+    [
+    propget, 
+    id(0x0000001E)
+    ]
+    HRESULT _stdcall AmountFee([out, retval] BSTR * Value );
+    [
+    propput, 
+    id(0x0000001E)
+    ]
+    HRESULT _stdcall AmountFee([in] BSTR Value );
+    [
+    propget, 
+    id(0x0000001F)
+    ]
+    HRESULT _stdcall TerminalOutID([out, retval] BSTR * Value );
+    [
+    propput, 
+    id(0x0000001F)
+    ]
+    HRESULT _stdcall TerminalOutID([in] BSTR Value );
+    [
+    propget, 
+    id(0x000000C9)
+    ]
+    HRESULT _stdcall ReceiptData([out, retval] BSTR * Value );
+    [
+    propput, 
+    id(0x000000C9)
+    ]
+    HRESULT _stdcall ReceiptData([in] BSTR Value );
+    [
+    propget, 
+    id(0x000000CA)
+    ]
+    HRESULT _stdcall EncPinBlock([out, retval] BSTR * Value );
+    [
+    propput, 
+    id(0x000000CA)
+    ]
+    HRESULT _stdcall EncPinBlock([in] BSTR Value );
+  };
+
+  [
+    uuid(D7F12E9A-14D1-4437-A0FC-0D5C4113C660), 
+    version(1.0), 
+    helpstring("Transaction Data Object")
+  ]
+  coclass TransData
+  {
+    [default] interface ITransData;
+  };
+
+  [
+    uuid(55E43BB7-1E1A-4358-9F65-CA5CD866B793), 
+    version(1.1), 
+    helpstring("Events interface for TransSender Object")
+  ]
+   dispinterface ITransSenderEvents
+  {
+    properties:
+    methods:
+    [
+    id(0x00000001)
+    ]
+    void OnExchange([in] long Result );
+    [
+    id(0x00000002)
+    ]
+    void OnPINExchange([in] BSTR PAN, [in] BSTR EWK, [in] long MkIndex );
+  };
+
+  [
+    uuid(8B6FC1F7-4737-474D-9324-9C7B7CF31EB3), 
+    version(1.0), 
+    helpstring("Transaction Sender Object")
+  ]
+  coclass TransSender
+  {
+    [default] interface ITransSender;
+    [default, source] dispinterface ITransSenderEvents;
+  };
+
+  
+  typedef  struct tag ITransData ** PPUserType1 /*Warning: unable to validate structure name: */;
+
+  [
+    uuid(9E13876D-EDE8-4B1B-BE89-B8497B693C6B), 
+    version(1.0), 
+    helpstring("Dispatch interface for TransSender Object"), 
+    dual, 
+    oleautomation
+  ]
+   interface ITransSender: IDispatch
+  {
+    [
+    id(0x00000001)
+    ]
+    HRESULT _stdcall InitResources([out, retval] long * Value );
+    [
+    id(0x00000002)
+    ]
+    HRESULT _stdcall FreeResources( void );
+    [
+    id(0x00000003)
+    ]
+    HRESULT _stdcall SetChannelParam([in] BSTR IPAddress, [in] long IPPort, [in] BSTR X25Script, [out, retval] long * Value );
+    [
+    id(0x00000004)
+    ]
+    HRESULT _stdcall SetProtocolParam([in] long TimeoutACK, [in] long TimeoutPacket, [in] long CountNAK, [in] long PacketSize, [out, retval] long * Value );
+    [
+    id(0x00000005)
+    ]
+    HRESULT _stdcall Exchange([in] ITransData ** Request /*Warning: unable to validate structure name: */, [in, out] ITransData ** Response /*Warning: unable to validate structure name: */, [in] long Timeout, [out, retval] long * Value );
+    [
+    propget, 
+    id(0x00000006)
+    ]
+    HRESULT _stdcall ErrorDescription([out, retval] BSTR * Value );
+    [
+    propget, 
+    id(0x00000007)
+    ]
+    HRESULT _stdcall ErrorCode([out, retval] long * Value );
+    [
+    id(0x00000008)
+    ]
+    HRESULT _stdcall SetControlServerParam([in] BSTR IPAddress, [in] long IPPort, [in] long Timeout, [out, retval] long * Value );
+    [
+    id(0x00000009)
+    ]
+    HRESULT _stdcall ControlServerStart([out, retval] long * Value );
+    [
+    id(0x0000000A)
+    ]
+    HRESULT _stdcall ControlServerStop([out, retval] long * Value );
+    [
+    id(0x0000000B)
+    ]
+    HRESULT _stdcall CancelExchange([out, retval] long * Value );
+  };
+
+}; 

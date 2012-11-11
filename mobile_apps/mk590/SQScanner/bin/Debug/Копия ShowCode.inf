@@ -1,0 +1,39 @@
+[Version]
+Signature   = "$Windows NT$"        ; required as-is
+Provider    = "Complex Systems"     ; maximum of 30 characters, full app name will be "<Provider> <AppName>"
+CESignature = "$Windows CE$"        ; required as-is
+ 
+[CEStrings]
+AppName     = "ShowCode"            ; maximum of 40 characters, full app name will be "<Provider> <AppName>"
+InstallDir  = %CE1%\%AppName%       ; Program Files\ShowCode
+ 
+[SourceDisksNames]                  ; directory that holds the application's files
+1 = , "Common Files",,"."
+ 
+[SourceDisksFiles]                  ; list of files to be included in .cab
+"%AppName%.exe" = 1
+pin.txt = 1
+ 
+[DefaultInstall]                    ; operations to be completed during install
+CopyFiles   = CopyToProgramFiles
+AddReg      = RegData
+CEShortcuts = ShortcutsMenu,ShortcutsDesktop   
+ 
+[DestinationDirs]                   ; default destination directories for each operation section
+CopyToProgramFiles    = 0, %InstallDir%
+ShortcutsDesktop = 0, %CE3%
+ShortcutsMenu = 0, %CE11%
+ 
+[CopyToProgramFiles]                ; copy operation file list
+"%AppName%.exe", "%AppName%.exe"
+"pin.txt", pin.txt
+ 
+[RegData]                           ; registry key list
+HKCU,Software\%AppName%,MajorVersion,0x00010001,1
+HKCU,Software\%AppName%,MinorVersion,0x00010001,0
+ 
+[ShortcutsMenu]                     ; Shortcut created in destination dir, %CE11%
+%AppName%,0,"%AppName%.exe"
+
+[ShortcutsDesktop]                  ; Shortcut created in destination dir, %CE3%
+%AppName%,0,"%AppName%.exe"
