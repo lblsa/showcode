@@ -395,8 +395,15 @@
 				})
 				.autocomplete({
 					source: function( request, response ) {
+						
+						strId = '';
+						for(i = 0; i<ids.length; i++)
+						{
+							strId += ids[i] + ', ';
+						}
+						
 						$.getJSON( "<?php echo Yii::app()->createUrl('events/searchOrg'); ?>", {
-							term: extractLast( request.term )
+							term: extractLast( request.term ), 'ids': strId,
 						}, response );
 					},
 					search: function() {
@@ -416,7 +423,7 @@
 						//terms.pop();
 						// add the selected item
 						//terms.push( ui.item.value );
-						for(i = 0; i<ids.length; i++)
+						/*for(i = 0; i<ids.length; i++)
 						{
 							if (ids[i]==ui.item.id)
 							{
@@ -424,7 +431,7 @@
 								this.value = '';
 								return false;
 							}
-						}
+						}*/
 						ids.push(ui.item.id);
 						values.push(ui.item.value);
 						// add placeholder to get the comma-and-space at the end

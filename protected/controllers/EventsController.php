@@ -36,12 +36,12 @@ class EventsController extends Controller
 				'users'=>array('*','@'),
 			),
 			array('allow',			// Для Организатора разрешено: 'index', 'view', 'admin' и 'create'
-				'actions'=>array('index', 'view', 'create', 'admin'),
+				'actions'=>array('index', 'view', 'create', 'admin', 'SearchOrg'),
 				'expression' => 'yii::app()->user->isOrganizer()',
 				//'expression' => array($this, 'isOrganizer'),
 			),
 			array('allow',			//для создателей мероприятия разрешено редактировать его и проверять билеты.
-				'actions'=>array('admin','update','checkTicket','passedList','public','protectionEmail', 'sendAlert'),
+				'actions'=>array('admin','update','checkTicket','passedList','public','protectionEmail', 'sendAlert', 'SearchOrg'),
 				'expression' => 'yii::app()->user->isCreator($_GET["id"])',
 				//'expression' => array($this, 'isCreator'),
 			),
@@ -530,8 +530,9 @@ class EventsController extends Controller
 	}
 	
 	//ищем всех организаторов
-	public function actionSearchOrg($term)
+	public function actionSearchOrg($term, $ids)
 	{
+		//echo '<pre>'; print_r($ids); echo '</pre>';
 		if (!empty($term))
 		{
 			//$term = mysql_escape_string($term);
@@ -541,7 +542,13 @@ class EventsController extends Controller
 			
 			$index = count($name);
 			
-			$sql = "select user_id, name as item, phone from tbl_user where user_id<>".$user_id." and name like '%".mysql_escape_string($name[$index - 1])."%'";
+			$and = '';
+			if (!empty($ids))
+			{
+				$and = ' and user_id not in ('.substr($ids, 0, -2).')';
+			}
+			
+			$sql = "select user_id, name as item, phone from tbl_user where user_id<>".$user_id." and name like '%".mysql_escape_string($name[$index - 1])."%'".$and;
 			$command = Yii::app()->db->createCommand($sql);
 			$dataReader = $command->query();
 			$users = $dataReader->readAll();		
