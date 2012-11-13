@@ -278,9 +278,20 @@ echo "Success: ".(($decoded == $message) ? "True" : "False")."<hr />\n";
             <div id="payment" style="border: medium none;box-shadow: 0 0 30px -5px #000000;display: none;height: 522px;left: 50%;margin-left: -408px;margin-top: -267px;padding: 3px;position: fixed;top: 50%;width: 784px; z-index: 65010;">
                 <input type="button" value="" onclick="javascript:closeMenu();return false;" id="buy_close" style="width: 17px;border: none; background:url(/images/close_button.png) left top no-repeat; display: block; left: 740px; top: 20px; position: absolute; cursor: pointer;" />
                 <iframe src="/events/iframe/9d58b520" width="100%" height="100%" style="border:none;"></iframe>
-            </div>                  
-            
-        </div>
+            </div>
+		</div>
+		<?php if (Yii::app()->user->isGuest): ?>
+		<!--vk-->
+		<script type="text/javascript">
+		  VK.init({apiId: 3235214});
+		</script>
+
+		<!-- Put this div tag to the place, where Auth block will be -->
+		<div id="vk_auth"></div>
+		<script type="text/javascript">
+			VK.Widgets.Auth("vk_auth", {width: "200px", authUrl: "<?php echo CHtml::normalizeUrl(array('site/vk'));?>"});
+		</script>
+		<?php endif;?>
     </div>
 </div>
 <!-- NEW MESSAGE AND REGISTRATION BLOCK (right column):end -->

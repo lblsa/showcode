@@ -234,4 +234,77 @@ class SiteController extends Controller
 		'.$mess;
 		mail($to, $title, $mess);
 	}
+	
+	//вконтакт
+	public function actionVk($uid, $first_name, $last_name, $hash)
+	{
+		$this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column3';
+		
+		$uid = (int)$uid;
+		$vkontakte_app_id = '3235214';
+		$vkontakte_secret_key = 'yJLLnNaNEiHZ1qdQYfDu';
+
+		$vk_authorized = md5($vkontakte_app_id.$uid.$vkontakte_secret_key) == $hash;
+
+		if ($vk_authorized)
+		{
+			$user_model = User::model()->findByAttributes(array('vkontakte_id' => $uid));
+			if (!$user_model)
+			{
+				$user_model = new User;
+				
+				$user_model->vkontakte_id = $uid;
+				$user_model->name = $first_name.' '.$last_name;
+				$pass = User::model()->generatePassword(10);
+				$user_model->password = $pass.'/'.md5($pass);
+				
+				if (isset($_POST['User']))
+				{
+					$user_model->attributes = $_POST['User'];
+					//если пользователь уже зарегистрировался в шк, но ни разу не вошел через вк
+					$user = User::model()->findByAttributes(array('phone' => '7'.$user_model->phone));
+					if ($user)
+					{
+						$identity = new UserIdentity($user->phone, $user->password);
+						$identity->authenticate_vkontankte($user);
+						$user->vkontakte_id = $user_model->vkontakte_id;
+						$user->phone = substr($user->phone, 1);
+						$user->save();
+						Yii::app()->user->login($identity);
+						$this->redirect(Yii::app()->user->returnUrl);
+					}
+					//новый юзер, пришедший через вк
+					else
+					{
+						if ($user_model->validate())
+						{
+							//echo '<pre>'; print_r($user_model->attributes); echo '</pre>';exit;
+							$user_model->save();
+							$identity = new UserIdentity($user_model->phone, $user_model->password);
+							$identity->authenticate_vkontankte($user_model);
+							Yii::app()->user->login($identity);
+							$this->redirect(Yii::app()->user->returnUrl);
+						}
+					}
+				}
+				
+				$roles = User::$ROLE;
+				if (!Yii::app()->user->isAdmin())
+					array_pop($roles);
+			
+				$this->render(Yii::app()->mf->siteType(). '/vk', array('model'=>$user_model, 'roles'=>$roles));
+				return;
+			}
+			
+			$identity = new UserIdentity(0,0);
+			$identity->authenticate_vkontankte($user_model);
+			Yii::app()->user->login($identity);
+			$this->redirect(Yii::app()->user->returnUrl);
+		}
+		else
+		{
+			$render_data['vk'] = 'При авторизации произошла ошибка';
+			$this->render(Yii::app()->mf->siteType(). '/vk', $render_data);
+		}
+	}
 }

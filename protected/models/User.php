@@ -593,7 +593,8 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('phone, name, role', 'required', 'message'=>'Не может быть пустым'),
+			array('phone, name, role, email', 'required', 'message'=>'Не может быть пустым'),
+			array('vkontakte_id', 'unique', 'message'=>'Пользователь с вашим id уже зарегистрирован в системе'),
             array('email', 'unique'),
             array('phone', 'unique'),
 			array('uniq, email, password, name, oldPassword, newPassword, repeatPassword, organization, phone', 'length', 'max'=>128),

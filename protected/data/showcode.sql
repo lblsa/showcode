@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 30, 2012 at 08:07 AM
+-- Generation Time: Nov 13, 2012 at 04:43 PM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.6-1ubuntu1
 
@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `tbl_events` (
   `author` int(10) NOT NULL,
   `column` int(10) DEFAULT NULL,
   `place` int(10) DEFAULT NULL,
-  `status` enum('draft','published') DEFAULT 'draft',
+  `status` enum('draft','published') DEFAULT 'published',
   `logo` varchar(100) NOT NULL,
   `open_key` int(10) NOT NULL COMMENT 'открытый ключ',
   `close_key` varchar(300) NOT NULL COMMENT 'закрытый ключ',
@@ -106,9 +106,9 @@ CREATE TABLE IF NOT EXISTS `tbl_events` (
 INSERT INTO `tbl_events` (`id`, `uniq`, `facebook_eid`, `title`, `description`, `address`, `datetime`, `author`, `column`, `place`, `status`, `logo`, `open_key`, `close_key`, `general_key`, `online`, `qr`, `active`) VALUES
 ('9d58b520', 'e637b0f84171ed2df826774d8f464883', NULL, 'Семинар – обучение работе с системой ShowCode', 'Обучение принципам работы с системой ShowCode.\r\nОбсуждаемые темы:\r\n - Регистрация нового события\r\n - Маркетинг мероприятий\r\n - Продвижение событий онлайн\r\n - Продажа билетов\r\n - Отчеты\r\n - Зачисление денег\r\n - Сбор пожертвований\r\n - Создание дизайна мероприятия', '111141, г. Москва, Зеленый пр-т, д. 3/10, стр. 15', '2012-02-06 08:00:00', 65, NULL, NULL, 'published', '/images/logo/9d58b520.png', 5, '423987430110969244671016398601023378450182994640941968220939454136823693131733158123551537175268844758938429738190498137156454955786250656247228765204125355567700449791760016168726433208698594019211322525204724108412193004139142807435399901472561539789', '2119937150554846223355081993005116892250914973204709841104697270684118465658665790617757685876344223794692148690952490685782277696879315873597334119013943839639136211190161708801788271090439844292961781193457254952869651317801332963504415711943531688669', 1, '/images/qrcode/9d58b520_dca48ab4.png', 1),
 ('3a5095f1', 'f84582d949c83f7cea786b4b3f96f0ba', NULL, 'Посещение зоопарка', 'Московский зоопарк – первый зоопарк в России, был открыт в 1864 году.\r\n\r\nСейчас в нём содержится более восьми тысяч животных, относящихся более, чем к тысяче видов мировой фауны. Зоопарк является членом Всемирной и Европейской ассоциации зоопарков и аквариумов (WAZA, EAZA), Евроазиатской региональной ассоциации зоопарков и аквариумов (ЕАРАЗА). Участвует во многих международных программах по сохранению исчезающих видов животных, сотрудничая с природоохранными организациями всего мира.', 'Москва, ул.&nbsp;Б.Грузинская,&nbsp;д.1', '2012-05-04 08:00:00', 3, NULL, NULL, 'published', '/images/logo/3a5095f1.png', 7, '848941469645673969560397761687704537702918210372377525437959792354869474114013339405384513443837166003172086073965826479466415910740586780078528311026013768253035365340219511147710168307573531367690853101451465969939539811444846657576341122615654795543', '1980863429173239262307594777271310587973475824202214226021906182161362106266031125279230531368953387340734867505920261785421639953079088780709594863404472607671945121872459962965204485914884089800930804600467393887810831733451807030206967164310523469547', 1, '/images/qrcode/3a5095f1_8af0999e.png', 1),
-('63577feb', '91728925dc1b9984dd9fc73721fa2a73', NULL, '123', '', NULL, '2012-10-31 08:00:00', 90, 11, 1, 'draft', '/images/logo/default.png', 5, '908161709131878028003931855252543539882470839314815204298032237056528314427644214935578285851746486206036697791667895412470745138918935153950107748119062400463571108424476097448676338271029103987185370600313386200355782199730575305680497250588987718925', '2270404272829695070009829638131358849706177098287038010745080592641320786069110537338945714629366215515091744479169738531176865865733426129143294237072360904439403589590449153821867989343679170356729834126868832859229707225245187075931561895778474597461', 0, '/images/qrcode/63577feb_1ba01b1f.png', 1),
-('4c7a03d3', '2e2191db3eea9f91e00efc1f0375fc0a', NULL, '111', '', NULL, '2012-10-31 08:00:00', 90, 22, 22, 'draft', '/images/logo/default.png', 7, '2427760543083538352702179272200284100424499889924870680151115053330344798735962283893895179700633294954790857895846304770491543329259405207694325513360894686692549540024285762385613704838189719804842415888469983780266240372724700323946906288944741777143', '3398864760316953693783050981080397740594299845894818952211561074662482718230347197451453251580886612936707201054184826678688164356274430249048558585882566665012220268015772560365537919738332192017489484919141614918293893313717922369480621981890911646721', 0, '/images/qrcode/4c7a03d3_bc3df307.png', 1),
-('eabf880c', '31bccc3146e3c2a1d3621afcaa8aa04c', NULL, '111', '', NULL, '2012-10-31 08:00:00', 90, 22, 22, 'draft', '/images/logo/default.png', 7, '845101311533357207447877979727170795192303935155958803398207189079502534523296224750542409189529769808468625218077523730202589797471031122607027427393469890051173366933507439666117651852513298091739979480319679077451594708743851010796287506541041861303', '1478927295183375113033786464522548891586531886522927905946862580889129435415768393313449216081677097164820094131635666527854534577898957635982574779664818280130555543014527160275210292054915515867472198366526617262886386470390845385273534953741262315437', 0, '/images/qrcode/eabf880c_becad9e1.png', 1),
+('63577feb', '828451e60d14d380a2d27e6fd8a5a7a5', NULL, '12311111111 111111111 11111111', '', NULL, '2012-10-31 08:00:00', 90, 11, 1, 'draft', '/images/logo/default.png', 5, '908161709131878028003931855252543539882470839314815204298032237056528314427644214935578285851746486206036697791667895412470745138918935153950107748119062400463571108424476097448676338271029103987185370600313386200355782199730575305680497250588987718925', '2270404272829695070009829638131358849706177098287038010745080592641320786069110537338945714629366215515091744479169738531176865865733426129143294237072360904439403589590449153821867989343679170356729834126868832859229707225245187075931561895778474597461', 0, '/images/qrcode/63577feb_c92f1757.png', 1),
+('4c7a03d3', 'b736f15bb14d5d29be9b0b1fac034bda', NULL, '111', '', NULL, '2012-10-31 08:00:00', 90, 22, 22, 'draft', '/images/logo/default.png', 7, '2427760543083538352702179272200284100424499889924870680151115053330344798735962283893895179700633294954790857895846304770491543329259405207694325513360894686692549540024285762385613704838189719804842415888469983780266240372724700323946906288944741777143', '3398864760316953693783050981080397740594299845894818952211561074662482718230347197451453251580886612936707201054184826678688164356274430249048558585882566665012220268015772560365537919738332192017489484919141614918293893313717922369480621981890911646721', 0, '/images/qrcode/4c7a03d3_16eb3937.png', 1),
+('eabf880c', '5b2545cb597d3dd91d91c2b9e9e7dedb', NULL, '111', '', NULL, '2012-10-31 08:00:00', 90, 22, 22, 'draft', '/images/logo/default.png', 7, '845101311533357207447877979727170795192303935155958803398207189079502534523296224750542409189529769808468625218077523730202589797471031122607027427393469890051173366933507439666117651852513298091739979480319679077451594708743851010796287506541041861303', '1478927295183375113033786464522548891586531886522927905946862580889129435415768393313449216081677097164820094131635666527854534577898957635982574779664818280130555543014527160275210292054915515867472198366526617262886386470390845385273534953741262315437', 0, '/images/qrcode/eabf880c_97438754.png', 1),
 ('396ffe7b', '702bb0af53a7a857dac7d883c2dbde29', NULL, '2', '22', '2', '2012-10-29 08:00:00', 90, 2, 2, 'draft', '/images/logo/default.png', 5, '1156331563727795284017469221028574990597171623298398353750319083282337357083445288054114380867879181077384987558561846904541843542184209889381930790627997016045647586885003041406107920295788806622080135673451712650658519650067354571953564449536786359237', '2890828909319488210043673052571437476492929058245995884375797708205843392708613220135285952169697952693462468896404617261354612259102958118001039916659011083949241974458493009158634903782530016422794645663315420117712510858824860150722313043217188554021', 0, '/images/qrcode/396ffe7b_495584a1.png', 1);
 
 -- --------------------------------------------------------
@@ -122,7 +122,7 @@ CREATE TABLE IF NOT EXISTS `tbl_event_org` (
   `id_org` int(11) NOT NULL,
   `id_event` varchar(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
 
 --
 -- Dumping data for table `tbl_event_org`
@@ -130,7 +130,11 @@ CREATE TABLE IF NOT EXISTS `tbl_event_org` (
 
 INSERT INTO `tbl_event_org` (`id`, `id_org`, `id_event`) VALUES
 (6, 72, 'eabf880c'),
-(7, 73, 'eabf880c');
+(7, 73, 'eabf880c'),
+(11, 69, '4c7a03d3'),
+(12, 73, '4c7a03d3'),
+(13, 79, '4c7a03d3'),
+(14, 69, '4c7a03d3');
 
 -- --------------------------------------------------------
 
@@ -145,7 +149,7 @@ CREATE TABLE IF NOT EXISTS `tbl_event_stat` (
   `send_stat` int(11) NOT NULL DEFAULT '0',
   `last_date` date NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `tbl_event_stat`
@@ -157,7 +161,8 @@ INSERT INTO `tbl_event_stat` (`id`, `user_id`, `event_id`, `send_stat`, `last_da
 (3, 90, '3891671b', 0, '2012-10-26'),
 (4, 90, '3891671b', 0, '2012-10-26'),
 (5, 90, '3891671b', 0, '2012-10-26'),
-(6, 90, '3891671b', 1, '2012-10-26');
+(6, 90, '3891671b', 1, '2012-10-26'),
+(7, 90, 'eabf880c', 2, '2012-10-31');
 
 -- --------------------------------------------------------
 
@@ -258,7 +263,7 @@ CREATE TABLE IF NOT EXISTS `tbl_passed` (
   `datetime` datetime DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=238 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=240 ;
 
 --
 -- Dumping data for table `tbl_passed`
@@ -312,7 +317,9 @@ INSERT INTO `tbl_passed` (`id`, `event_id`, `ticket_id`, `log_id`, `datetime`, `
 (234, '3a5095f1', 156, '5c14350a', '2012-08-14 12:40:06', 1),
 (235, '3a5095f1', 156, '4b4c2290', '2012-08-15 11:28:26', 1),
 (236, '3a5095f1', 156, 'fea54eaa', '2012-08-15 15:45:49', 1),
-(237, '3a5095f1', 156, '2dad2b16', '2012-08-15 17:18:52', 1);
+(237, '3a5095f1', 156, '2dad2b16', '2012-08-15 17:18:52', 1),
+(238, '63577feb', 165, 'ec352ba1', '2012-11-02 17:00:08', 90),
+(239, 'eabf880c', 167, '95a5d6b7', '2012-11-06 12:03:32', 73);
 
 -- --------------------------------------------------------
 
@@ -382,9 +389,9 @@ INSERT INTO `tbl_tickets` (`ticket_id`, `event_id`, `type`, `quantity`, `price`,
 (162, '512619d3', 'free', 36, 0, NULL, NULL, '00:00:01', '00:00:01', '1'),
 (163, '3891671b', 'free', 121, 0, NULL, NULL, '00:00:11', '00:00:11', '111'),
 (164, '396ffe7b', 'free', 4, 0, NULL, NULL, NULL, NULL, '2'),
-(165, '63577feb', 'free', 11, 0, NULL, NULL, NULL, NULL, NULL),
+(165, '63577feb', 'free', 9, 0, NULL, NULL, NULL, NULL, NULL),
 (166, '4c7a03d3', 'free', 484, 0, NULL, NULL, NULL, NULL, NULL),
-(167, 'eabf880c', 'free', 484, 0, NULL, NULL, NULL, NULL, NULL);
+(167, 'eabf880c', 'free', 482, 0, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -401,7 +408,7 @@ CREATE TABLE IF NOT EXISTS `tbl_transaction_log` (
   `price` int(10) DEFAULT NULL,
   `total` int(10) DEFAULT NULL,
   `user_id` int(10) DEFAULT NULL,
-  `datetime` datetime DEFAULT NULL,
+  `datetime` date DEFAULT NULL,
   `payment` enum('credit_card','qiwi') DEFAULT NULL,
   `status` tinyint(2) DEFAULT NULL,
   `mail` varchar(50) DEFAULT NULL,
@@ -415,76 +422,82 @@ CREATE TABLE IF NOT EXISTS `tbl_transaction_log` (
   `ticket_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`log_id`),
   UNIQUE KEY `uniq` (`uniq`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=499 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=505 ;
 
 --
 -- Dumping data for table `tbl_transaction_log`
 --
 
 INSERT INTO `tbl_transaction_log` (`log_id`, `uniq`, `event_id`, `type`, `quantity`, `price`, `total`, `user_id`, `datetime`, `payment`, `status`, `mail`, `family`, `address`, `column`, `place`, `rsa`, `qr`, `phone`, `ticket_id`) VALUES
-(357, 'e9194b27', '9d58b520', 'free', 1, 0, 0, 3, '2012-02-02 18:25:13', NULL, 1, 'max@complexsys.ru', 'Корецкий Максим', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_6e974195.png', '79206863980', 132),
-(358, 'd92c976f', '9d58b520', 'free', 1, 0, 0, NULL, '2012-02-03 09:49:45', NULL, 1, '', 'gfs adkfhckhsadkhfkhskhdfk', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_da0b249a.png', '79157066434', 132),
-(359, '48f52498', '9d58b520', 'free', 1, 0, 0, NULL, '2012-02-03 09:57:32', NULL, 1, '', 'Яkoff Zlonский', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_6d87884b.png', '79157066434', 132),
-(360, 'ede79a8b', '9d58b520', 'free', 1, 0, 0, 63, '2012-02-06 09:54:17', NULL, 1, 'maxmikheev@mail.ru', 'Михеев Максим', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_ad0bfaea.png', '79201548853', 132),
-(361, '28e2e415', '9d58b520', 'free', 1, 0, 0, 65, '2012-02-09 14:56:36', NULL, 3, 'isezonov@showcode.ru', 'Сезонов Иван Юрьевич', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_12e88769.png', '79032527820', 132),
-(362, 'a6486955', '9d58b520', 'free', 1, 0, 0, 65, '2012-02-09 14:58:16', NULL, 1, 'isezonov@showcode.ru', 'Сезонов Иван Юрьевич', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_a585db83.png', '79032527820', 132),
-(363, '8fad4811', '9d58b520', 'free', 1, 0, 0, 65, '2012-02-15 12:45:39', NULL, 1, 'isezonov@showcode.ru', 'Сезонов Иван Юрьевич', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_345971a7.png', '79032527820', 132),
-(481, '93c6d9fd', '9d58b520', 'free', 1, 0, 0, NULL, '2012-09-13 10:40:22', NULL, 1, 'roman.efimushkin@gmail.com', 'Test Test Test', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_c4800c44.png', '79651976571', 132),
-(482, '17d93e6b', '9d58b520', 'free', 1, 0, 0, NULL, '2012-09-13 10:43:37', NULL, 1, 'roman.efimushkin@gmail.com', 'Test Test Test', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_9c437f66.png', '79651976571', 132),
-(483, '1437bba2', '9d58b520', 'free', 1, 0, 0, NULL, '2012-09-13 10:50:27', NULL, 1, 'roman.efimushkin@gmail.com', 'Бдыщи', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_b5f3772.png', '79651976571', 132),
-(479, 'eb25c08f', '9d58b520', 'free', 1, 0, 0, NULL, '2012-09-13 10:29:26', NULL, 1, 'roman.efimushkin@gmail.com', 'Test Test Test', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_fda4a356.png', '79651976571', 132),
-(480, 'dec47957', '9d58b520', 'free', 1, 0, 0, NULL, '2012-09-13 10:30:03', NULL, 1, 'roman.efimushkin@gmail.com', 'Test Test Test', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_d0c8b762.png', '79651976571', 132),
-(476, '549119ed', '9d58b520', 'free', 1, 0, 0, 83, '2012-09-02 23:49:59', NULL, 1, 'tzenin@gmail.com', 'зенин тимофей владимирович', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_ca31ae2d.png', '79163408136', 132),
-(477, '10a66e98', '9d58b520', 'free', 1, 0, 0, NULL, '2012-09-04 10:07:11', NULL, 1, 'tzenin@gmail.com', 'зенин тимофей владимирович', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_dcf76c04.png', '79163408136', 132),
-(478, '2e81704a', '9d58b520', 'free', 1, 0, 0, NULL, '2012-09-12 22:45:54', NULL, 1, 'Isezonov@gmail.com', 'Sezonov i', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_d516ab59.png', '79299021278', 132),
-(474, '94771df0', '9d58b520', 'free', 1, 0, 0, NULL, '2012-09-02 00:04:17', NULL, 1, 'Isezonov@gmail.com', 'Ivan Sezonov', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_abda8169.png', '79299021278', 132),
-(475, '44aae21a', '9d58b520', 'free', 1, 0, 0, NULL, '2012-09-02 00:09:21', NULL, 1, 'Isezonov@gmail.com', 'Sezonov Ivan', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_262d2a2a.png', '79299021278', 132),
-(471, '10f827f1', '9d58b520', 'free', 1, 0, 0, NULL, '2012-09-01 19:42:02', NULL, 1, 'evil@bozo.ru', 'Митя', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_2eea7aa3.png', '79651976571', 132),
-(472, 'dd819e8a', '9d58b520', 'free', 1, 0, 0, 80, '2012-09-02 00:01:31', NULL, 1, 'Isezonov@gmail.com', 'Ivan Sezonov', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_e492465a.png', '79299021278', 132),
-(473, '95190195', '9d58b520', 'free', 1, 0, 0, 80, '2012-09-02 00:02:00', NULL, 1, 'Isezonov@gmail.com', 'Ivan Sezonov', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_71a3c530.png', '79299021278', 132),
-(469, '67f39cf2', '9d58b520', 'free', 1, 0, 0, 81, '2012-08-30 09:34:08', NULL, 1, 'mary_stas@mail.ru', 'Мария Павловна', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_7c8dc519.png', '79607171551', 132),
-(470, '6e09eac9', '9d58b520', 'free', 1, 0, 0, 82, '2012-08-30 12:28:29', NULL, 1, 'julia_komarova@hotmail.com', 'Комарова Юлия Вячеславовна', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_e66f91bf.png', '79199965586', 132),
-(455, 'cfc4e7cd', '9d58b520', 'free', 1, 0, 0, NULL, '2012-06-26 10:16:37', NULL, 1, 'isezonov@gmail.com', 'Сезонов Иван Юрьевич', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_5c1a7fee.png', '79032527820', 132),
-(456, 'f0b2260c', '3a5095f1', 'disposable', 1, 200, 200, 1, '2012-06-26 10:52:22', 'qiwi', 1, 'rubtsov@complexsys.ru', 'Иван', NULL, NULL, NULL, NULL, '/images/qrcode/3a5095f1_8838ea52.png', '79157066434', 156),
-(457, 'ec6db81d', '9d58b520', 'free', 1, 0, 0, NULL, '2012-07-18 17:05:50', NULL, 1, 'roman.efimushkin@gmail.com', 'Test Test Test', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_53fa6fcc.png', '79651976571', 132),
-(458, '15aad30a', '9d58b520', 'free', 1, 0, 0, 1, '2012-07-26 12:43:39', NULL, 1, 'rubtsov@complexsys.ru', 'Иван', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_9884aed4.png', '79157066434', 132),
-(459, 'b01f07c2', '3a5095f1', 'disposable', 1, 200, 200, 77, '2012-08-09 17:12:45', 'credit_card', 1, NULL, NULL, NULL, NULL, NULL, NULL, '/images/qrcode/3a5095f1_79b03f86.png', '70004110670', 156),
-(460, 'b4e06e39', '3a5095f1', 'disposable', 1, 200, 200, 77, '2012-08-13 11:04:13', 'credit_card', 1, NULL, NULL, NULL, NULL, NULL, NULL, '/images/qrcode/3a5095f1_7b3ac8eb.png', '70004110670', 156),
-(461, '8b8b44f1', '3a5095f1', 'disposable', 1, 200, 200, 1, '2012-08-14 12:19:21', 'qiwi', 3, 'rubtsov@complexsys.ru', 'Иван', NULL, NULL, NULL, NULL, '/images/qrcode/3a5095f1_d09f4cda.png', '79157066434', 156),
-(462, '23804d31', '3a5095f1', 'disposable', 1, 200, 200, 1, '2012-08-14 12:21:49', 'qiwi', 1, 'rubtsov@complexsys.ru', 'Иван', NULL, NULL, NULL, NULL, '/images/qrcode/3a5095f1_8c931fdc.png', '79157066434', 156),
-(463, '5c14350a', '3a5095f1', 'disposable', 1, 200, 200, 1, '2012-08-14 12:23:34', 'qiwi', 3, 'rubtsov@complexsys.ru', 'Иван', NULL, NULL, NULL, NULL, '/images/qrcode/3a5095f1_e97fec79.png', '79157066434', 156),
-(464, '2dad2b16', '3a5095f1', 'disposable', 1, 200, 200, 1, '2012-08-15 11:14:31', 'qiwi', 3, 'rubtsov@complexsys.ru', 'Иван', NULL, NULL, NULL, NULL, '/images/qrcode/3a5095f1_1b02c4ba.png', '79157066434', 156),
-(465, 'fea54eaa', '3a5095f1', 'disposable', 1, 200, 200, 1, '2012-08-15 11:16:34', 'qiwi', 3, 'rubtsov@complexsys.ru', 'Иван', NULL, NULL, NULL, NULL, '/images/qrcode/3a5095f1_f429778c.png', '79157066434', 156),
-(466, '4b4c2290', '3a5095f1', 'disposable', 1, 200, 200, 1, '2012-08-15 11:17:40', 'qiwi', 3, 'rubtsov@complexsys.ru', 'Иван', NULL, NULL, NULL, NULL, '/images/qrcode/3a5095f1_c3b1f3b0.png', '79157066434', 156),
-(467, 'da74b80e', '9d58b520', 'free', 1, 0, 0, NULL, '2012-08-28 21:58:16', NULL, 1, 'roman.efimushkin@gmail.com', 'Test Test Test', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_71e40ec9.png', '79651976571', 132),
-(468, 'dfd5ad2d', '9d58b520', 'free', 1, 0, 0, 80, '2012-08-28 22:30:43', NULL, 1, 'Isezonov@gmail.com', 'Сезонов Иван Юрьевич', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_54fff338.png', '79299021278', 132),
-(375, '6c5ef66f', '9d58b520', 'free', 1, 0, 0, NULL, '2012-02-28 22:33:33', NULL, 3, 'isezonov@inbox.ru', 'Сезонов Иван', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_24cb3a87.png', '79032527820', 132),
-(376, '53507e42', '9d58b520', 'free', 1, 0, 0, NULL, '2012-02-28 22:35:02', NULL, 3, 'isezonov@inbox.ru', 'Сезонов Иван Юрьевич', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_4b155167.png', '79032527820', 132),
-(484, '2325ce6a', '9d58b520', 'free', 1, 0, 0, NULL, '2012-09-13 10:52:37', NULL, 1, 'roman.efimushkin@gmail.com', 'Test Test Test', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_45dccb82.png', '79651976571', 132),
-(485, '648ec072', '9d58b520', 'free', 1, 0, 0, NULL, '2012-09-13 10:54:35', NULL, 1, 'roman.efimushkin@gmail.com', 'Test Test Test', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_9ba27675.png', '79651976571', 132),
-(486, '596de705', '9d58b520', 'free', 1, 0, 0, NULL, '2012-09-13 11:26:50', NULL, 1, 'roman.efimushkin@gmail.com', 'qweqweqwe sdfsdf', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_3f867743.png', '79651976571', 132),
-(487, 'a2a40307', '9d58b520', 'free', 1, 0, 0, NULL, '2012-09-13 11:29:02', NULL, 1, 'roman.efimushkin@gmail.com', 'qweqweqwe sdfsdf', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_ad3d881d.png', '79651976571', 132),
-(488, 'd3ce184f', '9d58b520', 'free', 1, 0, 0, NULL, '2012-09-13 12:29:50', NULL, 1, 'roman.efimushkin@gmail.com', 'Test Test Test', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_ccd4e298.png', '79651976571', 132),
-(489, 'f9ec2b43', '9d58b520', 'free', 1, 0, 0, NULL, '2012-09-13 12:37:39', NULL, 1, 'isezonov@gmail.com', 'Sezonov Ivan', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_a9d9e106.png', '79299021278', 132),
-(388, 'f672626e', '9d58b520', 'free', 1, 0, 0, 1, '2012-03-01 15:31:49', NULL, 3, 'rubtsov@complexsys.ru', 'Иван', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_9ff779f.png', '79157066434', 132),
-(389, 'c69412a4', '9d58b520', 'free', 1, 0, 0, 1, '2012-03-01 15:33:30', NULL, 3, 'rubtsov@complexsys.ru', 'Иван', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_bb9c9c6.png', '79157066434', 132),
-(391, '7c4a7c38', '9d58b520', 'free', 1, 0, 0, 65, '2012-03-05 23:02:05', NULL, 1, 'isezonov@showcode.ru', 'Сезонов Иван Юрьевич', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_2119e6f8.png', '79032527820', 132),
-(392, 'cd557640', '9d58b520', 'free', 1, 0, 0, 65, '2012-03-05 23:02:07', NULL, 1, 'isezonov@showcode.ru', 'Сезонов Иван Юрьевич', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_cf1787d4.png', '79032527820', 132),
-(423, '12d13a0a', '9d58b520', 'free', 1, 0, 0, NULL, '2012-04-17 00:57:22', NULL, 1, 'isezonov@inbox.ru', 'Сезонов ИЮ', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_a3a57d59.png', '79032527820', 132),
-(427, '899603cf', '9d58b520', 'free', 1, 0, 0, 69, '2012-04-18 10:33:32', NULL, 1, 'ponomaryv@yandex.ru', 'Пономарёв Сергей Андреевич', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_2f266fe3.png', '79206875952', 132),
-(428, '5c040f55', '9d58b520', 'free', 1, 0, 0, 69, '2012-04-18 10:34:30', NULL, 1, 'ponomaryv@yandex.ru', 'Пономарёв Сергей Андреевич', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_9772a949.png', '79206875952', 132),
-(429, '6c76c646', '9d58b520', 'free', 1, 0, 0, NULL, '2012-04-18 10:35:16', NULL, 1, 'sergey@complexsys.ru', 'Пономарёв Сергей', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_2989c1cd.png', '79206863980', 132),
-(430, 'df0c9657', '9d58b520', 'free', 1, 0, 0, NULL, '2012-04-18 10:42:02', NULL, 1, '', 'Корецкий Максим', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_b0e2b4a4.png', '79206863980', 132),
-(431, 'e9980102', '9d58b520', 'free', 1, 0, 0, 1, '2012-04-19 15:04:05', NULL, 1, 'rubtsov@complexsys.ru', 'Иван', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_bfc5bbe0.png', '79157066434', 132),
-(432, 'ee992275', '9d58b520', 'free', 1, 0, 0, 1, '2012-04-19 15:05:35', NULL, 1, 'rubtsov@complexsys.ru', 'Иван', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_684f16aa.png', '79157066434', 132),
-(443, '7cbe4fba', '9d58b520', 'free', 1, 0, 0, NULL, '2012-05-02 17:13:40', NULL, 1, 's.polikarpov@qiwi.ru', 'Поликарпов Сергей Александрович', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_4fe7e61d.png', '79265664082', 132),
-(445, 'a56ea5c9', '9d58b520', 'free', 1, 0, 0, 65, '2012-05-13 21:01:34', NULL, 1, 'isezonov@showcode.ru', 'Сезонов Иван Юрьевич', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_25c0f82a.png', '79032527820', 132),
-(490, 'd262f63f', '9d58b520', 'free', 1, 0, 0, 90, '2012-10-19 13:01:12', NULL, 1, 'rei_1991@mail.ru', 'Даша', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_6747bbad.png', '79040017142', 132),
-(491, '6960b13a', '9d58b520', 'free', 1, 0, 0, NULL, '2012-10-19 13:19:53', NULL, 1, 'rei_1991@mail.ru', 'Даша', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_a065ec42.png', '79040017142', 132),
-(492, '342f226e', '9d58b520', 'free', 1, 0, 0, NULL, '2012-10-19 13:26:17', NULL, 1, 'rei_1991@mail.ru', 'Даша', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_3e82ad09.png', '79040017142', 132),
-(493, 'd6e8b086', '9d58b520', 'free', 1, 0, 0, NULL, '2012-10-19 13:26:57', NULL, 1, 'rei_1991@mail.ru', 'Даша', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_f33b5023.png', '79040017142', 132),
-(496, '14e9facc', '6af760d1', 'free', 1, 0, 0, 90, '2012-10-21 15:13:15', NULL, 1, 'rei_1991@mail.ru', 'Даша', NULL, 1, 1, '1781627943592171679650660734783708080707312980613599893147986903599056509164828496971639988778257431011682729373694695751720674331651885055230659022335124950468923484476086461273319996710078009131667338766748609623244689250799046820936617122011579683943', '/images/qrcode/6af760d1_34beaf9d.png', '79040017241', 161),
-(497, '214979a9', '6af760d1', 'free', 1, 0, 0, 90, '2012-10-23 09:10:19', NULL, 1, 'rei_1991@mail.ru', 'Даша', NULL, 2, 1, '234741576135908670783502565996550398889297494060113307695360420052941165390863589976207302417319084306777339727064201902164453888241389560998771652335897189835753309670641696540242693002284957051091710740890355075788431997931458476134172524177892909206', '/images/qrcode/6af760d1_a85b906a.png', '79040017241', 161);
+(357, 'e9194b27', '9d58b520', 'free', 1, 0, 0, 3, '2012-02-02', NULL, 1, 'max@complexsys.ru', 'Корецкий Максим', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_6e974195.png', '79206863980', 132),
+(358, 'd92c976f', '9d58b520', 'free', 1, 0, 0, NULL, '2012-02-03', NULL, 1, '', 'gfs adkfhckhsadkhfkhskhdfk', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_da0b249a.png', '79157066434', 132),
+(359, '48f52498', '9d58b520', 'free', 1, 0, 0, NULL, '2012-02-03', NULL, 1, '', 'Яkoff Zlonский', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_6d87884b.png', '79157066434', 132),
+(360, 'ede79a8b', '9d58b520', 'free', 1, 0, 0, 63, '2012-02-06', NULL, 1, 'maxmikheev@mail.ru', 'Михеев Максим', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_ad0bfaea.png', '79201548853', 132),
+(361, '28e2e415', '9d58b520', 'free', 1, 0, 0, 65, '2012-02-09', NULL, 3, 'isezonov@showcode.ru', 'Сезонов Иван Юрьевич', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_12e88769.png', '79032527820', 132),
+(362, 'a6486955', '9d58b520', 'free', 1, 0, 0, 65, '2012-02-09', NULL, 1, 'isezonov@showcode.ru', 'Сезонов Иван Юрьевич', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_a585db83.png', '79032527820', 132),
+(363, '8fad4811', '9d58b520', 'free', 1, 0, 0, 65, '2012-02-15', NULL, 1, 'isezonov@showcode.ru', 'Сезонов Иван Юрьевич', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_345971a7.png', '79032527820', 132),
+(481, '93c6d9fd', '9d58b520', 'free', 1, 0, 0, NULL, '2012-09-13', NULL, 1, 'roman.efimushkin@gmail.com', 'Test Test Test', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_c4800c44.png', '79651976571', 132),
+(482, '17d93e6b', '9d58b520', 'free', 1, 0, 0, NULL, '2012-09-13', NULL, 1, 'roman.efimushkin@gmail.com', 'Test Test Test', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_9c437f66.png', '79651976571', 132),
+(483, '1437bba2', '9d58b520', 'free', 1, 0, 0, NULL, '2012-09-13', NULL, 1, 'roman.efimushkin@gmail.com', 'Бдыщи', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_b5f3772.png', '79651976571', 132),
+(479, 'eb25c08f', '9d58b520', 'free', 1, 0, 0, NULL, '2012-09-13', NULL, 1, 'roman.efimushkin@gmail.com', 'Test Test Test', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_fda4a356.png', '79651976571', 132),
+(480, 'dec47957', '9d58b520', 'free', 1, 0, 0, NULL, '2012-09-13', NULL, 1, 'roman.efimushkin@gmail.com', 'Test Test Test', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_d0c8b762.png', '79651976571', 132),
+(476, '549119ed', '9d58b520', 'free', 1, 0, 0, 83, '2012-09-02', NULL, 1, 'tzenin@gmail.com', 'зенин тимофей владимирович', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_ca31ae2d.png', '79163408136', 132),
+(477, '10a66e98', '9d58b520', 'free', 1, 0, 0, NULL, '2012-09-04', NULL, 1, 'tzenin@gmail.com', 'зенин тимофей владимирович', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_dcf76c04.png', '79163408136', 132),
+(478, '2e81704a', '9d58b520', 'free', 1, 0, 0, NULL, '2012-09-12', NULL, 1, 'Isezonov@gmail.com', 'Sezonov i', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_d516ab59.png', '79299021278', 132),
+(474, '94771df0', '9d58b520', 'free', 1, 0, 0, NULL, '2012-09-02', NULL, 1, 'Isezonov@gmail.com', 'Ivan Sezonov', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_abda8169.png', '79299021278', 132),
+(475, '44aae21a', '9d58b520', 'free', 1, 0, 0, NULL, '2012-09-02', NULL, 1, 'Isezonov@gmail.com', 'Sezonov Ivan', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_262d2a2a.png', '79299021278', 132),
+(471, '10f827f1', '9d58b520', 'free', 1, 0, 0, NULL, '2012-09-01', NULL, 1, 'evil@bozo.ru', 'Митя', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_2eea7aa3.png', '79651976571', 132),
+(472, 'dd819e8a', '9d58b520', 'free', 1, 0, 0, 80, '2012-09-02', NULL, 1, 'Isezonov@gmail.com', 'Ivan Sezonov', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_e492465a.png', '79299021278', 132),
+(473, '95190195', '9d58b520', 'free', 1, 0, 0, 80, '2012-09-02', NULL, 1, 'Isezonov@gmail.com', 'Ivan Sezonov', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_71a3c530.png', '79299021278', 132),
+(469, '67f39cf2', '9d58b520', 'free', 1, 0, 0, 81, '2012-08-30', NULL, 1, 'mary_stas@mail.ru', 'Мария Павловна', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_7c8dc519.png', '79607171551', 132),
+(470, '6e09eac9', '9d58b520', 'free', 1, 0, 0, 82, '2012-08-30', NULL, 1, 'julia_komarova@hotmail.com', 'Комарова Юлия Вячеславовна', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_e66f91bf.png', '79199965586', 132),
+(455, 'cfc4e7cd', '9d58b520', 'free', 1, 0, 0, NULL, '2012-06-26', NULL, 1, 'isezonov@gmail.com', 'Сезонов Иван Юрьевич', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_5c1a7fee.png', '79032527820', 132),
+(456, 'f0b2260c', '3a5095f1', 'disposable', 1, 200, 200, 1, '2012-06-26', 'qiwi', 1, 'rubtsov@complexsys.ru', 'Иван', NULL, NULL, NULL, NULL, '/images/qrcode/3a5095f1_8838ea52.png', '79157066434', 156),
+(457, 'ec6db81d', '9d58b520', 'free', 1, 0, 0, NULL, '2012-07-18', NULL, 1, 'roman.efimushkin@gmail.com', 'Test Test Test', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_53fa6fcc.png', '79651976571', 132),
+(458, '15aad30a', '9d58b520', 'free', 1, 0, 0, 1, '2012-07-26', NULL, 1, 'rubtsov@complexsys.ru', 'Иван', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_9884aed4.png', '79157066434', 132),
+(459, 'b01f07c2', '3a5095f1', 'disposable', 1, 200, 200, 77, '2012-08-09', 'credit_card', 1, NULL, NULL, NULL, NULL, NULL, NULL, '/images/qrcode/3a5095f1_79b03f86.png', '70004110670', 156),
+(460, 'b4e06e39', '3a5095f1', 'disposable', 1, 200, 200, 77, '2012-08-13', 'credit_card', 1, NULL, NULL, NULL, NULL, NULL, NULL, '/images/qrcode/3a5095f1_7b3ac8eb.png', '70004110670', 156),
+(461, '8b8b44f1', '3a5095f1', 'disposable', 1, 200, 200, 1, '2012-08-14', 'qiwi', 3, 'rubtsov@complexsys.ru', 'Иван', NULL, NULL, NULL, NULL, '/images/qrcode/3a5095f1_d09f4cda.png', '79157066434', 156),
+(462, '23804d31', '3a5095f1', 'disposable', 1, 200, 200, 1, '2012-08-14', 'qiwi', 1, 'rubtsov@complexsys.ru', 'Иван', NULL, NULL, NULL, NULL, '/images/qrcode/3a5095f1_8c931fdc.png', '79157066434', 156),
+(463, '5c14350a', '3a5095f1', 'disposable', 1, 200, 200, 1, '2012-08-14', 'qiwi', 3, 'rubtsov@complexsys.ru', 'Иван', NULL, NULL, NULL, NULL, '/images/qrcode/3a5095f1_e97fec79.png', '79157066434', 156),
+(464, '2dad2b16', '3a5095f1', 'disposable', 1, 200, 200, 1, '2012-08-15', 'qiwi', 3, 'rubtsov@complexsys.ru', 'Иван', NULL, NULL, NULL, NULL, '/images/qrcode/3a5095f1_1b02c4ba.png', '79157066434', 156),
+(465, 'fea54eaa', '3a5095f1', 'disposable', 1, 200, 200, 1, '2012-08-15', 'qiwi', 3, 'rubtsov@complexsys.ru', 'Иван', NULL, NULL, NULL, NULL, '/images/qrcode/3a5095f1_f429778c.png', '79157066434', 156),
+(466, '4b4c2290', '3a5095f1', 'disposable', 1, 200, 200, 1, '2012-08-15', 'qiwi', 3, 'rubtsov@complexsys.ru', 'Иван', NULL, NULL, NULL, NULL, '/images/qrcode/3a5095f1_c3b1f3b0.png', '79157066434', 156),
+(467, 'da74b80e', '9d58b520', 'free', 1, 0, 0, NULL, '2012-08-28', NULL, 1, 'roman.efimushkin@gmail.com', 'Test Test Test', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_71e40ec9.png', '79651976571', 132),
+(468, 'dfd5ad2d', '9d58b520', 'free', 1, 0, 0, 80, '2012-08-28', NULL, 1, 'Isezonov@gmail.com', 'Сезонов Иван Юрьевич', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_54fff338.png', '79299021278', 132),
+(375, '6c5ef66f', '9d58b520', 'free', 1, 0, 0, NULL, '2012-02-28', NULL, 3, 'isezonov@inbox.ru', 'Сезонов Иван', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_24cb3a87.png', '79032527820', 132),
+(376, '53507e42', '9d58b520', 'free', 1, 0, 0, NULL, '2012-02-28', NULL, 3, 'isezonov@inbox.ru', 'Сезонов Иван Юрьевич', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_4b155167.png', '79032527820', 132),
+(484, '2325ce6a', '9d58b520', 'free', 1, 0, 0, NULL, '2012-09-13', NULL, 1, 'roman.efimushkin@gmail.com', 'Test Test Test', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_45dccb82.png', '79651976571', 132),
+(485, '648ec072', '9d58b520', 'free', 1, 0, 0, NULL, '2012-09-13', NULL, 1, 'roman.efimushkin@gmail.com', 'Test Test Test', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_9ba27675.png', '79651976571', 132),
+(486, '596de705', '9d58b520', 'free', 1, 0, 0, NULL, '2012-09-13', NULL, 1, 'roman.efimushkin@gmail.com', 'qweqweqwe sdfsdf', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_3f867743.png', '79651976571', 132),
+(487, 'a2a40307', '9d58b520', 'free', 1, 0, 0, NULL, '2012-09-13', NULL, 1, 'roman.efimushkin@gmail.com', 'qweqweqwe sdfsdf', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_ad3d881d.png', '79651976571', 132),
+(488, 'd3ce184f', '9d58b520', 'free', 1, 0, 0, NULL, '2012-09-13', NULL, 1, 'roman.efimushkin@gmail.com', 'Test Test Test', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_ccd4e298.png', '79651976571', 132),
+(489, 'f9ec2b43', '9d58b520', 'free', 1, 0, 0, NULL, '2012-09-13', NULL, 1, 'isezonov@gmail.com', 'Sezonov Ivan', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_a9d9e106.png', '79299021278', 132),
+(388, 'f672626e', '9d58b520', 'free', 1, 0, 0, 1, '2012-03-01', NULL, 3, 'rubtsov@complexsys.ru', 'Иван', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_9ff779f.png', '79157066434', 132),
+(389, 'c69412a4', '9d58b520', 'free', 1, 0, 0, 1, '2012-03-01', NULL, 3, 'rubtsov@complexsys.ru', 'Иван', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_bb9c9c6.png', '79157066434', 132),
+(391, '7c4a7c38', '9d58b520', 'free', 1, 0, 0, 65, '2012-03-05', NULL, 1, 'isezonov@showcode.ru', 'Сезонов Иван Юрьевич', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_2119e6f8.png', '79032527820', 132),
+(392, 'cd557640', '9d58b520', 'free', 1, 0, 0, 65, '2012-03-05', NULL, 1, 'isezonov@showcode.ru', 'Сезонов Иван Юрьевич', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_cf1787d4.png', '79032527820', 132),
+(423, '12d13a0a', '9d58b520', 'free', 1, 0, 0, NULL, '2012-04-17', NULL, 1, 'isezonov@inbox.ru', 'Сезонов ИЮ', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_a3a57d59.png', '79032527820', 132),
+(427, '899603cf', '9d58b520', 'free', 1, 0, 0, 69, '2012-04-18', NULL, 1, 'ponomaryv@yandex.ru', 'Пономарёв Сергей Андреевич', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_2f266fe3.png', '79206875952', 132),
+(428, '5c040f55', '9d58b520', 'free', 1, 0, 0, 69, '2012-04-18', NULL, 1, 'ponomaryv@yandex.ru', 'Пономарёв Сергей Андреевич', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_9772a949.png', '79206875952', 132),
+(429, '6c76c646', '9d58b520', 'free', 1, 0, 0, NULL, '2012-04-18', NULL, 1, 'sergey@complexsys.ru', 'Пономарёв Сергей', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_2989c1cd.png', '79206863980', 132),
+(430, 'df0c9657', '9d58b520', 'free', 1, 0, 0, NULL, '2012-04-18', NULL, 1, '', 'Корецкий Максим', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_b0e2b4a4.png', '79206863980', 132),
+(431, 'e9980102', '9d58b520', 'free', 1, 0, 0, 1, '2012-04-19', NULL, 1, 'rubtsov@complexsys.ru', 'Иван', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_bfc5bbe0.png', '79157066434', 132),
+(432, 'ee992275', '9d58b520', 'free', 1, 0, 0, 1, '2012-04-19', NULL, 1, 'rubtsov@complexsys.ru', 'Иван', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_684f16aa.png', '79157066434', 132),
+(443, '7cbe4fba', '9d58b520', 'free', 1, 0, 0, NULL, '2012-05-02', NULL, 1, 's.polikarpov@qiwi.ru', 'Поликарпов Сергей Александрович', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_4fe7e61d.png', '79265664082', 132),
+(445, 'a56ea5c9', '9d58b520', 'free', 1, 0, 0, 65, '2012-05-13', NULL, 1, 'isezonov@showcode.ru', 'Сезонов Иван Юрьевич', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_25c0f82a.png', '79032527820', 132),
+(490, 'd262f63f', '9d58b520', 'free', 1, 0, 0, 90, '2012-10-19', NULL, 1, 'rei_1991@mail.ru', 'Даша', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_6747bbad.png', '79040017142', 132),
+(491, '6960b13a', '9d58b520', 'free', 1, 0, 0, NULL, '2012-10-19', NULL, 1, 'rei_1991@mail.ru', 'Даша', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_a065ec42.png', '79040017142', 132),
+(492, '342f226e', '9d58b520', 'free', 1, 0, 0, NULL, '2012-10-19', NULL, 1, 'rei_1991@mail.ru', 'Даша', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_3e82ad09.png', '79040017142', 132),
+(493, 'd6e8b086', '9d58b520', 'free', 1, 0, 0, NULL, '2012-10-19', NULL, 1, 'rei_1991@mail.ru', 'Даша', NULL, NULL, NULL, NULL, '/images/qrcode/9d58b520_f33b5023.png', '79040017142', 132),
+(496, '14e9facc', '6af760d1', 'free', 1, 0, 0, 90, '2012-10-21', NULL, 1, 'rei_1991@mail.ru', 'Даша', NULL, 1, 1, '1781627943592171679650660734783708080707312980613599893147986903599056509164828496971639988778257431011682729373694695751720674331651885055230659022335124950468923484476086461273319996710078009131667338766748609623244689250799046820936617122011579683943', '/images/qrcode/6af760d1_34beaf9d.png', '79040017241', 161),
+(497, '214979a9', '6af760d1', 'free', 1, 0, 0, 90, '2012-10-23', NULL, 1, 'rei_1991@mail.ru', 'Даша', NULL, 2, 1, '234741576135908670783502565996550398889297494060113307695360420052941165390863589976207302417319084306777339727064201902164453888241389560998771652335897189835753309670641696540242693002284957051091710740890355075788431997931458476134172524177892909206', '/images/qrcode/6af760d1_a85b906a.png', '79040017241', 161),
+(499, 'ec352ba1', '63577feb', 'free', 1, 0, 0, 90, '2012-11-02', NULL, 3, 'rei_1991@mail.ru', 'Даша', NULL, 1, 1, NULL, '/images/qrcode/63577feb_1523858.png', '79040017241', 165),
+(500, '95a5d6b7', 'eabf880c', 'free', 1, 0, 0, 90, '2012-11-04', NULL, 3, 'rei_1991@mail.ru', 'Даша', NULL, 1, 1, NULL, '/images/qrcode/eabf880c_786a63ca.png', '79040017241', 167),
+(501, 'a7dd4e8a', 'eabf880c', 'free', 1, 0, 0, 90, '2012-11-07', NULL, 1, 'rei_1991@mail.ru', 'Даша', NULL, 1, 3, NULL, '/images/qrcode/eabf880c_6e741004.png', '79040017241', 167),
+(502, 'd4966c2c', '63577feb', 'free', 1, 0, 0, 90, '2012-11-09', NULL, 0, 'rei_1991@mail.ru', 'Даша', NULL, 2, 1, NULL, '/images/qrcode/63577feb_31ee6717.png', '79040017241', 165),
+(503, '2b214fbd', '63577feb', 'free', 1, 0, 0, 90, '2012-11-09', NULL, 1, 'rei_1991@mail.ru', 'Даша', NULL, 3, 1, NULL, '/images/qrcode/63577feb_f5e79e00.png', '79040017241', 165),
+(504, '70a3f4a8', '63577feb', 'free', 1, 0, 0, 90, '2012-11-09', NULL, 1, 'rei_1991@mail.ru', 'Даша', NULL, 11, 1, NULL, '/images/qrcode/63577feb_2b668309.png', '79040017241', 165);
 
 -- --------------------------------------------------------
 
@@ -506,6 +519,7 @@ CREATE TABLE IF NOT EXISTS `tbl_user` (
   `profile` text,
   `access_token` tinytext,
   `send_mail` tinyint(1) DEFAULT NULL,
+  `vkontakte_id` int(11) NOT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `email` (`email`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=96 ;
@@ -514,32 +528,32 @@ CREATE TABLE IF NOT EXISTS `tbl_user` (
 -- Dumping data for table `tbl_user`
 --
 
-INSERT INTO `tbl_user` (`user_id`, `uid`, `type`, `uniq`, `email`, `phone`, `password`, `name`, `role`, `organization`, `profile`, `access_token`, `send_mail`) VALUES
-(1, 100003092610030, 'self', '111', 'rubtsov@complexsys.ru', 79157066434, '4a7d1ed414474e4033ac29ccb8653d9b', 'Иван', 'admin', 'ComplexSystems', '', 'AAACfGH2j7qsBADw7eG8c6v2Mr7X52moQsYqsIT9fIhqHyN2U3JLY2izBsGbzUxW7v1ZCB4DGsHOFupS3GEeyX10YQxeDJunVcNrwLIgZDZD', 1),
-(2, 100001827434541, 'self', 'c2b83f5d88042eb968c852aef6b089fd', 'vladimir.stasevich@gmail.com', 79261248431, 'c0047759421a42b6d01a5e00348f124e', 'Владимир Стасевич', 'admin', 'Showcode.ru', NULL, 'AAAEAEPYbzM4BAEaPcPVoYJGgSAWfnaX0gmk1D7D4mXvdzVPE9YoGG2mlpDXAQ0QZAgLNcjfjZAU8o5eBSDhTBEnIK4Dya9FAImXqhULwZDZD', 1),
-(3, NULL, 'self', 'cb1c7affe40ef9156b7e53802079f751', 'max@complexsys.ru', 79206863980, 'ca243b53a7795fe77c50cb0a6a3683d8', 'Корецкий Максим', 'admin', 'Комсис', NULL, NULL, 0),
-(63, NULL, 'self', '5911bb1510e031a52adce3520e808651', 'maxmikheev@mail.ru', 79201548853, '087a2b53a3c7137b37c8ab2d44b82cb9', 'Михеев Максим', 'admin', 'Комплексные Системы', NULL, NULL, NULL),
-(64, NULL, 'self', 'ef4b0ceff4af72b293117d15f2229a0e', 'hlebnikov@complexsys.ru', 79607114313, '49b6135ece69428729f8fb33253d14cd', 'ddale', 'admin', 'Абырвалл', NULL, NULL, NULL),
-(65, NULL, 'self', 'fb2d3f2eea6e5045d37faf51d28fca0b', 'isezonov@showcode.ru', 79032527820, '74eaa15398f41036bade50ee8017b07c', 'Сезонов Иван Юрьевич', 'admin', 'ShowCode', NULL, NULL, 1),
-(66, NULL, 'self', 'a03001993460673004a5b5325ca3bcd6', NULL, 79859919091, '8ef5f02ebd64f537f760085103c19fc7', 'Ефремов Владимир Сергеевич', 'user', '', NULL, NULL, NULL),
-(67, NULL, 'self', 'f963cc65c5dbcdd909dc57dd39abc37a', 'isezonov@inbox.ru', 79032627820, '8ecfefbaecd2c294292ff93ae0f0f8be', 'Сезонов Иван Юрьевич', 'user', NULL, NULL, NULL, NULL),
-(68, NULL, 'self', 'bc4447a6734eb6b24751c47f49d1df26', 'cloud@complexsys.ru', 79206876063, '8a31110bf9a1c2daa72cb3e7ca921c2d', 'Пуговкина Алена Сергеевна', 'user', NULL, NULL, NULL, NULL),
-(69, NULL, 'self', '5944819d268358f706a000d433627f49', 'ponomaryv@yandex.ru', 79206875952, 'da1f96e5fa7c451b2965a1c47c5eb3ce', 'Пономарёв Сергей Андреевич', 'organizer', 'ООО "Интеллектуальные решения"', NULL, NULL, NULL),
-(70, NULL, 'self', '8d2361122bd581b02fa23eabb4caf87b', 'corivan@yandex.ru', 70000000000, '2484cf190f67b7eed3f6f5934e89e056', 'ivab', 'user', NULL, NULL, NULL, NULL),
-(71, NULL, 'self', 'a0cc42720ff694daca02aa0c4b778658', NULL, 72222222222, 'e0ebc3c409070d07f1df0f2f4132509e', 'Поликарпов Сергей Александрович', 'user', '', NULL, NULL, NULL),
-(72, NULL, 'self', 'edc53a258b0423cb428269dea90b9c0a', 'la_coste_xtc@bk.ru', 79265664082, '7b80334928bfad28248e3f25072a8554', 'Поликарпов Сергей Александрович', 'organizer', 'QIWI Кошелек', NULL, NULL, NULL),
-(73, NULL, 'self', '77dffc5970fb6bbcc6a15700d6bafdfc', 'svyatoslav.ostrovskiY@gmail.com', 79262063533, '07e18ab8a3aa1eb225816e32513a0a51', 'Слава Островский', 'organizer', 'IceVenture', NULL, NULL, NULL),
-(74, NULL, 'self', '3a32bb075a7bc05363802b16db49bd32', NULL, 79011111111, 'ca58ca996e58a539d2347139cb9c3dee', 'Петрт петрович', 'user', NULL, NULL, NULL, NULL),
-(75, NULL, 'self', '2b6ca847a581631331b8cbc5af348006', 'roman.efimushkin@gmail.com', 79651976571, '9ff33f7b33fd83e94815c712a447087c', 'Test', 'user', NULL, NULL, NULL, NULL),
-(76, NULL, 'self', 'c8aea93293f8a4613f14ed32d8b4e995', 'sk2010-2012@mail.ru', 79817352447, '846bfac26471591bae8354b49dd8a4be', 'Кораблёв Сергей Иванович', 'organizer', 'Надувной Иллюзионный Театр "SK-MAGIC"', NULL, NULL, NULL),
-(77, NULL, 'self', '3bf5d5b87e4080b4624c6272b82a5957', NULL, 70004110670, 'ffb81594fbd198ff231151f9c7781162', 'Московский Зоопарк', 'user', 'Московский Зоопарк', NULL, NULL, NULL),
-(78, NULL, 'self', '267a011a8dc868ab6a85f9d216fe2791', 'tatyana.stasevich@gmail.com', 79253294072, 'cf104b9590ee333e061a03fffd0004cb', 'Стасевич Татьяна Борисовна', 'organizer', 'Стасевич Инкорпорейтед', NULL, NULL, NULL),
-(79, NULL, 'self', 'a56c151c1f8da4790dadda5e05c5cfd0', 'ingweth@yandex.ru', 79253297042, 'and6flow6whom/5528ab8a9ffd38040762588c55c8977c', 'Стасевич Татьяна ', 'organizer', 'Stasevich Inc', NULL, NULL, NULL),
-(80, NULL, 'self', '7e6d28b576d57f2b36855e096b4ec265', 'Isezonov@gmail.com', 79299021278, 'kerr9vend9swan/a3bc05eeea9fdc8ca66a29fbc24a2741', 'Сезонов Иван Юрьевич', 'user', NULL, NULL, NULL, NULL),
-(81, NULL, 'self', 'ca4f873bea0d3b5f5d2017d2cd0c7f0e', 'mary_stas@mail.ru', 79607171551, 'f1af2eb1eac02eeb9eed63fdba8c05d9', 'Мария Павловна', 'user', NULL, NULL, NULL, NULL),
-(82, NULL, 'self', '8647a3972ff3a14a5b95124a0052e5ea', 'julia_komarova@hotmail.com', 79199965586, 'mock0bhoy6quad/e99286f6ff2730b5997384d5a9ac560b', 'Комарова Юлия Вячеславовна', 'user', NULL, NULL, NULL, NULL),
-(83, NULL, 'self', '0cb88d3cc0536b53493a05d4e950aed1', 'tzenin@gmail.com', 79163408136, '803354e6e62be8d5853b597c35d291d6', 'зенин тимофей владимирович', 'user', NULL, NULL, NULL, NULL),
-(90, NULL, 'self', '7d81ecd4273a331d9bdafef591494c37', 'rei_1991@mail.ru', 79040017241, 'frey6argo6bone/bc6584b326a6a7b2a394faaa20226264', 'Даша', 'admin', '', NULL, NULL, NULL);
+INSERT INTO `tbl_user` (`user_id`, `uid`, `type`, `uniq`, `email`, `phone`, `password`, `name`, `role`, `organization`, `profile`, `access_token`, `send_mail`, `vkontakte_id`) VALUES
+(1, 100003092610030, 'self', '111', 'rubtsov@complexsys.ru', 79157066434, '4a7d1ed414474e4033ac29ccb8653d9b', 'Иван', 'admin', 'ComplexSystems', '', 'AAACfGH2j7qsBADw7eG8c6v2Mr7X52moQsYqsIT9fIhqHyN2U3JLY2izBsGbzUxW7v1ZCB4DGsHOFupS3GEeyX10YQxeDJunVcNrwLIgZDZD', 1, 0),
+(2, 100001827434541, 'self', 'c2b83f5d88042eb968c852aef6b089fd', 'vladimir.stasevich@gmail.com', 79261248431, 'c0047759421a42b6d01a5e00348f124e', 'Владимир Стасевич', 'admin', 'Showcode.ru', NULL, 'AAAEAEPYbzM4BAEaPcPVoYJGgSAWfnaX0gmk1D7D4mXvdzVPE9YoGG2mlpDXAQ0QZAgLNcjfjZAU8o5eBSDhTBEnIK4Dya9FAImXqhULwZDZD', 1, 0),
+(3, NULL, 'self', 'cb1c7affe40ef9156b7e53802079f751', 'max@complexsys.ru', 79206863980, 'ca243b53a7795fe77c50cb0a6a3683d8', 'Корецкий Максим', 'admin', 'Комсис', NULL, NULL, 0, 0),
+(63, NULL, 'self', '5911bb1510e031a52adce3520e808651', 'maxmikheev@mail.ru', 79201548853, '087a2b53a3c7137b37c8ab2d44b82cb9', 'Михеев Максим', 'admin', 'Комплексные Системы', NULL, NULL, NULL, 0),
+(64, NULL, 'self', 'ef4b0ceff4af72b293117d15f2229a0e', 'hlebnikov@complexsys.ru', 79607114313, '49b6135ece69428729f8fb33253d14cd', 'ddale', 'admin', 'Абырвалл', NULL, NULL, NULL, 0),
+(65, NULL, 'self', 'fb2d3f2eea6e5045d37faf51d28fca0b', 'isezonov@showcode.ru', 79032527820, '74eaa15398f41036bade50ee8017b07c', 'Сезонов Иван Юрьевич', 'admin', 'ShowCode', NULL, NULL, 1, 0),
+(66, NULL, 'self', 'a03001993460673004a5b5325ca3bcd6', NULL, 79859919091, '8ef5f02ebd64f537f760085103c19fc7', 'Ефремов Владимир Сергеевич', 'user', '', NULL, NULL, NULL, 0),
+(67, NULL, 'self', 'f963cc65c5dbcdd909dc57dd39abc37a', 'isezonov@inbox.ru', 79032627820, '8ecfefbaecd2c294292ff93ae0f0f8be', 'Сезонов Иван Юрьевич', 'user', NULL, NULL, NULL, NULL, 0),
+(68, NULL, 'self', 'bc4447a6734eb6b24751c47f49d1df26', 'cloud@complexsys.ru', 79206876063, '8a31110bf9a1c2daa72cb3e7ca921c2d', 'Пуговкина Алена Сергеевна', 'user', NULL, NULL, NULL, NULL, 0),
+(69, NULL, 'self', '5944819d268358f706a000d433627f49', 'ponomaryv@yandex.ru', 79206875952, 'da1f96e5fa7c451b2965a1c47c5eb3ce', 'Пономарёв Сергей Андреевич', 'organizer', 'ООО "Интеллектуальные решения"', NULL, NULL, NULL, 0),
+(70, NULL, 'self', '8d2361122bd581b02fa23eabb4caf87b', 'corivan@yandex.ru', 70000000000, '2484cf190f67b7eed3f6f5934e89e056', 'ivab', 'user', NULL, NULL, NULL, NULL, 0),
+(71, NULL, 'self', 'a0cc42720ff694daca02aa0c4b778658', NULL, 72222222222, 'e0ebc3c409070d07f1df0f2f4132509e', 'Поликарпов Сергей Александрович', 'user', '', NULL, NULL, NULL, 0),
+(72, NULL, 'self', 'edc53a258b0423cb428269dea90b9c0a', 'la_coste_xtc@bk.ru', 79265664082, '7b80334928bfad28248e3f25072a8554', 'Поликарпов Сергей Александрович', 'organizer', 'QIWI Кошелек', NULL, NULL, NULL, 0),
+(73, NULL, 'self', '77dffc5970fb6bbcc6a15700d6bafdfc', 'svyatoslav.ostrovskiY@gmail.com', 79262063533, '07e18ab8a3aa1eb225816e32513a0a51', 'Слава Островский', 'organizer', 'IceVenture', NULL, NULL, NULL, 0),
+(74, NULL, 'self', '3a32bb075a7bc05363802b16db49bd32', NULL, 79011111111, 'ca58ca996e58a539d2347139cb9c3dee', 'Петрт петрович', 'user', NULL, NULL, NULL, NULL, 0),
+(75, NULL, 'self', '2b6ca847a581631331b8cbc5af348006', 'roman.efimushkin@gmail.com', 79651976571, '9ff33f7b33fd83e94815c712a447087c', 'Test', 'user', NULL, NULL, NULL, NULL, 0),
+(76, NULL, 'self', 'c8aea93293f8a4613f14ed32d8b4e995', 'sk2010-2012@mail.ru', 79817352447, '846bfac26471591bae8354b49dd8a4be', 'Кораблёв Сергей Иванович', 'organizer', 'Надувной Иллюзионный Театр "SK-MAGIC"', NULL, NULL, NULL, 0),
+(77, NULL, 'self', '3bf5d5b87e4080b4624c6272b82a5957', NULL, 70004110670, 'ffb81594fbd198ff231151f9c7781162', 'Московский Зоопарк', 'user', 'Московский Зоопарк', NULL, NULL, NULL, 0),
+(78, NULL, 'self', '267a011a8dc868ab6a85f9d216fe2791', 'tatyana.stasevich@gmail.com', 79253294072, 'cf104b9590ee333e061a03fffd0004cb', 'Стасевич Татьяна Борисовна', 'organizer', 'Стасевич Инкорпорейтед', NULL, NULL, NULL, 0),
+(79, NULL, 'self', 'a56c151c1f8da4790dadda5e05c5cfd0', 'ingweth@yandex.ru', 79253297042, 'and6flow6whom/5528ab8a9ffd38040762588c55c8977c', 'Стасевич Татьяна ', 'organizer', 'Stasevich Inc', NULL, NULL, NULL, 0),
+(80, NULL, 'self', '7e6d28b576d57f2b36855e096b4ec265', 'Isezonov@gmail.com', 79299021278, 'kerr9vend9swan/a3bc05eeea9fdc8ca66a29fbc24a2741', 'Сезонов Иван Юрьевич', 'user', NULL, NULL, NULL, NULL, 0),
+(81, NULL, 'self', 'ca4f873bea0d3b5f5d2017d2cd0c7f0e', 'mary_stas@mail.ru', 79607171551, 'f1af2eb1eac02eeb9eed63fdba8c05d9', 'Мария Павловна', 'user', NULL, NULL, NULL, NULL, 0),
+(82, NULL, 'self', '8647a3972ff3a14a5b95124a0052e5ea', 'julia_komarova@hotmail.com', 79199965586, 'mock0bhoy6quad/e99286f6ff2730b5997384d5a9ac560b', 'Комарова Юлия Вячеславовна', 'user', NULL, NULL, NULL, NULL, 0),
+(83, NULL, 'self', '0cb88d3cc0536b53493a05d4e950aed1', 'tzenin@gmail.com', 79163408136, '803354e6e62be8d5853b597c35d291d6', 'зенин тимофей владимирович', 'user', NULL, NULL, NULL, NULL, 0),
+(90, NULL, 'self', '7d81ecd4273a331d9bdafef591494c37', 'rei_1991@mail.ru', 79040017241, 'frey6argo6bone/bc6584b326a6a7b2a394faaa20226264', 'Даша', 'organizer', '', NULL, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
