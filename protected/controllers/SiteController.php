@@ -39,8 +39,8 @@ class SiteController extends Controller
 	 * when an action is not explicitly requested by users.
 	 */
 	public function actionIndex()
-    {
-        $this->render(Yii::app()->mf->siteType(). '/index');
+    {		
+		$this->render(Yii::app()->mf->siteType(). '/index');
     }
 
 	/**
@@ -235,6 +235,77 @@ class SiteController extends Controller
 		mail($to, $title, $mess);
 	}
 	
+	//авторизация
+	public function autoriation($flag, $id, $post)
+	{
+		if($flag==1)
+			$user_model = User::model()->findByAttributes(array('vkontakte_id' => $id));
+		else
+			$user_model = User::model()->findByAttributes(array('facebook_id' => $idf));
+			
+		if (!$user_model)
+		{
+			$user_model = new User;
+			
+			if($flag==1)
+				$user_model->vkontakte_id = $id;
+			else
+				$user_model->facebook_id = $id;
+				
+			$user_model->name = $first_name.' '.$last_name;
+			$pass = User::model()->generatePassword(10);
+			$user_model->password = $pass.'/'.md5($pass);
+			
+			if (isset($post['User']))
+			{
+				$user_model->attributes = $post['User'];
+				//если пользователь уже зарегистрировался в шк, но ни разу не вошел через вк
+				$user = User::model()->findByAttributes(array('phone' => '7'.$user_model->phone));
+				if ($user)
+				{
+					$identity = new UserIdentity($user->phone, $user->password);
+					$identity->authenticate_vk_fb($user);
+					
+					if($flag==1)
+						$user->vkontakte_id = $user_model->vkontakte_id;
+					else
+						$user->facebook_id = $user_model->facebook_id;
+					
+					$user->phone = substr($user->phone, 1);
+					$user->save();
+					Yii::app()->user->login($identity);
+					$this->redirect(Yii::app()->user->returnUrl);
+				}
+				//новый юзер, пришедший через вк или фб
+				else
+				{
+					if ($user_model->validate())
+					{
+						//echo '<pre>'; print_r($user_model->attributes); echo '</pre>';exit;
+						$user_model->save();
+						$identity = new UserIdentity($user_model->phone, $user_model->password);
+						$identity->authenticate_vk_fb($user_model);
+							
+						Yii::app()->user->login($identity);
+						$this->redirect(Yii::app()->user->returnUrl);
+					}
+				}
+			}
+			
+			$roles = User::$ROLE;
+			if (!Yii::app()->user->isAdmin())
+				array_pop($roles);
+		
+			$this->render(Yii::app()->mf->siteType(). '/vk', array('model'=>$user_model, 'roles'=>$roles));
+			return;
+		}
+		
+		$identity = new UserIdentity(0,0);
+		$identity->authenticate_vk_fb($user_model);
+		Yii::app()->user->login($identity);
+		$this->redirect(Yii::app()->user->returnUrl);
+	}
+	
 	//вконтакт
 	public function actionVk($uid, $first_name, $last_name, $hash)
 	{
@@ -248,63 +319,43 @@ class SiteController extends Controller
 
 		if ($vk_authorized)
 		{
-			$user_model = User::model()->findByAttributes(array('vkontakte_id' => $uid));
-			if (!$user_model)
-			{
-				$user_model = new User;
-				
-				$user_model->vkontakte_id = $uid;
-				$user_model->name = $first_name.' '.$last_name;
-				$pass = User::model()->generatePassword(10);
-				$user_model->password = $pass.'/'.md5($pass);
-				
-				if (isset($_POST['User']))
-				{
-					$user_model->attributes = $_POST['User'];
-					//если пользователь уже зарегистрировался в шк, но ни разу не вошел через вк
-					$user = User::model()->findByAttributes(array('phone' => '7'.$user_model->phone));
-					if ($user)
-					{
-						$identity = new UserIdentity($user->phone, $user->password);
-						$identity->authenticate_vkontankte($user);
-						$user->vkontakte_id = $user_model->vkontakte_id;
-						$user->phone = substr($user->phone, 1);
-						$user->save();
-						Yii::app()->user->login($identity);
-						$this->redirect(Yii::app()->user->returnUrl);
-					}
-					//новый юзер, пришедший через вк
-					else
-					{
-						if ($user_model->validate())
-						{
-							//echo '<pre>'; print_r($user_model->attributes); echo '</pre>';exit;
-							$user_model->save();
-							$identity = new UserIdentity($user_model->phone, $user_model->password);
-							$identity->authenticate_vkontankte($user_model);
-							Yii::app()->user->login($identity);
-							$this->redirect(Yii::app()->user->returnUrl);
-						}
-					}
-				}
-				
-				$roles = User::$ROLE;
-				if (!Yii::app()->user->isAdmin())
-					array_pop($roles);
-			
-				$this->render(Yii::app()->mf->siteType(). '/vk', array('model'=>$user_model, 'roles'=>$roles));
-				return;
-			}
-			
-			$identity = new UserIdentity(0,0);
-			$identity->authenticate_vkontankte($user_model);
-			Yii::app()->user->login($identity);
-			$this->redirect(Yii::app()->user->returnUrl);
+			$this->autoriation(1, $uid, $_POST);
 		}
 		else
 		{
 			$render_data['vk'] = 'При авторизации произошла ошибка';
 			$this->render(Yii::app()->mf->siteType(). '/vk', $render_data);
 		}
+	}
+	
+	//фейсбук		
+	public function actionFb()
+	{
+		$this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column3';
+		require_once 'php-sdk/src/facebook.php';
+		
+		$facebook_appId  = '423912244331435';
+		$facebook_secret = '3a97b435b571a5e432f5d1ba4532d5de';
+	
+		$facebook = new Facebook(array(
+			'appId'  => $facebook_appId,
+			'secret' => $facebook_secret,
+		));
+		$idf = $facebook->getUser();
+		
+		if ($idf)
+		{
+			try
+			{
+				$user_profile = $facebook->api('/me');				
+			}
+			catch (FacebookApiException $e)
+			{
+				die('facebook api error');
+			}
+		}
+		
+		$this->autoriation(2, $idf, $_POST);
+		
 	}
 }

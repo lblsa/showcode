@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 13, 2012 at 04:43 PM
+-- Generation Time: Nov 14, 2012 at 09:20 PM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.6-1ubuntu1
 
@@ -520,40 +520,41 @@ CREATE TABLE IF NOT EXISTS `tbl_user` (
   `access_token` tinytext,
   `send_mail` tinyint(1) DEFAULT NULL,
   `vkontakte_id` int(11) NOT NULL,
+  `facebook_id` int(11) NOT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=96 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=99 ;
 
 --
 -- Dumping data for table `tbl_user`
 --
 
-INSERT INTO `tbl_user` (`user_id`, `uid`, `type`, `uniq`, `email`, `phone`, `password`, `name`, `role`, `organization`, `profile`, `access_token`, `send_mail`, `vkontakte_id`) VALUES
-(1, 100003092610030, 'self', '111', 'rubtsov@complexsys.ru', 79157066434, '4a7d1ed414474e4033ac29ccb8653d9b', 'Иван', 'admin', 'ComplexSystems', '', 'AAACfGH2j7qsBADw7eG8c6v2Mr7X52moQsYqsIT9fIhqHyN2U3JLY2izBsGbzUxW7v1ZCB4DGsHOFupS3GEeyX10YQxeDJunVcNrwLIgZDZD', 1, 0),
-(2, 100001827434541, 'self', 'c2b83f5d88042eb968c852aef6b089fd', 'vladimir.stasevich@gmail.com', 79261248431, 'c0047759421a42b6d01a5e00348f124e', 'Владимир Стасевич', 'admin', 'Showcode.ru', NULL, 'AAAEAEPYbzM4BAEaPcPVoYJGgSAWfnaX0gmk1D7D4mXvdzVPE9YoGG2mlpDXAQ0QZAgLNcjfjZAU8o5eBSDhTBEnIK4Dya9FAImXqhULwZDZD', 1, 0),
-(3, NULL, 'self', 'cb1c7affe40ef9156b7e53802079f751', 'max@complexsys.ru', 79206863980, 'ca243b53a7795fe77c50cb0a6a3683d8', 'Корецкий Максим', 'admin', 'Комсис', NULL, NULL, 0, 0),
-(63, NULL, 'self', '5911bb1510e031a52adce3520e808651', 'maxmikheev@mail.ru', 79201548853, '087a2b53a3c7137b37c8ab2d44b82cb9', 'Михеев Максим', 'admin', 'Комплексные Системы', NULL, NULL, NULL, 0),
-(64, NULL, 'self', 'ef4b0ceff4af72b293117d15f2229a0e', 'hlebnikov@complexsys.ru', 79607114313, '49b6135ece69428729f8fb33253d14cd', 'ddale', 'admin', 'Абырвалл', NULL, NULL, NULL, 0),
-(65, NULL, 'self', 'fb2d3f2eea6e5045d37faf51d28fca0b', 'isezonov@showcode.ru', 79032527820, '74eaa15398f41036bade50ee8017b07c', 'Сезонов Иван Юрьевич', 'admin', 'ShowCode', NULL, NULL, 1, 0),
-(66, NULL, 'self', 'a03001993460673004a5b5325ca3bcd6', NULL, 79859919091, '8ef5f02ebd64f537f760085103c19fc7', 'Ефремов Владимир Сергеевич', 'user', '', NULL, NULL, NULL, 0),
-(67, NULL, 'self', 'f963cc65c5dbcdd909dc57dd39abc37a', 'isezonov@inbox.ru', 79032627820, '8ecfefbaecd2c294292ff93ae0f0f8be', 'Сезонов Иван Юрьевич', 'user', NULL, NULL, NULL, NULL, 0),
-(68, NULL, 'self', 'bc4447a6734eb6b24751c47f49d1df26', 'cloud@complexsys.ru', 79206876063, '8a31110bf9a1c2daa72cb3e7ca921c2d', 'Пуговкина Алена Сергеевна', 'user', NULL, NULL, NULL, NULL, 0),
-(69, NULL, 'self', '5944819d268358f706a000d433627f49', 'ponomaryv@yandex.ru', 79206875952, 'da1f96e5fa7c451b2965a1c47c5eb3ce', 'Пономарёв Сергей Андреевич', 'organizer', 'ООО "Интеллектуальные решения"', NULL, NULL, NULL, 0),
-(70, NULL, 'self', '8d2361122bd581b02fa23eabb4caf87b', 'corivan@yandex.ru', 70000000000, '2484cf190f67b7eed3f6f5934e89e056', 'ivab', 'user', NULL, NULL, NULL, NULL, 0),
-(71, NULL, 'self', 'a0cc42720ff694daca02aa0c4b778658', NULL, 72222222222, 'e0ebc3c409070d07f1df0f2f4132509e', 'Поликарпов Сергей Александрович', 'user', '', NULL, NULL, NULL, 0),
-(72, NULL, 'self', 'edc53a258b0423cb428269dea90b9c0a', 'la_coste_xtc@bk.ru', 79265664082, '7b80334928bfad28248e3f25072a8554', 'Поликарпов Сергей Александрович', 'organizer', 'QIWI Кошелек', NULL, NULL, NULL, 0),
-(73, NULL, 'self', '77dffc5970fb6bbcc6a15700d6bafdfc', 'svyatoslav.ostrovskiY@gmail.com', 79262063533, '07e18ab8a3aa1eb225816e32513a0a51', 'Слава Островский', 'organizer', 'IceVenture', NULL, NULL, NULL, 0),
-(74, NULL, 'self', '3a32bb075a7bc05363802b16db49bd32', NULL, 79011111111, 'ca58ca996e58a539d2347139cb9c3dee', 'Петрт петрович', 'user', NULL, NULL, NULL, NULL, 0),
-(75, NULL, 'self', '2b6ca847a581631331b8cbc5af348006', 'roman.efimushkin@gmail.com', 79651976571, '9ff33f7b33fd83e94815c712a447087c', 'Test', 'user', NULL, NULL, NULL, NULL, 0),
-(76, NULL, 'self', 'c8aea93293f8a4613f14ed32d8b4e995', 'sk2010-2012@mail.ru', 79817352447, '846bfac26471591bae8354b49dd8a4be', 'Кораблёв Сергей Иванович', 'organizer', 'Надувной Иллюзионный Театр "SK-MAGIC"', NULL, NULL, NULL, 0),
-(77, NULL, 'self', '3bf5d5b87e4080b4624c6272b82a5957', NULL, 70004110670, 'ffb81594fbd198ff231151f9c7781162', 'Московский Зоопарк', 'user', 'Московский Зоопарк', NULL, NULL, NULL, 0),
-(78, NULL, 'self', '267a011a8dc868ab6a85f9d216fe2791', 'tatyana.stasevich@gmail.com', 79253294072, 'cf104b9590ee333e061a03fffd0004cb', 'Стасевич Татьяна Борисовна', 'organizer', 'Стасевич Инкорпорейтед', NULL, NULL, NULL, 0),
-(79, NULL, 'self', 'a56c151c1f8da4790dadda5e05c5cfd0', 'ingweth@yandex.ru', 79253297042, 'and6flow6whom/5528ab8a9ffd38040762588c55c8977c', 'Стасевич Татьяна ', 'organizer', 'Stasevich Inc', NULL, NULL, NULL, 0),
-(80, NULL, 'self', '7e6d28b576d57f2b36855e096b4ec265', 'Isezonov@gmail.com', 79299021278, 'kerr9vend9swan/a3bc05eeea9fdc8ca66a29fbc24a2741', 'Сезонов Иван Юрьевич', 'user', NULL, NULL, NULL, NULL, 0),
-(81, NULL, 'self', 'ca4f873bea0d3b5f5d2017d2cd0c7f0e', 'mary_stas@mail.ru', 79607171551, 'f1af2eb1eac02eeb9eed63fdba8c05d9', 'Мария Павловна', 'user', NULL, NULL, NULL, NULL, 0),
-(82, NULL, 'self', '8647a3972ff3a14a5b95124a0052e5ea', 'julia_komarova@hotmail.com', 79199965586, 'mock0bhoy6quad/e99286f6ff2730b5997384d5a9ac560b', 'Комарова Юлия Вячеславовна', 'user', NULL, NULL, NULL, NULL, 0),
-(83, NULL, 'self', '0cb88d3cc0536b53493a05d4e950aed1', 'tzenin@gmail.com', 79163408136, '803354e6e62be8d5853b597c35d291d6', 'зенин тимофей владимирович', 'user', NULL, NULL, NULL, NULL, 0),
-(90, NULL, 'self', '7d81ecd4273a331d9bdafef591494c37', 'rei_1991@mail.ru', 79040017241, 'frey6argo6bone/bc6584b326a6a7b2a394faaa20226264', 'Даша', 'organizer', '', NULL, NULL, NULL, 0);
+INSERT INTO `tbl_user` (`user_id`, `uid`, `type`, `uniq`, `email`, `phone`, `password`, `name`, `role`, `organization`, `profile`, `access_token`, `send_mail`, `vkontakte_id`, `facebook_id`) VALUES
+(1, 100003092610030, 'self', '111', 'rubtsov@complexsys.ru', 79157066434, '4a7d1ed414474e4033ac29ccb8653d9b', 'Иван', 'admin', 'ComplexSystems', '', 'AAACfGH2j7qsBADw7eG8c6v2Mr7X52moQsYqsIT9fIhqHyN2U3JLY2izBsGbzUxW7v1ZCB4DGsHOFupS3GEeyX10YQxeDJunVcNrwLIgZDZD', 1, 0, 0),
+(2, 100001827434541, 'self', 'c2b83f5d88042eb968c852aef6b089fd', 'vladimir.stasevich@gmail.com', 79261248431, 'c0047759421a42b6d01a5e00348f124e', 'Владимир Стасевич', 'admin', 'Showcode.ru', NULL, 'AAAEAEPYbzM4BAEaPcPVoYJGgSAWfnaX0gmk1D7D4mXvdzVPE9YoGG2mlpDXAQ0QZAgLNcjfjZAU8o5eBSDhTBEnIK4Dya9FAImXqhULwZDZD', 1, 0, 0),
+(3, NULL, 'self', 'cb1c7affe40ef9156b7e53802079f751', 'max@complexsys.ru', 79206863980, 'ca243b53a7795fe77c50cb0a6a3683d8', 'Корецкий Максим', 'admin', 'Комсис', NULL, NULL, 0, 0, 0),
+(63, NULL, 'self', '5911bb1510e031a52adce3520e808651', 'maxmikheev@mail.ru', 79201548853, '087a2b53a3c7137b37c8ab2d44b82cb9', 'Михеев Максим', 'admin', 'Комплексные Системы', NULL, NULL, NULL, 0, 0),
+(64, NULL, 'self', 'ef4b0ceff4af72b293117d15f2229a0e', 'hlebnikov@complexsys.ru', 79607114313, '49b6135ece69428729f8fb33253d14cd', 'ddale', 'admin', 'Абырвалл', NULL, NULL, NULL, 0, 0),
+(65, NULL, 'self', 'fb2d3f2eea6e5045d37faf51d28fca0b', 'isezonov@showcode.ru', 79032527820, '74eaa15398f41036bade50ee8017b07c', 'Сезонов Иван Юрьевич', 'admin', 'ShowCode', NULL, NULL, 1, 0, 0),
+(66, NULL, 'self', 'a03001993460673004a5b5325ca3bcd6', NULL, 79859919091, '8ef5f02ebd64f537f760085103c19fc7', 'Ефремов Владимир Сергеевич', 'user', '', NULL, NULL, NULL, 0, 0),
+(67, NULL, 'self', 'f963cc65c5dbcdd909dc57dd39abc37a', 'isezonov@inbox.ru', 79032627820, '8ecfefbaecd2c294292ff93ae0f0f8be', 'Сезонов Иван Юрьевич', 'user', NULL, NULL, NULL, NULL, 0, 0),
+(68, NULL, 'self', 'bc4447a6734eb6b24751c47f49d1df26', 'cloud@complexsys.ru', 79206876063, '8a31110bf9a1c2daa72cb3e7ca921c2d', 'Пуговкина Алена Сергеевна', 'user', NULL, NULL, NULL, NULL, 0, 0),
+(69, NULL, 'self', '5944819d268358f706a000d433627f49', 'ponomaryv@yandex.ru', 79206875952, 'da1f96e5fa7c451b2965a1c47c5eb3ce', 'Пономарёв Сергей Андреевич', 'organizer', 'ООО "Интеллектуальные решения"', NULL, NULL, NULL, 0, 0),
+(70, NULL, 'self', '8d2361122bd581b02fa23eabb4caf87b', 'corivan@yandex.ru', 70000000000, '2484cf190f67b7eed3f6f5934e89e056', 'ivab', 'user', NULL, NULL, NULL, NULL, 0, 0),
+(71, NULL, 'self', 'a0cc42720ff694daca02aa0c4b778658', NULL, 72222222222, 'e0ebc3c409070d07f1df0f2f4132509e', 'Поликарпов Сергей Александрович', 'user', '', NULL, NULL, NULL, 0, 0),
+(72, NULL, 'self', 'edc53a258b0423cb428269dea90b9c0a', 'la_coste_xtc@bk.ru', 79265664082, '7b80334928bfad28248e3f25072a8554', 'Поликарпов Сергей Александрович', 'organizer', 'QIWI Кошелек', NULL, NULL, NULL, 0, 0),
+(73, NULL, 'self', '77dffc5970fb6bbcc6a15700d6bafdfc', 'svyatoslav.ostrovskiY@gmail.com', 79262063533, '07e18ab8a3aa1eb225816e32513a0a51', 'Слава Островский', 'organizer', 'IceVenture', NULL, NULL, NULL, 0, 0),
+(74, NULL, 'self', '3a32bb075a7bc05363802b16db49bd32', NULL, 79011111111, 'ca58ca996e58a539d2347139cb9c3dee', 'Петрт петрович', 'user', NULL, NULL, NULL, NULL, 0, 0),
+(75, NULL, 'self', '2b6ca847a581631331b8cbc5af348006', 'roman.efimushkin@gmail.com', 79651976571, '9ff33f7b33fd83e94815c712a447087c', 'Test', 'user', NULL, NULL, NULL, NULL, 0, 0),
+(76, NULL, 'self', 'c8aea93293f8a4613f14ed32d8b4e995', 'sk2010-2012@mail.ru', 79817352447, '846bfac26471591bae8354b49dd8a4be', 'Кораблёв Сергей Иванович', 'organizer', 'Надувной Иллюзионный Театр "SK-MAGIC"', NULL, NULL, NULL, 0, 0),
+(77, NULL, 'self', '3bf5d5b87e4080b4624c6272b82a5957', NULL, 70004110670, 'ffb81594fbd198ff231151f9c7781162', 'Московский Зоопарк', 'user', 'Московский Зоопарк', NULL, NULL, NULL, 0, 0),
+(78, NULL, 'self', '267a011a8dc868ab6a85f9d216fe2791', 'tatyana.stasevich@gmail.com', 79253294072, 'cf104b9590ee333e061a03fffd0004cb', 'Стасевич Татьяна Борисовна', 'organizer', 'Стасевич Инкорпорейтед', NULL, NULL, NULL, 0, 0),
+(79, NULL, 'self', 'a56c151c1f8da4790dadda5e05c5cfd0', 'ingweth@yandex.ru', 79253297042, 'and6flow6whom/5528ab8a9ffd38040762588c55c8977c', 'Стасевич Татьяна ', 'organizer', 'Stasevich Inc', NULL, NULL, NULL, 0, 0),
+(80, NULL, 'self', '7e6d28b576d57f2b36855e096b4ec265', 'Isezonov@gmail.com', 79299021278, 'kerr9vend9swan/a3bc05eeea9fdc8ca66a29fbc24a2741', 'Сезонов Иван Юрьевич', 'user', NULL, NULL, NULL, NULL, 0, 0),
+(81, NULL, 'self', 'ca4f873bea0d3b5f5d2017d2cd0c7f0e', 'mary_stas@mail.ru', 79607171551, 'f1af2eb1eac02eeb9eed63fdba8c05d9', 'Мария Павловна', 'user', NULL, NULL, NULL, NULL, 0, 0),
+(82, NULL, 'self', '8647a3972ff3a14a5b95124a0052e5ea', 'julia_komarova@hotmail.com', 79199965586, 'mock0bhoy6quad/e99286f6ff2730b5997384d5a9ac560b', 'Комарова Юлия Вячеславовна', 'user', NULL, NULL, NULL, NULL, 0, 0),
+(83, NULL, 'self', '0cb88d3cc0536b53493a05d4e950aed1', 'tzenin@gmail.com', 79163408136, '803354e6e62be8d5853b597c35d291d6', 'зенин тимофей владимирович', 'user', NULL, NULL, NULL, NULL, 0, 0),
+(90, NULL, 'self', '7d81ecd4273a331d9bdafef591494c37', 'rei_1991@mail.ru', 79040017241, NULL, 'Даша', 'organizer', NULL, NULL, NULL, NULL, 3563062, 0);
 
 -- --------------------------------------------------------
 

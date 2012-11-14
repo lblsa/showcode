@@ -291,7 +291,13 @@ echo "Success: ".(($decoded == $message) ? "True" : "False")."<hr />\n";
 		<script type="text/javascript">
 			VK.Widgets.Auth("vk_auth", {width: "200px", authUrl: "<?php echo CHtml::normalizeUrl(array('site/vk'));?>"});
 		</script>
-		<?php endif;?>
+		
+		<!--fb-->
+		<div style="padding-top: 10px; padding-left: 20px; padding-bottom: 10px;">
+			<?php /*<a href='<?php echo $loginUrl; ?>'><img src='<?php echo Yii::app()->baseUrl; ?>/images/facebook.png' /></a>*/?>
+			<a href="<?php echo CHtml::normalizeUrl(array('site/fb'))?>"><img src='<?php echo Yii::app()->baseUrl; ?>/images/facebook.png' /></a>
+		</div>
+		<? endif; ?>
     </div>
 </div>
 <!-- NEW MESSAGE AND REGISTRATION BLOCK (right column):end -->
