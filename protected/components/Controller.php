@@ -45,10 +45,38 @@ class Controller extends CController
 	
 	public function getTextEmailSendListTickets($tickets, $event, $organizator)
 	{
-		$text = $this->renderPartial(Yii::app()->mf->siteType(). '/_emailTickers',array(
-								'tickets'=>$tickets,
-								'event'=>$event,
-								'organizator'=>$organizator,
+		$text = $this->renderPartial(Yii::app()->mf->siteType(). '/_emailTickers',
+			array(
+				'tickets'=>$tickets,
+				'event'=>$event,
+				'organizator'=>$organizator,
+		), true);
+		
+		return $text;
+	}
+	
+	public function buyIsDoneFree($model, $ticket, $eventUniq, $event)
+	{
+		$text = $this->renderPartial(Yii::app()->mf->siteType(). '/_buyIsDoneFree',
+			array(
+				'model'=>$model,
+				'ticket'=>$ticket,
+				'eventUniq'=>$eventUniq,
+				'event'=>$event,
+		), true);
+		
+		return $text;
+	}
+	
+	public function buyIsDonePay($model, $ticket, $eventUniq, $event, $tit)
+	{
+		$text = $this->renderPartial(Yii::app()->mf->siteType(). '/_buyIsDonePay',
+			array(
+				'model'=>$model,
+				'ticket'=>$ticket,
+				'eventUniq'=>$eventUniq,
+				'event'=>$event,
+				'tit'=>$tit,
 		), true);
 		
 		return $text;

@@ -273,7 +273,8 @@ class SiteController extends Controller
 					
 					$user->phone = substr($user->phone, 1);
 					$user->save();
-					Yii::app()->user->login($identity);
+					$duration = 3600*24*30;
+					Yii::app()->user->login($identity, $duration);
 					$this->redirect(Yii::app()->user->returnUrl);
 				}
 				//новый юзер, пришедший через вк или фб
@@ -284,9 +285,9 @@ class SiteController extends Controller
 						//echo '<pre>'; print_r($user_model->attributes); echo '</pre>';exit;
 						$user_model->save();
 						$identity = new UserIdentity($user_model->phone, $user_model->password);
-						$identity->authenticate_vk_fb($user_model);
-							
-						Yii::app()->user->login($identity);
+						$identity->authenticate_vk_fb($user_model);								
+						$duration = 3600*24*30;
+						Yii::app()->user->login($identity, $duration);
 						$this->redirect(Yii::app()->user->returnUrl);
 					}
 				}
@@ -302,7 +303,8 @@ class SiteController extends Controller
 		
 		$identity = new UserIdentity(0,0);
 		$identity->authenticate_vk_fb($user_model);
-		Yii::app()->user->login($identity);
+		$duration = 3600*24*30;
+		Yii::app()->user->login($identity, $duration);
 		$this->redirect(Yii::app()->user->returnUrl);
 	}
 	

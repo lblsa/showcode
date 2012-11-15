@@ -148,7 +148,8 @@ class EventsController extends Controller
 			{
 				$user = User::model()->find('`phone` = :phone', array(':phone'=>'7'.$_POST['TransactionLog']['phone']));
 				//регистрируем нового пользователя
-				if (count($user)==0){
+				if (count($user)==0)
+				{
 					$a = new User();
 					$a->type = 'self';
 					$a->email = $_POST['TransactionLog']['mail'];
@@ -158,13 +159,13 @@ class EventsController extends Controller
 					$yourpass = User::generatePassword(10);
 					$a->password = md5($yourpass);
 					$a->save();
-					if($a->email){
+					if($a->email)
+					{
 						//$text = $a->getTextEmailAboutRegistration($yourpass);
 						//Yii::app()->mf->mail_html($a->email,'noreply@'.$_SERVER[HTTP_HOST],Yii::app()->name,$text,'Регистрация в ' .Yii::app()->name. '!');
 						$user = User::model()->find('`email`=:email and `phone`=:phone', array(':phone'=>$a->phone, ':email'=>$a->email));
-					}else{
+					}else
 						$user = User::model()->find('`phone`=:phone', array(':phone'=>$a->phone));
-					}
 
 					//$message = Yii::app()->name. '.Пароль:' .$yourpass;
 					//$a->sendMessenge($message, $a->phone);
@@ -175,16 +176,14 @@ class EventsController extends Controller
 			{
 				$_POST['TransactionLog']['user_id'] = $user->user_id;
 				if ($model->column && $model->place)
-				{
-					
+				{					
 					if(count($_POST['TransactionLog']['place']) == 0 && count($_POST['TransactionLog']['column']) == 0)
 					{
 						$log=new TransactionLog;
 						$log->addError('place', 1);
 					}
 					else
-					{
-						
+					{						
 						$valid = true;
 						$n = 0;
 						$logs = Array();
@@ -206,7 +205,6 @@ class EventsController extends Controller
 							{
 								if ($valid && $logs[$i]->insert())
 								{
-									//die('1123455');
 									$valid = true;
 								}
 								else

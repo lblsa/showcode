@@ -95,9 +95,11 @@ class TransactionLogController extends Controller
 	 */
 	public function actionView($id)
     {
-        $this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column2';
+        //echo '<pre>'; print_r($_GET); echo '</pre>';exit;
+		$this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column2';
         $model = $this->loadModel($id);
-        if(isset($_POST['Card'])){
+        if(isset($_POST['Card']))
+		{
             $model->buyIsDone();
             $model = $this->loadModel($id);
         }
@@ -246,36 +248,37 @@ class TransactionLogController extends Controller
 	public function loadModel($uniq)
 	{
 		$model=TransactionLog::model()->find('uniq=:uniq',array(':uniq'=>$uniq));
-		if($model===null){
-                        $IP = $_SERVER["REMOTE_ADDR"];
-                        $visitor = Visitors::model()->find('ip=:ip',array(':ip'=>$IP));
-                        if($visitor){
-                            $diffMinutes = floor(abs(strtotime(date('Y-m-d H:i:s')) - strtotime($visitor['time_last_come']))/60);
-                            if($diffMinutes >= 30){
-                                Visitors::model()->updateByPk($visitor->id, array('count'=>1, 'time_last_come'=>Yii::app()->mf->dateForMysql(date('Y-m-d')).' '.date('H:i:s')));
-                            }else{
-                                if(intval($visitor['count']) > 20){
-                                    $time_ban = mktime(0, 0, 0, date("m")  , date("d")+7, date("Y"));
-                                    Visitors::model()->updateByPk($visitor->id, array('count'=>0,'BAN' => 1, 'time_ban'=>Yii::app()->mf->dateForMysql(date("Y-m-d",$time_ban)),'time_last_come'=>Yii::app()->mf->dateForMysql(date('Y-m-d')).' '.date('H:i:s')));
-                                    Yii::app()->user->logout();
-                                    $this->redirect('/user/permissionDenied');
-                                    return false;
-                                }else{
-                                    if(intval($visitor['count']) > 5)
-                                        sleep (5);
-                                    $visitor->saveCounters(array('count'=>1));
-                                    Visitors::model()->updateByPk($visitor->id, array('time_last_come'=>Yii::app()->mf->dateForMysql(date('Y-m-d')).' '.date('H:i:s')));
-                                }
-                            }
-                        }else{
-                            $visitor = new Visitors();
-                            $params = array("ip" => $IP, "time_last_come" => Yii::app()->mf->dateForMysql(date('Y-m-d')).' '.date('H:i:s'), "time" => Yii::app()->mf->dateForMysql(date('Y-m-d')).' '.date('H:i:s'));
-                            $visitor->attributes = $params;
-                            $visitor->insert();
-                        }
+		if($model===null)
+		{
+			$IP = $_SERVER["REMOTE_ADDR"];
+			$visitor = Visitors::model()->find('ip=:ip',array(':ip'=>$IP));
+			if($visitor){
+				$diffMinutes = floor(abs(strtotime(date('Y-m-d H:i:s')) - strtotime($visitor['time_last_come']))/60);
+				if($diffMinutes >= 30){
+					Visitors::model()->updateByPk($visitor->id, array('count'=>1, 'time_last_come'=>Yii::app()->mf->dateForMysql(date('Y-m-d')).' '.date('H:i:s')));
+				}else{
+					if(intval($visitor['count']) > 20){
+						$time_ban = mktime(0, 0, 0, date("m")  , date("d")+7, date("Y"));
+						Visitors::model()->updateByPk($visitor->id, array('count'=>0,'BAN' => 1, 'time_ban'=>Yii::app()->mf->dateForMysql(date("Y-m-d",$time_ban)),'time_last_come'=>Yii::app()->mf->dateForMysql(date('Y-m-d')).' '.date('H:i:s')));
+						Yii::app()->user->logout();
+						$this->redirect('/user/permissionDenied');
+						return false;
+					}else{
+						if(intval($visitor['count']) > 5)
+							sleep (5);
+						$visitor->saveCounters(array('count'=>1));
+						Visitors::model()->updateByPk($visitor->id, array('time_last_come'=>Yii::app()->mf->dateForMysql(date('Y-m-d')).' '.date('H:i:s')));
+					}
+				}
+			}else{
+				$visitor = new Visitors();
+				$params = array("ip" => $IP, "time_last_come" => Yii::app()->mf->dateForMysql(date('Y-m-d')).' '.date('H:i:s'), "time" => Yii::app()->mf->dateForMysql(date('Y-m-d')).' '.date('H:i:s'));
+				$visitor->attributes = $params;
+				$visitor->insert();
+			}
 
 			throw new CHttpException(404,'Запрошенная страница не существует.');
-                }
+		}
 		return $model;
 	}
 
