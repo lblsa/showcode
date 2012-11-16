@@ -100,7 +100,14 @@ class TransactionLogController extends Controller
         $model = $this->loadModel($id);
         if(isset($_POST['Card']))
 		{
-            $model->buyIsDone();
+            
+			$ticket = Tickets::model()->findByPk($model->ticket_id);
+			$event = Events::model()->find(array('select'=>'datetime,id,address','condition'=>'id=:event_id','params'=>array(':event_id'=>$model->event_id)));
+			$eventUniq = $event->uniqium;
+		
+			//$model->buyIsDone();			
+			$this->buyIsDoneFree($model, $ticket, $eventUniq, $event);
+
             $model = $this->loadModel($id);
         }
 
@@ -393,8 +400,14 @@ class TransactionLogController extends Controller
             $ticket = TransactionLog::model()->find('uniq=:uniq',array(':uniq' => $uniqarr[0]));
 
             if ($responsePaymentClient['txnResponseCode'] == "0" && $responsePaymentClient['txnResponseCode'] != "No Value Returned" && !$errorExists) {
-                if(count($ticket) > 0){
-                    $ticket->buyIsDone();
+                if(count($ticket) > 0)
+				{
+                    //$ticket->buyIsDone();
+					$tickets = Tickets::model()->findByPk($ticket->ticket_id);
+					$event = Events::model()->find(array('select'=>'datetime,id,address','condition'=>'id=:event_id','params'=>array(':event_id'=>$ticket->event_id)));
+					$eventUniq = $event->uniqium;
+
+					$this->buyIsDoneFree($ticket, $tickets, $eventUniq, $event);
                     $this->redirect('/ticket/view/'.$ticket['uniq']);
                 }
             }else{

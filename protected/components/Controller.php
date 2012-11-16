@@ -55,8 +55,49 @@ class Controller extends CController
 		return $text;
 	}
 	
-	public function buyIsDoneFree($model, $ticket, $eventUniq, $event)
+	public function getTextEmailAboutRegistration($password, $model)
 	{
+		$text = $this->renderPartial(Yii::app()->mf->siteType(). '/_registrationEmail',
+			array(
+				'password'=>$password,
+				'model'=>$model,
+		), true);
+		
+		return $text;
+	}
+	
+	public function getTextEmailAboutRecoveryPassword($password, $model)
+	{
+		$text = $this->renderPartial(Yii::app()->mf->siteType(). '/_recoveryEmail',
+			array(
+				'password'=>$password,
+				'model'=>$model,
+		), true);
+		
+		return $text;
+	}
+	
+	public function buyIsDoneFree($model, $ticket, $eventUniq, $event)
+	{		
+		//Отправляем пользователю смс.		
+		//$user = mysql_fetch_array(mysql_query('select phone from tbl_user where user_id="' .$log['user_id']. '"'));
+		if(isset(Yii::app()->user->phone))
+			$phone = Yii::app()->user->phone;
+		else
+			$phone = $model->phone;		
+		
+		if (isset($phone))
+		{
+			require_once('./soap/sms24x7.php');
+			$EMAIL_SMS = 'rubtsov@complexsys.ru';
+			$PASSWORD_SMS = 'MoZBdJsXG8';
+			$message = 'Ваш билет находится здесь:' .PHP_EOL. 'http://' .$_SERVER['HTTP_HOST']. '/ticket/view/' .$model->uniq. '?preview';
+			$r = smsapi_push_msg_nologin($EMAIL_SMS, $PASSWORD_SMS, $phone, $message, array("unicode"=>"1"));
+		}
+		
+		//отправляем письмо
+		$fromMail = 'noreply@'.$_SERVER[HTTP_HOST];
+		
 		$text = $this->renderPartial(Yii::app()->mf->siteType(). '/_buyIsDoneFree',
 			array(
 				'model'=>$model,
@@ -65,11 +106,31 @@ class Controller extends CController
 				'event'=>$event,
 		), true);
 		
-		return $text;
+		//return $text;
+		Yii::app()->mf->mail_html($model->mail,$fromMail,Yii::app()->name,$text,$title);
 	}
 	
 	public function buyIsDonePay($model, $ticket, $eventUniq, $event, $tit)
 	{
+		//Отправляем пользователю смс.		
+		//$user = mysql_fetch_array(mysql_query('select phone from tbl_user where user_id="' .$log['user_id']. '"'));
+		if(isset(Yii::app()->user->phone))
+			$phone = Yii::app()->user->phone;
+		else
+			$phone = $model->phone;		
+		
+		if (isset($phone))
+		{
+			require_once('./soap/sms24x7.php');
+			$EMAIL_SMS = 'rubtsov@complexsys.ru';
+			$PASSWORD_SMS = 'MoZBdJsXG8';
+			$message = 'Ваш билет находится здесь:' .PHP_EOL. 'http://' .$_SERVER['HTTP_HOST']. '/ticket/view/' .$model->uniq. '?preview';
+			$r = smsapi_push_msg_nologin($EMAIL_SMS, $PASSWORD_SMS, $phone, $message, array("unicode"=>"1"));
+		}
+		
+		//отправляем письмо
+		$fromMail = 'noreply@'.$_SERVER[HTTP_HOST];
+		
 		$text = $this->renderPartial(Yii::app()->mf->siteType(). '/_buyIsDonePay',
 			array(
 				'model'=>$model,
@@ -79,6 +140,7 @@ class Controller extends CController
 				'tit'=>$tit,
 		), true);
 		
-		return $text;
+		//return $text;
+		Yii::app()->mf->mail_html($model->mail,$fromMail,Yii::app()->name,$text,$title);
 	}
 }

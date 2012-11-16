@@ -1114,9 +1114,11 @@ class EventsController extends Controller
                             $a->phone = $_POST['TransactionLog']['phone'];
                             $yourpass = User::generatePassword(10);
                             $a->password = md5($yourpass);
-                            if($a->save()){
-                                if($a->email){
-                                    $text = $a->getTextEmailAboutRegistration($yourpass);
+                            if($a->save())
+							{
+                                if($a->email)
+								{
+                                    $text = $this->getTextEmailAboutRegistration($yourpass, $a);
                                     Yii::app()->mf->mail_html($a->email,'noreply@'.$_SERVER[HTTP_HOST],Yii::app()->name,$text,'Регистрация в ' .Yii::app()->name. '!');
                                 }
                                 $user = User::model()->find('phone = :phone',array(':phone'=>$a->phone));

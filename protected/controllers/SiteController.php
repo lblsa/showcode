@@ -58,7 +58,7 @@ class SiteController extends Controller
                     $new_pass = $user->generatePassword(10);
                     User::model()->updateAll(array("password" => $new_pass.'/'.md5($new_pass)),"phone = '" .$user->phone. "'");
 
-                    $text = $user->getTextEmailAboutRecoveryPassword($new_pass);
+                    $text = $this->getTextEmailAboutRecoveryPassword($new_pass, $user);
                     if($user->email){
                         $fromMail = 'noreply@'.$_SERVER[HTTP_HOST];
                         Yii::app()->mf->mail_html($user->email,$fromMail,Yii::app()->name,$text,'Восстановление пароля');
