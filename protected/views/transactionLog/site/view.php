@@ -1,10 +1,7 @@
 <link href="/js/theme-redmond/jquery-ui-1.8.13.custom.css" type="text/css" rel="stylesheet">
 <script src="/js/jquery-ui-1.8.16.custom.min.js" type="text/javascript"></script>
 <script src="/js/jquery-ui-timepicker-addon.js" type="text/javascript"></script>
-<?php
-Yii::app()->clientScript->registerScript('card-form','$("input.datepicker").datepicker({minDate:"0"});');
-Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/jquery.PrintArea.js');
-?>
+<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/jquery.PrintArea.js');?>
 <div class="main_form_wrapper list_buy_events">
     <div id="list_tickets">
 	<div id="print_area">
@@ -337,4 +334,5 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/j
 		prtContent.innerHTML=strOldOne;
 	}
 	
+	$("input.datepicker").datepicker({minDate:"0"});
 </script>

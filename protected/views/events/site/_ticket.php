@@ -1,58 +1,76 @@
-<?php
-echo '<div id="list_tickets'.$uniqEvent->prefix_class.'">';
-echo '<h2>Билеты:</h2>';
+<style>
+	tr.title_table th a
+	{
+		text-decoration: none;
+		font-weight: normal;
+	}
+</style>
+<div id="list_tickets<?php echo $uniqEvent->prefix_class;?>">
 
-echo '<table style="width: 94%!important;" class="grid-view">';
-echo '<tr class="title_table'.$uniqEvent->prefix_class.'">';
-if($buy)
-	echo '<td></td>';
-if(!$uniqEvent->infinity_qantitty){
-    if($log)
-        echo '<td>Осталось</td>';
-    else
-        echo '<td>Количество</td>';
-}
-echo '<td>Цена</td>';
-echo '<td>Время начала</td>';
-echo '<td>Время окончания</td>';
-echo '<td>Описание</td>';
-echo '</tr>';
-foreach($ticket as $n=>$value){
-    echo '<tr>';
-    if($buy){
-        if($log->ticket_id == $value->ticket_id)
-            $check = true;
-        else
-            $check = false;
-        echo '<td>';
-        echo CHtml::radioButton('TransactionLog[ticket_id]', $check, array('id'=>'TransactionLog_ticket_id_'.$n,'value'=>$value->ticket_id,'price'=>$value->price, 'quantity'=>$value->quantity));
-        echo '</td>';
-        }
-
-        if(!$uniqEvent->infinity_qantitty)
-            echo '<td>'.CHtml::encode($value->quantity).'</td>';
-
-        if ($value->type!='free')
-            echo '<td>'.CHtml::encode($value->price).'&nbsp;руб.</td>';
-        else
-            echo '<td>0&nbsp;руб.</td>';
-
-        if ($value->time_begin)
-            echo '<td>'.CHtml::encode($value->time_begin).'</td>';
-        else
-            echo '<td></td>';
-
-        if ($value->time_end)
-            echo '<td>'.CHtml::encode($value->time_end).'</td>';
-        else
-            echo '<td></td>';
-
-        if ($value->description)
-            echo '<td class="last_cell'.$uniqEvent->prefix_class.'">'.CHtml::encode($value->description).'</td>';
-        else
-            echo '<td class="last_cell'.$uniqEvent->prefix_class.'"></td>';
-        echo '</tr>';
-        }
-        echo '</table>';
-        echo '</div>';
-?>
+	<h2>Билеты:</h2>
+	
+	<?php 
+		$columns = array();
+		$columns1 = array();
+		
+		if(!$uniqEvent->infinity_qantitty)
+		{
+			if ($log)
+			{
+				if ($buy)
+				{
+					if($log->ticket_id == $value->ticket_id)
+						$check = true;
+					else
+						$check = false;			
+				
+					$columns = array(
+						array(
+							'header'=>'',
+							'value'=>'CHtml::radioButton("TransactionLog[ticket_id]", $check, array("id"=>"TransactionLog_ticket_id_".$data->ticket_id,"value"=>$data->ticket_id,"price"=>$data->price, "quantity"=>$data->quantity))',
+							'type'=>'raw',
+							'htmlOptions'=>array('style'=>'width: 20px;'),
+						),
+						array(
+							'header'=>'Осталось',
+							'htmlOptions'=>array('style'=>'width: 40px;'),
+							'value'=>'$data->quantity',
+						),
+					);
+				}
+			}
+			else
+				$columns[] = array(
+					'header'=>'Количество',				
+					'value'=>'$data->quantity',
+					'type' =>'raw',
+					'htmlOptions'=>array('style'=>'width: 40px;'),
+				);
+		}	
+		$columns1 = array(
+			array(
+				'name'=>'price',
+				'htmlOptions'=>array('style'=>'width: 40px;'),
+				'value'=>'$data->price." руб."',
+			),
+			array(
+				'name'=>'time_begin',
+				'htmlOptions'=>array('style'=>'width: 100px;'),
+			),
+			array(
+				'name'=>'time_end',
+				'htmlOptions'=>array('style'=>'width: 100px;'),
+			),
+			'description',
+		);
+		
+		$columns = array_merge($columns, $columns1);
+		
+		$this->widget('zii.widgets.grid.CGridView', array(
+			'id'=>'tickets-grid',
+			'dataProvider'=>$tickets->searchTisk($ticket[0]->event_id),
+			'columns'=>$columns,
+			'cssFile' => Yii::app()->baseUrl.'/css/gridview/styles.css',
+		));
+	?>
+</div>

@@ -47,15 +47,14 @@
 						<?php echo CHtml::checkBoxList('user', $user['user_id'], array($user['user_id']=>' ')); ?>
 					</td>				
 					<td>				
-							<?php echo $user['family']; ?>					
+						<?php echo $user['family']; ?>					
 					</td>			
 					<td>				
-							<?php echo $user['phone']; ?>					
+						<?php echo $user['phone']; ?>					
 					</td>			
 					<td>				
-							<?php echo $user['mail']; ?>					
-					</td>
-					
+						<?php echo $user['mail']; ?>					
+					</td>					
 				</tr>
 				<?php endforeach; ?>
 			</table>
@@ -65,7 +64,7 @@
 		</div>
 		 
 		<div class="row submit">
-		<?php echo CHtml::submitButton('Отправить', array('id'=>'submit_save_button')); ?>
+			<?php echo CHtml::submitButton('Отправить', array('id'=>'submit_save_button')); ?>
 		</div>
 	<?php echo CHtml::endForm(); ?>
 </div>

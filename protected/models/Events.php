@@ -74,13 +74,12 @@ class Events extends CActiveRecord
 						->thumb(173,false)
 						->save(Yii::app()->basePath.'/../images/logo/'.$this->id.'_mini.'.$ext, false, 80);
 				}
-				else{
-                                    $this->addError('logo', 'Картинка должна иметь размер не больше 1 Мб.');
+				else
+				{
+                    $this->addError('logo', 'Картинка должна иметь размер не больше 1 Мб.');
 					return false;
-                                }
+				}
 			}
-
-
 			return true;
 		}
 		else

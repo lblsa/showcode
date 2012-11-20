@@ -101,7 +101,7 @@ class User extends CActiveRecord
 				$this->phone = '7' .$this->phone;
 				if($this->type == 'self' && $this->isNewRecord){
 					if($this->email){
-						$text = Yii::app()->controller->->getTextEmailAboutRegistration($yourPassword, $this);
+						$text = Yii::app()->controller->getTextEmailAboutRegistration($yourPassword, $this);
 						Yii::app()->mf->mail_html($this->email,'noreply@'.$_SERVER[HTTP_HOST],Yii::app()->name,$text,'Регистрация в ' .Yii::app()->name. '!');
 					}
 					$message = Yii::app()->name. '.Пароль:' .$yourPassword;

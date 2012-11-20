@@ -5,136 +5,9 @@ if($model->place)
 	$places = $model->place;
 else
 	$places = 0;
+?>
 
-Yii::app()->clientScript->registerScript('name_js1','
-    $("body > div.ui-page").live("pageaftershow",function(event){
-	var count_place = '.$places.';
-	var places = Array();
-	var placesCount = 0;
-
-                    $("#button_bye").live("tap",function(event) {
-                          console.log("test");
-                          $("#button_bye").empty();
-                          $("div.payment").show();
-                          return false;
-                      });
-
-	$("#TransactionLog_quantity").keyup(function()
-	{
-		var q = parseInt($("#TransactionLog_quantity").val());
-		var radio_inputs = $(".grid-view input");
-		for(var i = 0; i < radio_inputs.length; i++){
-			if(radio_inputs[i].checked){
-				var elem = radio_inputs[i];
-			}
-		}
-		if(elem){
-			var price = parseInt($(elem).parents("tr").find("td.price").text());
-			var quantity_max = parseInt($(elem).parents("tr").find("td.quantity").text());
-
-			if (q >= 0)
-				$("input[name=summ]").val(q*price);
-			if (q > quantity_max || !q)
-			{
-				$("#TransactionLog_quantity").val(0);
-				$("input[name=summ]").val(0);
-			}
-		}else{
-			$("#TransactionLog_quantity").val(0);
-			$("input[name=summ]").val(0);
-		}
-	});
-
-	$("#htmlcode").click(function()
-	{
-		$("#htmlcode").attr("rows","9");
-	});
-
-	$("td.place").click(function(){
-		var place = this;
-		var placeClass = place.className;
-		var iplace = parseInt($(place).attr("place"));
-		var icolumn = parseInt($(place).attr("column"));
-		var id = (icolumn - 1) * count_place + iplace;
-		if (!places["order_" + id]) {
-			if (placesCount < 5) {
-				if (placeClass == "place") {
-					place.className = "place select_place";
-					$(place).css("background", "#429FCC");
-				}
-				places["order_" + id] = {"place": iplace, "column": icolumn};
-				placesCount++;
-			} else {
-				alert("\u041C\u043E\u0436\u043D\u043E \u0437\u0430\u0431\u0440\u043E\u043D\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u043D\u0435 \u0431\u043E\u043B\u0435\u0435 5 \u043C\u0435\u0441\u0442");
-			}
-		} else {
-			if (placeClass == "place select_place") {
-				place.className = "place";
-				$(place).css("background", "#FFF");
-			}
-			places["order_" + id] = null;
-			placesCount--;
-		}
-	});
-
-	$("td.place").mouseover(function(){
-		if(placesCount > 0){
-			var darw = true;
-			for(var id in places){
-				if (!places[id] || (places[id]["place"] != $(this).attr("place") && places[id]["column"] != $(this).attr("column")))
-					darw = true;
-				else{
-					darw = false;
-					break;
-				}
-			}
-			if(darw){
-				$(this).css("background", "#AAE6FF");
-			}
-		}else{
-			$(this).css("background", "#AAE6FF");
-		}
-	});
-
-	$("td.place").mouseout(function(){
-		if(placesCount > 0){
-			var darw = true;
-			for(var id in places){
-				if (!places[id] || (places[id]["place"] != $(this).attr("place") && places[id]["column"] != $(this).attr("column")))
-					darw = true;
-				else{
-					darw = false;
-					break;
-				}
-			}
-			if(darw){
-				$(this).css("background", "#FFF");
-			}
-		}else{
-			$(this).css("background", "#FFF");
-		}
-	});
-
-	$("input[name=\"TransactionLog[payment]\"]").click(function(){
-	if ($("#isPlace").val()==1 && placesCount < 1)
-	{
-		alert("Сначала выберете место!");
-		$(this).removeAttr("checked");
-	}});
-
-	$("#idbuy").click(function(){
-		if(placesCount > 0){
-			var html = "";
-			for(var id in places){
-				html = "";
-				html += "<input id=\"TransactionLog_place\" type=\"hidden\" name=\"TransactionLog[place][]\" value=\""+places[id]["place"]+"\">";
-				html += "<input id=\"TransactionLog_column\" type=\"hidden\" name=\"TransactionLog[column][]\" value=\""+places[id]["column"]+"\">";
-				$("#TransactionLog_event_id").after(html);
-			}
-		}
-	});
-        });
-');
+<?php 
 /*
 Yii::app()->clientScript->registerScriptFile('https://userapi.com/js/api/openapi.js?34', CClientScript::POS_HEAD);
 Yii::app()->clientScript->registerScript('vkontakte_like','
@@ -153,8 +26,6 @@ Yii::app()->clientScript->registerScript('facebook_like','
 ?>
 
 <?php $this->headering = $model->title; ?>
-
-
 <?php
 if (yii::app()->user->isAdmin() || yii::app()->user->isOrganizer())
 	$this->menu=array(
@@ -516,3 +387,142 @@ if (Yii::app()->user->isAdmin() || Yii::app()->user->isCreator($model->id))
 	<?php $this->endWidget(); ?>
     </div>
 <?php endif; ?>
+
+<script type="text/javascript">
+	$("body > div.ui-page").live("pageaftershow",function(event){
+		var count_place = '.$places.';
+		var places = Array();
+		var placesCount = 0;
+
+		$("#button_bye").live("tap",function(event) {
+			  console.log("test");
+			  $("#button_bye").empty();
+			  $("div.payment").show();
+			  return false;
+		  });
+
+		$("#TransactionLog_quantity").keyup(function()
+		{
+			var q = parseInt($("#TransactionLog_quantity").val());
+			var radio_inputs = $(".grid-view input");
+			for(var i = 0; i < radio_inputs.length; i++){
+				if(radio_inputs[i].checked){
+					var elem = radio_inputs[i];
+				}
+			}
+			if(elem){
+				var price = parseInt($(elem).parents("tr").find("td.price").text());
+				var quantity_max = parseInt($(elem).parents("tr").find("td.quantity").text());
+
+				if (q >= 0)
+					$("input[name=summ]").val(q*price);
+				if (q > quantity_max || !q)
+				{
+					$("#TransactionLog_quantity").val(0);
+					$("input[name=summ]").val(0);
+				}
+			}else{
+				$("#TransactionLog_quantity").val(0);
+				$("input[name=summ]").val(0);
+			}
+		});
+
+		$("#htmlcode").click(function()
+		{
+			$("#htmlcode").attr("rows","9");
+		});
+
+		$("td.place").click(function(){
+			var place = this;
+			var placeClass = place.className;
+			var iplace = parseInt($(place).attr("place"));
+			var icolumn = parseInt($(place).attr("column"));
+			var id = (icolumn - 1) * count_place + iplace;
+			if (!places["order_" + id]) 
+			{
+				if (placesCount < 5) 
+				{
+					if (placeClass == "place") 
+					{
+						place.className = "place select_place";
+						$(place).css("background", "#429FCC");
+					}
+					places["order_" + id] = {"place": iplace, "column": icolumn};
+					placesCount++;
+				} 
+				else 
+					alert("\u041C\u043E\u0436\u043D\u043E \u0437\u0430\u0431\u0440\u043E\u043D\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u043D\u0435 \u0431\u043E\u043B\u0435\u0435 5 \u043C\u0435\u0441\u0442");
+			} 
+			else
+			{
+				if (placeClass == "place select_place")
+				{
+					place.className = "place";
+					$(place).css("background", "#FFF");
+				}
+				places["order_" + id] = null;
+				placesCount--;
+			}
+		});
+
+		$("td.place").mouseover(function(){
+			if(placesCount > 0)
+			{
+				var darw = true;
+				for(var id in places)
+				{
+					if (!places[id] || (places[id]["place"] != $(this).attr("place") && places[id]["column"] != $(this).attr("column")))
+						darw = true;
+					else{
+						darw = false;
+						break;
+					}
+				}
+				if(darw)
+					$(this).css("background", "#AAE6FF");				
+			}
+			else
+				$(this).css("background", "#AAE6FF");
+		});
+
+		$("td.place").mouseout(function(){
+			if(placesCount > 0)
+			{
+				var darw = true;
+				for(var id in places)
+				{
+					if (!places[id] || (places[id]["place"] != $(this).attr("place") && places[id]["column"] != $(this).attr("column")))
+						darw = true;
+					else{
+						darw = false;
+						break;
+					}
+				}
+				if(darw)
+					$(this).css("background", "#FFF");
+			}
+			else
+				$(this).css("background", "#FFF");
+		});
+
+		$("input[name=\"TransactionLog[payment]\"]").click(function(){
+			if ($("#isPlace").val()==1 && placesCount < 1)
+			{
+				alert("Сначала выберете место!");
+				$(this).removeAttr("checked");
+			}
+		});
+
+		$("#idbuy").click(function(){
+			if(placesCount > 0){
+				var html = "";
+				for(var id in places){
+					html = "";
+					html += "<input id=\"TransactionLog_place\" type=\"hidden\" name=\"TransactionLog[place][]\" value=\""+places[id]["place"]+"\">";
+					html += "<input id=\"TransactionLog_column\" type=\"hidden\" name=\"TransactionLog[column][]\" value=\""+places[id]["column"]+"\">";
+					$("#TransactionLog_event_id").after(html);
+				}
+			}
+		});
+	});
+</script>

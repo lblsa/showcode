@@ -393,7 +393,11 @@ class EventsController extends Controller
 			    }
 			}
 		}
+		
+		$attributes = $this->getAttributes($this->loadTicket($id), $model, $model->uniqium);
 
+		$tickets = new Tickets;
+		
 		$this->render(Yii::app()->mf->siteType(). '/view',array(
 			'model'=>$model,
 			'ticket'=>$this->loadTicket($id),
@@ -403,9 +407,178 @@ class EventsController extends Controller
             'uniqEvent'=>$model->uniqium,
 			'ids' =>$ids,
 			'values' =>$values,
+			'attributes'=>$attributes,
+			'tickets'=>$tickets,
 		));
 	}
+	
+	public function getAttributes($ticket, $model, $uniqEvent)
+	{
+		if(!$uniqEvent)
+		{
+			$attributes = array(
+				array(
+					'name'=>'title',
+					'type'=>'raw',
+					'value'=>'<h2>'.$model->title.'</h2>',
+					),
+				array(
+					'name'=>'description',
+					'type'=>'raw',
+					'value'=>'<p>'.nl2br($model->description).'</p>',
+					),
+				array(
+					'name'=>'address',
+					'type'=>'raw',
+					'value'=>'<p>'.nl2br($model->address).'</p>',
+					),
+				array(
+					'name'=>'author',
+					'type'=>'raw',
+					'value'=>'<p>'.Yii::app()->user->getAuthorName($model->author).'</p>',
+					)
+			);
+			
+			$attributes[] = array(
+				'name'=>'datetime',
+				'type'=>'raw',
+				'value'=>'<p>'.$model->normalViewDate($model->datetime).'</p>',
+				);
 
+			if ($model->facebook_eid)
+				$attributes[] = array(
+					'name'=>'facebook_eid',
+					'type'=>'url',
+					);
+					
+			$attributes[]=array(
+				'label'=>'Тип',
+				'type'=>'raw',
+				'value'=>'<p>'.Tickets::$type_ticket[$ticket[0]['type']].'</p>',
+				);
+				
+			if ( isset($ticket[0]['date_begin']) && isset($ticket[0]['date_end']) )
+			{
+				$attributes[]=array(
+					'label'=>'Дата начала действия',
+					'type'=>'raw',
+					'value'=>'<p>'.Events::normalViewDate($ticket[0]['date_begin']).'</p>',
+					);
+				$attributes[]=array(
+					'label'=>'Дата окончания действия',
+					'type'=>'raw',
+					'value'=>'<p>'.Events::normalViewDate($ticket[0]['date_end']).'</p>',
+					);
+			}
+		}
+		else
+		{
+			$attributes = array(
+				array(
+					'type'=>'raw',
+					'value'=>'<div id="event-title'.$uniqEvent->prefix_class.'">'.'<h2>'.$model->title.$uniqEvent->prefix_title.'</h2>'.'</div>',
+					),
+				array(
+					'label'=>'<div><span>'.Events::model()->getAttributeLabel('address').':</span>',
+					'type'=>'raw',
+					'value'=>'<p>'.nl2br($model->address).'</p>'.'</div>',
+					),
+			  );
+
+			if($uniqEvent->location)
+				$attributes[] = array(
+					'label'=>'<div><span>'.EventUniq::model()->getAttributeLabel('location').':</span>',
+					'type'=>'raw',
+					'value'=>'<p id="mapLocation">Расположение</p>'.'</div><div id="map'.$uniqEvent->prefix_class.'" style="visibility:hidden;"><input id="buy_close'.$uniqEvent->prefix_class.'" class="buy_close" type="button" value="" name="yt0">'.$uniqEvent->location.'</div>',
+					);
+
+			if($uniqEvent->phone)
+				$attributes[] = array(
+					'label'=>'<div><span>'.EventUniq::model()->getAttributeLabel('phone').':</span>',
+					'type'=>'raw',
+					'value'=>'<p>'.nl2br($uniqEvent->phone).'</p>'.'</div>',
+					);
+
+			if($uniqEvent->fax)
+				$attributes[] = array(
+					'label'=>'<div><span>'.EventUniq::model()->getAttributeLabel('fax').':</span>',
+					'type'=>'raw',
+					'value'=>'<p>'.nl2br($uniqEvent->fax).'</p>'.'</div>',
+					);
+
+			if($uniqEvent->email)
+				$attributes[] = array(
+					'label'=>'<div><span>'.EventUniq::model()->getAttributeLabel('email').':</span>',
+					'type'=>'raw',
+					'value'=>'<p><a href="mailto:'.nl2br($uniqEvent->email).'">'.nl2br($uniqEvent->email).'</a></p>'.'</div>',
+					);
+
+			if($uniqEvent->sait)
+				$attributes[] = array(
+					'label'=>'<div><span>'.EventUniq::model()->getAttributeLabel('sait').':</span>',
+					'type'=>'raw',
+					'value'=>'<p><a target="_blank" href="http://'.nl2br($uniqEvent->sait).'">'.nl2br($uniqEvent->sait).'</a></p>'.'</div>',
+					);
+
+			if($uniqEvent->time_work)
+				$attributes[] = array(
+					'label'=>'<div><span>'.EventUniq::model()->getAttributeLabel('time_work').':</span>',
+					'type'=>'raw',
+					'value'=>'<p class="info_about_event_full'.$uniqEvent->prefix_class.'">'.nl2br($uniqEvent->time_work).'</p>'.'</div>',
+					);
+
+			$attributes[] = array(
+				'label'=>'<div><span>'.Events::model()->getAttributeLabel('description').':</span>',
+				'type'=>'raw',
+				'value'=>'<p class="info_about_event_full'.$uniqEvent->prefix_class.'">'.nl2br($model->description).'</p>'.'</div>',
+				);
+
+			if(Yii::app()->user->isAdmin())
+				$attributes[] = array(
+					'label'=>'<div><span>'.Events::model()->getAttributeLabel('author').':</span>',
+					'type'=>'raw',
+					'value'=>'<p>'.Yii::app()->user->getAuthorName($model->author).'</p>'.'</div>',
+					);
+
+			if(!$uniqEvent->infinity_time){
+				$attributes[] = array(
+					'label'=>'<div><span>'.Events::model()->getAttributeLabel('datetime').':</span>',
+					'type'=>'raw',
+					'value'=>'<p>'.$model->normalViewDate($model->datetime).'</p>'.'</div>',
+					);
+			}
+
+			if ($model->facebook_eid)
+				$attributes[] = array(
+					'name'=>'facebook_eid',
+					'type'=>'url',
+					);
+
+			if(Yii::app()->user->isAdmin())
+				$attributes[]=array(
+					'label'=>'<div><span>'.Tickets::model()->getAttributeLabel('type').':</span>',
+					'type'=>'raw',
+					'value'=>'<p>'.Tickets::$type_ticket[$ticket[0]['type']].'</p>'.'</div>',
+					);
+			if(Yii::app()->user->isAdmin())
+				if ( isset($ticket[0]['date_begin']) && isset($ticket[0]['date_end']) )
+				{
+					$attributes[]=array(
+						'label'=>'<div><span>'.Tickets::model()->getAttributeLabel('date_begin').':</span>',
+						'type'=>'raw',
+						'value'=>'<p>'.Events::normalViewDate($ticket[0]['date_begin']).'</p>'.'</div>',
+						);
+					$attributes[]=array(
+						'label'=>'<div><span>'.Tickets::model()->getAttributeLabel('date_end').':</span>',
+						'type'=>'raw',
+						'value'=>'<p>'.Events::normalViewDate($ticket[0]['date_end']).'</p>'.'</div>',
+						);
+
+				}
+		}
+		
+		return $attributes;
+	}
 	/**
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
@@ -1193,12 +1366,16 @@ class EventsController extends Controller
 		}else{
                     $log=new TransactionLog;
                 }
+				
+		$tickets = new Tickets;
+
 		if(!$flag)
 			$this->renderPartial('iframe',array(
 				'model'=>$model,
 				'ticket'=>$ticket,
 				'log'=>$log,
-                                'buy_place'=>$buy_place,
+				'buy_place'=>$buy_place,
+				'tickets' => $tickets,
 			));
 	}
 

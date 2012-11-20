@@ -1,36 +1,6 @@
 <link href="/js/theme-redmond/jquery-ui-1.8.13.custom.css" type="text/css" rel="stylesheet">
 <script src="/js/jquery-ui-1.8.16.custom.min.js" type="text/javascript"></script>
 <script src="/js/jquery-ui-timepicker-addon.js" type="text/javascript"></script>
-<?php
-    Yii::app()->clientScript->registerScript('search', "
-        $('#TransactionLog_date_begin').datepicker();
-        $('#TransactionLog_date_end').datepicker();
-
-        $('#TransactionLog_date_begin').change(function(){
-            if(this.value != ''){
-                var inputValue = this.value.split('.');
-                var inputDate = new Date(parseInt(inputValue[2]), inputValue[1]-1, parseInt(inputValue[0])+1);
-                var otherInput = '#TransactionLog_date_end';
-                $(otherInput).datepicker('option', {minDate:inputDate});
-                $(otherInput).datepicker('option', {defaultDate:inputDate});
-            }
-        });
-        $('#TransactionLog_date_begin').change();
-
-        $('#TransactionLog_date_end').change(function(){
-            if(this.value != ''){
-                var inputValue = this.value.split('.');
-                var inputDate = new Date(parseInt(inputValue[2]), inputValue[1]-1, parseInt(inputValue[0])+1);
-                var otherInput = '#TransactionLog_date_begin';
-                $(otherInput).datepicker('option', {maxDate:inputDate});
-                $(otherInput).datepicker('option', {defaultDate:inputDate});
-            }
-        });
-
-        $('#TransactionLog_date_end').change();
-    ");
-?>
-
 <div class="form_main">
 
     <?php $form=$this->beginWidget('CActiveForm', array(
@@ -83,3 +53,30 @@
     <?php $this->endWidget(); ?>
 
 </div><!-- search-form -->
+<script type="text/javascript">
+	$('#TransactionLog_date_begin').datepicker();
+	$('#TransactionLog_date_end').datepicker();
+
+	$('#TransactionLog_date_begin').change(function(){
+		if(this.value != ''){
+			var inputValue = this.value.split('.');
+			var inputDate = new Date(parseInt(inputValue[2]), inputValue[1]-1, parseInt(inputValue[0])+1);
+			var otherInput = '#TransactionLog_date_end';
+			$(otherInput).datepicker('option', {minDate:inputDate});
+			$(otherInput).datepicker('option', {defaultDate:inputDate});
+		}
+	});
+	$('#TransactionLog_date_begin').change();
+
+	$('#TransactionLog_date_end').change(function(){
+		if(this.value != ''){
+			var inputValue = this.value.split('.');
+			var inputDate = new Date(parseInt(inputValue[2]), inputValue[1]-1, parseInt(inputValue[0])+1);
+			var otherInput = '#TransactionLog_date_begin';
+			$(otherInput).datepicker('option', {maxDate:inputDate});
+			$(otherInput).datepicker('option', {defaultDate:inputDate});
+		}
+	});
+
+	$('#TransactionLog_date_end').change();
+</script>

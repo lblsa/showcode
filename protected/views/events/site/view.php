@@ -1,5 +1,4 @@
 <style>
-
 	.edit_event_buttons
 	{
 		position: static;
@@ -44,21 +43,8 @@ if($model->place)
 	$places = $model->place;
 else
 	$places = 0;
-Yii::app()->clientScript->registerScriptFile('https://userapi.com/js/api/openapi.js?34', CClientScript::POS_HEAD);
-$id_api_vk = intval(Yii::app()->params["vk_id"]);
-/*Yii::app()->clientScript->registerScript('vkontakte_like','
-	VK.init({apiId: '.$id_api_vk.', onlyWidgets: true});
-	VK.Widgets.Like("vk_like", {type: "button"});
-');*/
-/*
-Yii::app()->clientScript->registerScript('facebook_like','
-	(function(d){
-	  var js, id = "facebook-jssdk"; if (d.getElementById(id)) {return;}
-	  js = d.createElement("script"); js.id = id; js.async = true;
-	  js.src = "//connect.facebook.net/ru_RU/all.js#appId=281547825204430&xfbml=1";
-	  d.getElementsByTagName("head")[0].appendChild(js);
-	}(document));
-');*/
+//Yii::app()->clientScript->registerScriptFile('http://userapi.com/js/api/openapi.js?34', CClientScript::POS_HEAD);
+//$id_api_vk = intval(Yii::app()->params["vk_id"]);
 ?>
 
 <?php
@@ -66,20 +52,6 @@ $this->breadcrumbs=array(
 	'Мероприятия'=>array('index'),
 	$model->title,
 );
-/*if (yii::app()->user->isAdmin() || yii::app()->user->isOrganizer())
-	$this->menu[]=array('label'=>'Создать мероприятие', 'url'=>array('create'));*/
-/*if (yii::app()->user->isAdmin() || yii::app()->user->id == $model->author)
-    $this->menu=array(
-        array('label'=>'Создать мероприятие', 'url'=>array('create')),
-    );*/
-/*if((yii::app()->user->isAdmin() || yii::app()->user->isOrganizer()) && $model->status != 'published'){
-    $this->menu=array(
-        array('label'=>'Опубликовать', 'url'=>array('public', 'id'=>$model->id)),
-        array('label'=>'Редактировать', 'url'=>array('update', 'id'=>$model->id)),
-        array('label'=>'Управление мероприятиями', 'url'=>array('admin')),
-    );
-}
-else*/
 if(yii::app()->user->isAdmin())
 {
     $this->menu[] = array('label'=>'Управление мероприятиями', 'url'=>array('admin'));
@@ -89,11 +61,8 @@ if (yii::app()->user->isAdmin() || yii::app()->user->isCreator($model->id))
         if($model->active != 1)
             $this->menu[]=array('label'=>'Удалить мероприятие', 'url'=>'', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Вы действительно хотите удалить мероприятие?'));
         else
-            $this->menu[]=array('label'=>'Статистика', 'url'=>'#', 'linkOptions'=>array('submit'=>array('/statistics'),'params'=>array('TransactionLog[user_id]' => $model->author,'TransactionLog[event_id]'=>$model->id,'TransactionLog[period]'=>'weeks','TransactionLog[date_begin]'=> @date('d.m.Y', mktime(0, 0, 0, @date("m")-2, @date("d"), @date("Y"))),'TransactionLog[date_end]'=>@date('d.m.Y'))));
-			
-            //$this->menu[]=array('label'=>'Статистика', 'url'=>array('/statistics', 'TransactionLog[user_id]' => $model->author,'TransactionLog[event_id]'=>$model->id,'TransactionLog[period]'=>'weeks','TransactionLog[date_begin]'=> date('d.m.Y', mktime(0, 0, 0, date("m")-2, date("d"), date("Y"))),'TransactionLog[date_end]'=>date('d.m.Y')));
-
-if (yii::app()->user->isCreator($model->id) /*&& $model->active == 1*/)
+            $this->menu[]=array('label'=>'Статистика', 'url'=>'#', 'linkOptions'=>array('submit'=>array('/statistics'),'params'=>array('TransactionLog[user_id]' => $model->author,'TransactionLog[event_id]'=>$model->id,'TransactionLog[period]'=>'weeks','TransactionLog[date_begin]'=> date('d.m.Y', mktime(0, 0, 0, date("m")-2, date("d"), date("Y"))),'TransactionLog[date_end]'=>date('d.m.Y'))));
+if (yii::app()->user->isCreator($model->id))
 {
 	$this->menu[] = array('label'=>'Редактировать', 'url'=>array('update', 'id'=>$model->id));	
 	$this->menu[]=array('label'=>'Проверка билетов', 'url'=>array('checkTicket', 'id'=>$model->id));
@@ -102,222 +71,39 @@ if (yii::app()->user->isCreator($model->id) /*&& $model->active == 1*/)
 if(Yii::app()->user->isAdmin() || Yii::app()->user->isCreator($model->id))
 	$this->menu[]=array('label'=>'Рассылка оповещений', 'url'=>'', 'linkOptions'=>array('id'=>'sendAlert'));
 ?>
-<!--<h2>Просмотр события: <?php //echo $model->title; ?></h2>-->
-
 <?php if(!$uniqEvent): ?>
-    <?php
-        $attributes = array(
-            //'id',
-            //'title',
-            array(
-                'name'=>'title',
-                'type'=>'raw',
-                'value'=>'<h2>'.$model->title.'</h2>',
-                ),
-            array(
-                'name'=>'description',
-                'type'=>'raw',
-                'value'=>'<p>'.nl2br($model->description).'</p>',
-                ),
-            array(
-                'name'=>'address',
-                'type'=>'raw',
-                'value'=>'<p>'.nl2br($model->address).'</p>',
-                ),
-            array(
-                'name'=>'author',
-                'type'=>'raw',
-                'value'=>'<p>'.Yii::app()->user->getAuthorName($model->author).'</p>',
-                )
-          );
-
-
-        $attributes[] = array(
-            'name'=>'datetime',
-            'type'=>'raw',
-            'value'=>'<p>'.$model->normalViewDate($model->datetime).'</p>',
-            );
-
-        if ($model->facebook_eid)
-            $attributes[] = array(
-                'name'=>'facebook_eid',
-                'type'=>'url',
-                );
-        /*$attributes[] = array(
-            'name'=>'status',
-            'type'=>'raw',
-            'value'=>'<p>'.Events::$STATUS[$model->status].'</p>',
-            );
-        /*$attributes[] = array(
-         *		'name'=>'logo',
-         * 		'type'=>'image',
-         * 		'value'=>$model->logo,
-                    );*/
-        $attributes[]=array(
-            'label'=>'Тип',
-            'type'=>'raw',
-            'value'=>'<p>'.Tickets::$type_ticket[$ticket[0]['type']].'</p>',
-            );
-        if ( isset($ticket[0]['date_begin']) && isset($ticket[0]['date_end']) ){
-            $attributes[]=array(
-                'label'=>'Дата начала действия',
-                'type'=>'raw',
-                'value'=>'<p>'.Events::normalViewDate($ticket[0]['date_begin']).'</p>',
-                );
-            $attributes[]=array(
-                'label'=>'Дата окончания действия',
-                'type'=>'raw',
-                'value'=>'<p>'.Events::normalViewDate($ticket[0]['date_end']).'</p>',
-                );
-
-            }
-    ?>
-
 <div class="description_event_wrapper" id="qr-events">
 	<div class="description_event">
 		<div class="full_image"><?php echo CHtml::image($model->logo, $model->title);?></div>
-			<div class="full_text_info_about_event<?php echo $uniqEvent->prefix_class; ?>">
-			   <?php        
-					//Выводится информация о мероприятии
-					$this->widget('zii.widgets.CDetailView', array(
-						'data' => $model,
-						'attributes' => $attributes,
-						'tagName' => 'div',
-						'itemTemplate' => "<div><span>{label}:</span>{value}</div>\n",
-						'itemCssClass' => array('event-title-zoo',''),
-					)); ?>
+		<div class="full_text_info_about_event<?php echo $uniqEvent->prefix_class; ?>">
+		   <?php        
+				//Выводится информация о мероприятии
+				$this->widget('zii.widgets.CDetailView', array(
+					'data' => $model,
+					'attributes' => $attributes,
+					'tagName' => 'div',
+					'itemTemplate' => "<div><span>{label}:</span>{value}</div>\n",
+					'itemCssClass' => array('event-title-zoo',''),
+				)); ?>
 <?php else: ?>
-    <?php
-        $attributes = array(
-            //'id',
-            //'title',
-            array(
-                'type'=>'raw',
-                'value'=>'<div id="event-title'.$uniqEvent->prefix_class.'">'.'<h2>'.$model->title.$uniqEvent->prefix_title.'</h2>'.'</div>',
-                ),
-            array(
-                'label'=>'<div><span>'.Events::model()->getAttributeLabel('address').':</span>',
-                'type'=>'raw',
-                'value'=>'<p>'.nl2br($model->address).'</p>'.'</div>',
-                ),
-          );
-
-        if($uniqEvent->location)
-            $attributes[] = array(
-                'label'=>'<div><span>'.EventUniq::model()->getAttributeLabel('location').':</span>',
-                'type'=>'raw',
-                'value'=>'<p id="mapLocation">Расположение</p>'.'</div><div id="map'.$uniqEvent->prefix_class.'" style="visibility:hidden;"><input id="buy_close'.$uniqEvent->prefix_class.'" class="buy_close" type="button" value="" name="yt0">'.$uniqEvent->location.'</div>',
-                );
-
-        if($uniqEvent->phone)
-            $attributes[] = array(
-                'label'=>'<div><span>'.EventUniq::model()->getAttributeLabel('phone').':</span>',
-                'type'=>'raw',
-                'value'=>'<p>'.nl2br($uniqEvent->phone).'</p>'.'</div>',
-                );
-
-        if($uniqEvent->fax)
-            $attributes[] = array(
-                'label'=>'<div><span>'.EventUniq::model()->getAttributeLabel('fax').':</span>',
-                'type'=>'raw',
-                'value'=>'<p>'.nl2br($uniqEvent->fax).'</p>'.'</div>',
-                );
-
-        if($uniqEvent->email)
-            $attributes[] = array(
-                'label'=>'<div><span>'.EventUniq::model()->getAttributeLabel('email').':</span>',
-                'type'=>'raw',
-                'value'=>'<p><a href="mailto:'.nl2br($uniqEvent->email).'">'.nl2br($uniqEvent->email).'</a></p>'.'</div>',
-                );
-
-        if($uniqEvent->sait)
-            $attributes[] = array(
-                'label'=>'<div><span>'.EventUniq::model()->getAttributeLabel('sait').':</span>',
-                'type'=>'raw',
-                'value'=>'<p><a target="_blank" href="http://'.nl2br($uniqEvent->sait).'">'.nl2br($uniqEvent->sait).'</a></p>'.'</div>',
-                );
-
-        if($uniqEvent->time_work)
-            $attributes[] = array(
-                'label'=>'<div><span>'.EventUniq::model()->getAttributeLabel('time_work').':</span>',
-                'type'=>'raw',
-                'value'=>'<p class="info_about_event_full'.$uniqEvent->prefix_class.'">'.nl2br($uniqEvent->time_work).'</p>'.'</div>',
-                );
-
-        $attributes[] = array(
-            'label'=>'<div><span>'.Events::model()->getAttributeLabel('description').':</span>',
-            'type'=>'raw',
-            'value'=>'<p class="info_about_event_full'.$uniqEvent->prefix_class.'">'.nl2br($model->description).'</p>'.'</div>',
-            );
-
-        if(Yii::app()->user->isAdmin())
-            $attributes[] = array(
-                'label'=>'<div><span>'.Events::model()->getAttributeLabel('author').':</span>',
-                'type'=>'raw',
-                'value'=>'<p>'.Yii::app()->user->getAuthorName($model->author).'</p>'.'</div>',
-                );
-
-        if(!$uniqEvent->infinity_time){
-            $attributes[] = array(
-                'label'=>'<div><span>'.Events::model()->getAttributeLabel('datetime').':</span>',
-                'type'=>'raw',
-                'value'=>'<p>'.$model->normalViewDate($model->datetime).'</p>'.'</div>',
-                );
-        }
-
-        if ($model->facebook_eid)
-            $attributes[] = array(
-                'name'=>'facebook_eid',
-                'type'=>'url',
-                );
-
-/*
-        if(Yii::app()->user->isAdmin())
-            $attributes[] = array(
-                'label'=>'<div><span>'.Events::model()->getAttributeLabel('status').':</span>',
-                'type'=>'raw',
-                'value'=>'<p>'.Events::$STATUS[$model->status].'</p>'.'</div>',
-                );
-                */
-        if(Yii::app()->user->isAdmin())
-            $attributes[]=array(
-                'label'=>'<div><span>'.Tickets::model()->getAttributeLabel('type').':</span>',
-                'type'=>'raw',
-                'value'=>'<p>'.Tickets::$type_ticket[$ticket[0]['type']].'</p>'.'</div>',
-                );
-        if(Yii::app()->user->isAdmin())
-            if ( isset($ticket[0]['date_begin']) && isset($ticket[0]['date_end']) ){
-                $attributes[]=array(
-                    'label'=>'<div><span>'.Tickets::model()->getAttributeLabel('date_begin').':</span>',
-                    'type'=>'raw',
-                    'value'=>'<p>'.Events::normalViewDate($ticket[0]['date_begin']).'</p>'.'</div>',
-                    );
-                $attributes[]=array(
-                    'label'=>'<div><span>'.Tickets::model()->getAttributeLabel('date_end').':</span>',
-                    'type'=>'raw',
-                    'value'=>'<p>'.Events::normalViewDate($ticket[0]['date_end']).'</p>'.'</div>',
-                    );
-
-                }
-            echo '<div class="description_event_wrapper'.$uniqEvent->prefix_class.'" id="qr-events">';
-            echo '<div class="description_event'.$uniqEvent->prefix_class.'">';
-            echo '<!-- image -->';
-            echo '<div class="full_image'.$uniqEvent->prefix_class.'">'.CHtml::image($model->logo, $model->title).'</div>';
-            echo '<!-- full text information about event -->';
-echo '<div class="full_text_info_about_event'.$uniqEvent->prefix_class.'">';
-        //Выводится информация о мероприятии
-        $this->widget('zii.widgets.CDetailView', array(
-            'data' => $model,
-            'attributes' => $attributes,
-            'tagName' => 'div',
-            'itemTemplate' => "{label}{value}\n",
-            'itemCssClass' => array('event-title-zoo',''),
-        ));
-    ?>
+<div class="description_event_wrapper<?php echo $uniqEvent->prefix_class;?>" id="qr-events">
+	<div class="description_event<?php echo $uniqEvent->prefix_class;?>">
+		<!-- image -->
+		<div class="full_image<?php echo $uniqEvent->prefix_class;?>"><?php echo CHtml::image($model->logo, $model->title);?></div>
+		<!-- full text information about event -->
+		<div class="full_text_info_about_event<?php echo $uniqEvent->prefix_class;?>">
+        <!--Выводится информация о мероприятии-->
+		 <?php       
+			$this->widget('zii.widgets.CDetailView', array(
+					'data' => $model,
+					'attributes' => $attributes,
+					'tagName' => 'div',
+					'itemTemplate' => "{label}{value}\n",
+					'itemCssClass' => array('event-title-zoo',''),
+				));
+			?>
 <?php endif; ?>
-<div id="clone_menu" style="float: left">
-
-</div>
+<div id="clone_menu" style="float: left"></div>
 <div class="clear"></div>
 <!-- links -->
 <div class="buy_ticket_and_back_to_events<?php echo $uniqEvent->prefix_class ?>">
@@ -338,16 +124,18 @@ echo '<div class="full_text_info_about_event'.$uniqEvent->prefix_class.'">';
 
     <?php if (Yii::app()->user->isAdmin() || Yii::app()->user->isCreator($model->id)): ?>
         <br/>
-        <?php $this->widget('application.extensions.print.printWidget', array(
+        <?php 
+			$this->widget('application.extensions.print.printWidget', array(
                         'htmlOptions' => array('class' => 'print_qr_code'),
-	   		'cssFile' => 'print.css',
-			'printedElement' => '.eprint',
+						'cssFile' => 'print.css',
+						'printedElement' => '.eprint',
                         'coverElement' => '#wrapper',
-			'title' => 'Showcode.ru',
-			'tooltip' => 'Распечатать QR-code мероприятия',    //tooltip message of the print icon. Defaults to 'print'
-	    	'text' => 'Распечатать QR-code мероприятия', //text which will appear beside the print icon. Defaults to NULL
-		)
-	); ?>
+						'title' => 'Showcode.ru',
+						'tooltip' => 'Распечатать QR-code мероприятия',    //tooltip message of the print icon. Defaults to 'print'
+						'text' => 'Распечатать QR-code мероприятия', //text which will appear beside the print icon. Defaults to NULL
+					)
+				); 
+		?>
     <?php endif; ?>
 </div>
 </div>
@@ -384,44 +172,37 @@ echo '<div class="full_text_info_about_event'.$uniqEvent->prefix_class.'">';
 </div>
 
 <!--Выводится информация о билетах-->
-<div style="clear: left">
-	
-    <?php $this->renderPartial(Yii::app()->mf->siteType(). '/_ticket', array('ticket'=>$ticket,'uniqEvent'=>$uniqEvent)); ?>
+<div style="clear: left">	
+    <?php $this->renderPartial(Yii::app()->mf->siteType(). '/_ticket', array('ticket'=>$ticket,'uniqEvent'=>$uniqEvent, 'tickets'=>$tickets)); ?>
 </div>
+<br />
 <?php
 	//для админа или создателя мероприятия выводим открытые ключи rsa и код для вставки на сторонние ресурсы.
-if (Yii::app()->user->isAdmin() || Yii::app()->user->isCreator($model->id))
-{
-    echo '<br/>';
-    echo '<div class="api_key_qr_code_rsa_key">';
-    echo '<fieldset>';
-        echo '<div class="one_group_elements_form eprint">';
-            echo CHtml::label('API ключ мероприятия: ','apikey');
-            echo CHtml::textField('apikey', $model->uniq, array('size'=>34, 'readonly'=>true, 'id' => 'apikey'));
-        echo '</div>';
-        echo '<div class="one_group_elements_form eprint">';
-            echo CHtml::label('QR-код мероприятия: ','qr');
-            echo CHtml::image($model->qr, 'QR-код мероприятия');
-        echo '</div>';
-        echo '<div class="one_group_elements_form">';
-            echo CHtml::label('Открытый ключ RSA: ','open_key');
-            $str_keys = $model->open_key.':'.$model->general_key;
-            echo CHtml::textField('open_key', $str_keys, array('size'=>110, 'readonly'=>true, 'id' => 'apikey'));
-        echo '</div>';
-        echo '<div class="one_group_elements_form">';
-            echo CHtml::label('Код мероприятия для вставки на сторонние ресурсы: ','htmlcode');
-            echo CHtml::textArea('htmlcode',$model->getHtmlCode(),array('rows'=>1, 'cols'=>80, 'readonly'=>true, 'id' => 'apikey'));
-        echo '</div>';
-     echo '</fieldset>';
-     echo '</div>';
-}
-?>
-
-<br />
-
+if (Yii::app()->user->isAdmin() || Yii::app()->user->isCreator($model->id)): ?>
+<div class="api_key_qr_code_rsa_key">
+	<fieldset>
+		<div class="one_group_elements_form eprint">
+            <?php echo CHtml::label('API ключ мероприятия: ','apikey');?>
+            <?php echo CHtml::textField('apikey', $model->uniq, array('size'=>34, 'readonly'=>true, 'id' => 'apikey'));?>
+		</div>
+		<div class="one_group_elements_form eprint">
+            <?php echo CHtml::label('QR-код мероприятия: ','qr');?>
+            <?php echo CHtml::image($model->qr, 'QR-код мероприятия');?>
+		</div>
+		<div class="one_group_elements_form">
+            <?php echo CHtml::label('Открытый ключ RSA: ','open_key');?>
+            <?php $str_keys = $model->open_key.':'.$model->general_key;?>
+            <?php echo CHtml::textField('open_key', $str_keys, array('size'=>110, 'readonly'=>true, 'id' => 'apikey'));?>
+		</div>
+		<div class="one_group_elements_form">
+            <?php echo CHtml::label('Код мероприятия для вставки на сторонние ресурсы: ','htmlcode');?>
+            <?php echo CHtml::textArea('htmlcode',$model->getHtmlCode(),array('rows'=>1, 'cols'=>80, 'readonly'=>true, 'id' => 'apikey'));?>
+		</div>
+	</fieldset>
+</div>
+<?php endif;?>
 <table id="social_networks_likes">
 	<tr>
-    <!--div id="fb-root"></div><div class="fb-like" data-href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/events/view/<?php echo $model->id; ?>" data-send="false" data-width="300" data-show-faces="false"></div-->
 		<td> <div id="vk_like"></div> </td>
 		<td>
 			<iframe src="http://www.facebook.com/plugins/like.php?href=https://<?php echo $_SERVER['HTTP_HOST']; ?>/events/view/<?php echo $model->id; ?>&amp;send=false&amp;layout=standard&amp;width=350&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:350px; height:35px;" allowTransparency="true"></iframe>
@@ -454,17 +235,13 @@ if (Yii::app()->user->isAdmin() || Yii::app()->user->isCreator($model->id))
         <p>Если вы не были зарегистрированны в системе, то на указанный вами номер телефона и адрес электронной почты (если соответствующее поле было заполнено) будет выслан ваш пароль для входа в систему.</p>
         <p>Используя указанный номер телефона и данный пароль, вы сможете автрозоваться в системе ShowCode</p>
     <?php else: ?>
-            <?php			//Начинается форма покупки
-	$form=$this->beginWidget('CActiveForm', array(
+    <?php	//Начинается форма покупки
+		$form=$this->beginWidget('CActiveForm', array(
 			'id'=>'events-form',
 			'enableAjaxValidation'=>false,
 			'htmlOptions'=>array('enctype'=>'multipart/form-data'),
 		));
 	?>
-
-<!--<a style="font-size: 16px; margin:0px 0px 0px 230px;" id="button_bye" href="#">Купить билеты</a>-->
-
-
             <?php echo $form->hiddenField($log,'event_id',array('value'=>$model->id)); ?>
             <?php if (!isset(Yii::app()->user->id)): ?>
                     <?php echo $form->hiddenField($log,'family',array('value'=>Yii::app()->user->name)); ?>
@@ -572,69 +349,66 @@ if (Yii::app()->user->isAdmin() || Yii::app()->user->isCreator($model->id))
 
 
 		<div>
-			<?php $this->renderPartial(Yii::app()->mf->siteType(). '/_ticket', array('ticket'=>$ticket, 'buy'=>true, 'log'=>$log, 'uniqEvent'=>$uniqEvent)); ?>
+			<?php $this->renderPartial(Yii::app()->mf->siteType(). '/_ticket', array('ticket'=>$ticket, 'buy'=>true, 'log'=>$log, 'uniqEvent'=>$uniqEvent, 'tickets'=>$tickets)); ?>
 
 			<?php if ($log->errors['ticket'][0]==1): ?>
 				<p style="color:red">Не выбран билет</p>
 			<?php endif; ?>
 		</div>
 
-                                      <?php if ($ticket[0]->type=='reusable'):?>
-                                            <div>
-                                                    <?php echo $form->labelEx($log,'quantity'); ?>
-                                                    <?php echo $form->textField($log,'quantity',array('value'=>$log->quantity,'size'=>5)); ?>
+		<?php if ($ticket[0]->type=='reusable'):?>
+			<div>
+				<?php echo $form->labelEx($log,'quantity'); ?>
+				<?php echo $form->textField($log,'quantity',array('value'=>$log->quantity,'size'=>5)); ?>
 
-                                                    <?php if ($log->errors['quantity'][0]=='big_size'): ?>
-                                                            <div class="errorMessage">Вы не можете купить столько билетов</div>
-                                                    <?php endif; ?>
+				<?php if ($log->errors['quantity'][0]=='big_size'): ?>
+						<div class="errorMessage">Вы не можете купить столько билетов</div>
+				<?php endif; ?>
 
-                                                    <?php if ($log->errors['quantity'][0]=='null'): ?>
-                                                            <div class="errorMessage">Поле не может быть пустым</div>
-                                                    <?php endif; ?>
-                                            </div>
-
-                                            <div>
-                                                    <?php echo $form->labelEx($log,'total'); ?>
-                                                    <?php echo $form->textField($log,'total',array('value'=>$log->total,'name'=>'summ', 'size'=>5, 'readonly'=>1)); ?>
-                                                    <?php if ($log->errors['total'][0]==1): ?>
-                                                            <div class="errorMessage">Сумма не верна</div>
-                                                    <?php endif; ?>
-                                            </div>
-                                    <?php endif; ?>
+				<?php if ($log->errors['quantity'][0]=='null'): ?>
+						<div class="errorMessage">Поле не может быть пустым</div>
+				<?php endif; ?>
+			</div>
+			<div>
+				<?php echo $form->labelEx($log,'total'); ?>
+				<?php echo $form->textField($log,'total',array('value'=>$log->total,'name'=>'summ', 'size'=>5, 'readonly'=>1)); ?>
+				<?php if ($log->errors['total'][0]==1): ?>
+					<div class="errorMessage">Сумма не верна</div>
+				<?php endif; ?>
+			</div>
+		<?php endif; ?>
 
 
 	<?php if ($ticket[0]['type']!='free'):?>
-                        <div>
-                            <h2>Способ оплаты</h2>
-                            <table width="400px" >
-                                <tr>
-                                    <td><input value="credit_card" id="TransactionLog_payment_0" name="TransactionLog[payment]" type="radio" <?php if ($log->payment == 'credit_card') echo 'checked'; ?> ></td>
-                                    <td><label for="TransactionLog_payment_0"><img src="/images/card.png" alt="credit_card"></label></td>
-                                    <td><label for="TransactionLog_payment_0">Кредитная карта</label></td>
-                                </tr>
-                                <tr>
-                                    <td><input value="qiwi" id="TransactionLog_payment_1" name="TransactionLog[payment]" type="radio" <?php if ($log->payment == 'qiwi') echo 'checked'; ?> ></td>
-                                    <td><label for="TransactionLog_payment_1"><img src="/images/qiwi.gif" alt="qiwi"></label></td>
-                                    <td><label for="TransactionLog_payment_1">Qiwi кошелёк</label></td>
-                                </tr>
-                            </table>
-			<?php if ($log->errors['payment'][0]==1): ?>
-                            <p style="color:red">Некорректный тип</p>
-			<?php endif; ?>
-                        </div>
+		<div>
+			<h2>Способ оплаты</h2>
+			<table width="400px" >
+				<tr>
+					<td><input value="credit_card" id="TransactionLog_payment_0" name="TransactionLog[payment]" type="radio" <?php if ($log->payment == 'credit_card') echo 'checked'; ?> ></td>
+					<td><label for="TransactionLog_payment_0"><img src="/images/card.png" alt="credit_card"></label></td>
+					<td><label for="TransactionLog_payment_0">Кредитная карта</label></td>
+				</tr>
+				<tr>
+					<td><input value="qiwi" id="TransactionLog_payment_1" name="TransactionLog[payment]" type="radio" <?php if ($log->payment == 'qiwi') echo 'checked'; ?> ></td>
+					<td><label for="TransactionLog_payment_1"><img src="/images/qiwi.gif" alt="qiwi"></label></td>
+					<td><label for="TransactionLog_payment_1">Qiwi кошелёк</label></td>
+				</tr>
+			</table>
+		<?php if ($log->errors['payment'][0]==1): ?>
+			<p style="color:red">Некорректный тип</p>
+		<?php endif; ?>
+		</div>
 	<?php endif; ?>
-                        <div>
-                    <?php if($ticket[0]['type'] == 'free'): ?>
-                        <?php echo CHtml::submitButton('Забрать билет', array('id'=>'submit_save_button',)); ?>
-                    <?php else: ?>
-                        <?php echo CHtml::submitButton('Перейти к оплате', array('id'=>'submit_save_button',)); ?>
-                    <?php endif; ?>
-                        </div>
-
-
+	<div>
+		<?php if($ticket[0]['type'] == 'free'): ?>
+			<?php echo CHtml::submitButton('Забрать билет', array('id'=>'submit_save_button',)); ?>
+		<?php else: ?>
+			<?php echo CHtml::submitButton('Перейти к оплате', array('id'=>'submit_save_button',)); ?>
+		<?php endif; ?>
+	</div>
 	<?php $this->endWidget(); ?>
         <?php endif; ?>
-        </div>
+    </div>
 </div>
 
 <?php endif; ?>
