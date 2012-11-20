@@ -1,0 +1,50 @@
+[Version]
+Signature   = "$Windows NT$"        ; required as-is
+Provider    = "Complex Systems"     ; maximum of 30 characters, full app name will be "<Provider> <AppName>"
+CESignature = "$Windows CE$"        ; required as-is
+ 
+[CEStrings]
+AppName     = "ShowCode"            ; maximum of 40 characters, full app name will be "<Provider> <AppName>"
+InstallDir  = %CE1%\%AppName%       ; Program Files\ShowCode
+ 
+[SourceDisksNames]                  ; directory that holds the application's files
+1 = , "Common Files",,"."
+ 
+[SourceDisksFiles]                  ; list of files to be included in .cab
+"%AppName%.exe" = 1
+pin.txt = 1
+Symbol.Barcode.dll = 1
+Symbol.Barcode.xml = 1
+Symbol.dll = 1
+Symbol.xml = 1
+Symbol.StandardForms.dll = 1
+Symbol.StandardForms.xml = 1
+ 
+[DefaultInstall]                    ; operations to be completed during install
+CopyFiles   = CopyToProgramFiles
+AddReg      = RegData
+CEShortcuts = Shortcuts   
+CESelfRegister = Symbol.Barcode.dll
+CESelfRegister = Symbol.dll
+CESelfRegister = Symbol.StandardForms.dll
+ 
+[DestinationDirs]                   ; default destination directories for each operation section
+CopyToProgramFiles    = 0, %InstallDir%
+Shortcuts = 0, %CE11%
+ 
+[CopyToProgramFiles]                ; copy operation file list
+"%AppName%.exe", "%AppName%.exe"
+"pin.txt", pin.txt
+"Symbol.Barcode.dll", Symbol.Barcode.dll
+"Symbol.Barcode.xml", Symbol.Barcode.xml
+"Symbol.dll", Symbol.dll
+"Symbol.xml", Symbol.xml
+"Symbol.StandardForms.dll", Symbol.StandardForms.dll
+"Symbol.StandardForms.xml", Symbol.StandardForms.xml
+ 
+[RegData]                           ; registry key list
+HKCU,Software\%AppName%,MajorVersion,0x00010001,1
+HKCU,Software\%AppName%,MinorVersion,0x00010001,0
+ 
+[Shortcuts]                         ; Shortcut created in destination dir, %CE11%
+%AppName%,0,"%AppName%.exe"
