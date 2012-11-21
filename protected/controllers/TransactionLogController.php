@@ -67,7 +67,8 @@ class TransactionLogController extends Controller
 		
 		$ch = 0;
 		
-		$pages = (int)$_GET['page'];
+		//echo '<pre>'; print_r($_GET); echo '</pre>';
+		$pages = (int)$_GET['TransactionLog_page'];
 		
 		if($_GET['num']==1)
 			$ch = 1;
@@ -76,17 +77,21 @@ class TransactionLogController extends Controller
 		if($_GET['num']==3)
 			$ch = 3;
 		
+		
+		
         $this->render(Yii::app()->mf->siteType(). '/index', array('pages'=>$pages, 'ch'=>$ch, 'flag'=>$flag, 'user_id'=>$user_id));
     }
 	
 	//список билетов
 	public function actionAjaxTicketList($flag, $user_id, $num, $page)
 	{
-		$t = TransactionLog::model()->getData($flag, $user_id);
-		$data = $t['data'];
-		$pages = $t['pages'];
-		$pages->validateCurrentPage = $page;
-		$this->renderPartial(Yii::app()->mf->siteType().'/_ticket_list', array('data' => $data, 'pages' => $pages, 'flag' => 1, 'id_user' => '', 'num'=>$num));
+		$model = new TransactionLog;
+		//$t = TransactionLog::model()->getData($flag, $user_id);
+		//$data = $t['data'];
+		//$pages = $t['pages'];
+		//$pages->validateCurrentPage = $page;
+		//echo '<pre>'; print_r($page); echo '</pre>';//exit;
+		$this->renderPartial(Yii::app()->mf->siteType().'/_ticket_list', array('data' => $data, 'pages' => $pages, 'flag' => 1, 'id_user' => '', 'num'=>$num, 'model'=>$model, 'user_id'=>$user_id, 'flag'=>$flag, 'page'=>$page));
 	}
 
 	/**
@@ -95,10 +100,19 @@ class TransactionLogController extends Controller
 	 */
 	public function actionView($id)
     {
-        $this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column2';
+        //echo '<pre>'; print_r($_GET); echo '</pre>';exit;
+		$this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column2';
         $model = $this->loadModel($id);
-        if(isset($_POST['Card'])){
-            $model->buyIsDone();
+        if(isset($_POST['Card']))
+		{
+            
+			$ticket = Tickets::model()->findByPk($model->ticket_id);
+			$event = Events::model()->find(array('select'=>'datetime,id,address','condition'=>'id=:event_id','params'=>array(':event_id'=>$model->event_id)));
+			$eventUniq = $event->uniqium;
+		
+			//$model->buyIsDone();			
+			$this->buyIsDoneFree($model, $ticket, $eventUniq, $event);
+
             $model = $this->loadModel($id);
         }
 
@@ -246,36 +260,37 @@ class TransactionLogController extends Controller
 	public function loadModel($uniq)
 	{
 		$model=TransactionLog::model()->find('uniq=:uniq',array(':uniq'=>$uniq));
-		if($model===null){
-                        $IP = $_SERVER["REMOTE_ADDR"];
-                        $visitor = Visitors::model()->find('ip=:ip',array(':ip'=>$IP));
-                        if($visitor){
-                            $diffMinutes = floor(abs(strtotime(date('Y-m-d H:i:s')) - strtotime($visitor['time_last_come']))/60);
-                            if($diffMinutes >= 30){
-                                Visitors::model()->updateByPk($visitor->id, array('count'=>1, 'time_last_come'=>Yii::app()->mf->dateForMysql(date('Y-m-d')).' '.date('H:i:s')));
-                            }else{
-                                if(intval($visitor['count']) > 20){
-                                    $time_ban = mktime(0, 0, 0, date("m")  , date("d")+7, date("Y"));
-                                    Visitors::model()->updateByPk($visitor->id, array('count'=>0,'BAN' => 1, 'time_ban'=>Yii::app()->mf->dateForMysql(date("Y-m-d",$time_ban)),'time_last_come'=>Yii::app()->mf->dateForMysql(date('Y-m-d')).' '.date('H:i:s')));
-                                    Yii::app()->user->logout();
-                                    $this->redirect('/user/permissionDenied');
-                                    return false;
-                                }else{
-                                    if(intval($visitor['count']) > 5)
-                                        sleep (5);
-                                    $visitor->saveCounters(array('count'=>1));
-                                    Visitors::model()->updateByPk($visitor->id, array('time_last_come'=>Yii::app()->mf->dateForMysql(date('Y-m-d')).' '.date('H:i:s')));
-                                }
-                            }
-                        }else{
-                            $visitor = new Visitors();
-                            $params = array("ip" => $IP, "time_last_come" => Yii::app()->mf->dateForMysql(date('Y-m-d')).' '.date('H:i:s'), "time" => Yii::app()->mf->dateForMysql(date('Y-m-d')).' '.date('H:i:s'));
-                            $visitor->attributes = $params;
-                            $visitor->insert();
-                        }
+		if($model===null)
+		{
+			$IP = $_SERVER["REMOTE_ADDR"];
+			$visitor = Visitors::model()->find('ip=:ip',array(':ip'=>$IP));
+			if($visitor){
+				$diffMinutes = floor(abs(strtotime(date('Y-m-d H:i:s')) - strtotime($visitor['time_last_come']))/60);
+				if($diffMinutes >= 30){
+					Visitors::model()->updateByPk($visitor->id, array('count'=>1, 'time_last_come'=>Yii::app()->mf->dateForMysql(date('Y-m-d')).' '.date('H:i:s')));
+				}else{
+					if(intval($visitor['count']) > 20){
+						$time_ban = mktime(0, 0, 0, date("m")  , date("d")+7, date("Y"));
+						Visitors::model()->updateByPk($visitor->id, array('count'=>0,'BAN' => 1, 'time_ban'=>Yii::app()->mf->dateForMysql(date("Y-m-d",$time_ban)),'time_last_come'=>Yii::app()->mf->dateForMysql(date('Y-m-d')).' '.date('H:i:s')));
+						Yii::app()->user->logout();
+						$this->redirect('/user/permissionDenied');
+						return false;
+					}else{
+						if(intval($visitor['count']) > 5)
+							sleep (5);
+						$visitor->saveCounters(array('count'=>1));
+						Visitors::model()->updateByPk($visitor->id, array('time_last_come'=>Yii::app()->mf->dateForMysql(date('Y-m-d')).' '.date('H:i:s')));
+					}
+				}
+			}else{
+				$visitor = new Visitors();
+				$params = array("ip" => $IP, "time_last_come" => Yii::app()->mf->dateForMysql(date('Y-m-d')).' '.date('H:i:s'), "time" => Yii::app()->mf->dateForMysql(date('Y-m-d')).' '.date('H:i:s'));
+				$visitor->attributes = $params;
+				$visitor->insert();
+			}
 
 			throw new CHttpException(404,'Запрошенная страница не существует.');
-                }
+		}
 		return $model;
 	}
 
@@ -390,8 +405,14 @@ class TransactionLogController extends Controller
             $ticket = TransactionLog::model()->find('uniq=:uniq',array(':uniq' => $uniqarr[0]));
 
             if ($responsePaymentClient['txnResponseCode'] == "0" && $responsePaymentClient['txnResponseCode'] != "No Value Returned" && !$errorExists) {
-                if(count($ticket) > 0){
-                    $ticket->buyIsDone();
+                if(count($ticket) > 0)
+				{
+                    //$ticket->buyIsDone();
+					$tickets = Tickets::model()->findByPk($ticket->ticket_id);
+					$event = Events::model()->find(array('select'=>'datetime,id,address','condition'=>'id=:event_id','params'=>array(':event_id'=>$ticket->event_id)));
+					$eventUniq = $event->uniqium;
+
+					$this->buyIsDoneFree($ticket, $tickets, $eventUniq, $event);
                     $this->redirect('/ticket/view/'.$ticket['uniq']);
                 }
             }else{

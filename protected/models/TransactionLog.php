@@ -227,8 +227,7 @@ class TransactionLog extends CActiveRecord
 		parent::afterSave();
 		//E-mail от кого отправлено письмо
 		//$fromMail = $Booking_Time = Control::model()->find("name = 'fromMail'")->value;
-		$fromMail = 'noreply@'.$_SERVER[HTTP_HOST];
-
+		
 		//Сохраняем телефон пользователя в БД.
 		if (Yii::app()->user->id && !Yii::app()->user->phone && $this->rememberMail)
 		{
@@ -238,143 +237,36 @@ class TransactionLog extends CActiveRecord
 				User::model()->updateByPk(Yii::app()->user->id, array('phone'=>$this->phone));
 			}
 		}
-                $event = Events::model()->findByPk($this->event_id);
-                $eventUniq = $event->uniqium;
+		$event = Events::model()->findByPk($this->event_id);
+		$eventUniq = $event->uniqium;
 
 		//Уменьшаем ко-во оставшихся билетов
 		$ticket = Tickets::model()->findByPk($this->ticket_id);
-                if(!$eventUniq->infinity_qantitty){
-                    $count = $ticket->quantity - $this->quantity;
-                    Tickets::model()->updateAll(array("quantity" => "$count"),"ticket_id = '$this->ticket_id' AND type = '$this->type'");
-                }
-
-		if($this->type == 'free'){
-			$this->buyIsDone();
-		}else{
-
-			if($this->mail && $this->payment != 'credit_card'){
-                            //И отправляем письмо на почту...
-                            $tit = Events::getEventTitle($this->event_id);
-                            $ev_date = Events::getEventDate($this->event_id);
-                            $title = 'Бронь: ' .$tit;
-                            $text = '';
-                            $text = $text.'<table cellspasing="0" border="0" cellpadding="0" width="100%" style="background-color:#dadada; border-collapse: collapse; border-spacing:0;">';
-                            $text = $text.'<tr>';
-                            $text = $text.'<td height="20"></td>';
-                            $text = $text.'</tr>';
-                            $text = $text.'<tr>';
-                            $text = $text.'<td align="center">';
-                            $text = $text.'<table cellspasing="0" border="0" cellpadding="0" height="460px" width="728px" style="margin: 0pt; padding:0; background-color: rgb(255, 255, 255); border-collapse: collapse; border-spacing:0;">';
-                            $text = $text.'<tr>';
-                            $text = $text.'<td style="background-image:url(http://' .$_SERVER['HTTP_HOST']. '/images/email/content_bg.png); background-repeat:no-repeat; background-position:left top; padding-top: 0px; padding-right:0; padding-bottom:0; padding-left: 21px;">';
-                            $text = $text.'<table cellspasing="0" border="0" cellpadding="0" width="698px" style="margin: 0pt; padding: 0pt; background-color: rgb(255, 255, 255); border-collapse: collapse; border-spacing:0;">';
-                            $text = $text.'<tr>';
-                            $text = $text.'<td colspan="2"><img src="http://' .$_SERVER['HTTP_HOST']. '/images/email/logo_booking_ticket.jpg" alt="Showcode. Бронирование билета." title="Showcode. Бронирование билета." style="margin: 0pt; padding: 0pt; border: 0pt none; display: block;"></td>';
-			    $text = $text.'</tr>';
-			    $text = $text.'<tr>';
-                            if(!$eventUniq)
-                                $text = $text.'<td colspan="2"><div style="height: 40px;"><p style="font-family:Arial, Helvetica, sans-serif; font-size:24px; font-weight:normal; font-style:normal; color:#333; padding-bottom: 10px;">Здравствуйте, '.$this->family.'.</p></td>';
-                            else
-                                $text = $text.'<td colspan="2"><div style="height: 30px;"><p style="font-family:Arial, Helvetica, sans-serif; font-size:24px; font-weight:normal; font-style:normal; color:#333; padding-bottom: 10px;">Здравствуйте, '.$this->family.'.</p></td>';
-			    $text = $text.'</tr>';
-			    $text = $text.'<tr>';
-                            if(!$eventUniq){
-			   	$text = $text.'<td style="background-color:#e5e5e5;"><p style=" font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal; color:#333;line-height: 18px;padding-left: 10px;padding-right: 10px;margin-top: 10px;margin-bottom: 10px;">Вы забронировали билет на мероприятие под названием «<a href="http://' .$_SERVER['HTTP_HOST']. '/events/view/' .$this->event_id. '" target="_blank" title="'.$tit.'">'.$tit.'</a>», которое состоится <b>';
-			   	if($this->type == 'travel'){
-					$text = $text.''. Events::getEventDate($ticket->date_begin) .' - ';
-	   				$text = $text.''. Events::getEventDate($ticket->date_end) .' года ';
-				}else{
-					$text = $text.''. Events::getEventDate($this->event_id) .' года ';
-					if($ticket->time_begin){
-						$text = $text.'(начало в '. $ticket->time_begin;
-					}else{
-						$text = $text.'(начало в '. Events::getEventTime($this->event_id);
-					}
-					if($ticket->time_end){
-						$text = $text.', окончание в '. $ticket->time_end;
-					}
-					$text = $text.'). ';
-				}
-
-				if (isset($this->column) && isset($this->place))
-				{
-					$text = $text.'Ваш ряд №' .$this->column. ', место ' .$this->place. '.';
-				}
-				$text = $text.'</b><br/><br/>Вы должны оплатить билет, выбранным вами способом, <b>в течение 4 часов. Если за это время оплата не произойдёт, то ваша бронь аннулируется.</p></td>';
-                                $text = $text.'<td style="padding-right: 10px;">&nbsp;</td>';
-                            }else{
-                                $text = $text.'<td>';
-                                $text = $text.'<table cellspasing="0" border="0" cellpadding="0" width="" style="margin: 0pt; padding: 20px 0; background-color: rgb(255, 255, 255); border-collapse: collapse;">';
-                                $text = $text.'<tr>';
-                                $text = $text.'<td width="120px">';
-                                $text = $text.'<img src="http://' .$_SERVER['HTTP_HOST']. '/images/email/zoo/zoo-logo.png" alt="' .$event->title. '" title="' .$event->title. '" style="margin: 0pt; padding: 0pt; border: 0pt none; display: block; border:1px #cccccc solid;">';
-                                $text = $text.'</td>';
-                                $text = $text.'<td style="background-color:#30aabc; width:419px">';
-                                $text = $text.'<p style="padding:0 10px 0 20px; font-family:Arial, Helvetica, sans-serif; font-size:12px; font-weight:normal; font-style:normal; color:#fff; line-height:18px;"><b>Вы купили билет</b> в «' .$event->title. '»<br />';
-                                $text = $text.'Часы работы: '.$eventUniq->time_work.'<br />';
-                                $text = $text.'Адрес: '.$event->address.'<br />';
-                                $text = $text.'Тел.: '.$eventUniq->phone.'</p>';
-                                $text = $text.'</td>';
-                                $text = $text.'<td style="background-color:#30aabc; vertical-align:bottom;">';
-                                $text = $text.'<img style="vertical-align:bottom;" src="http://' .$_SERVER['HTTP_HOST']. '/images/email/zoo/bird_top_part.png" alt="" />';
-                                $text = $text.'</td>';
-                                $text = $text.'</tr>';
-                                $text = $text.'<tr>';
-                                $text = $text.'<td><img style="vertical-align:top;" src="http://' .$_SERVER['HTTP_HOST']. '/images/email/zoo/bird_bottom_part_empty.png" alt=""/></td>';
-                                $text = $text.'<td><img style="vertical-align:top;" src="http://' .$_SERVER['HTTP_HOST']. '/images/email/zoo/bird_bottom_part_empty.png" alt=""/></td>';
-                                $text = $text.'<td>';
-                                $text = $text.'<img style="vertical-align:top;" src="http://' .$_SERVER['HTTP_HOST']. '/images/email/zoo/bird_bottom_part.png" alt=""/>';
-                                $text = $text.'</td>';
-                                $text = $text.'</tr>';
-                                $text = $text.'</table>';
-                                $text = $text.'</td>';
-                            }
-			    $text = $text.'</tr>';
-			    $text = $text.'<tr>';
-                            if(!$eventUniq){
-                                $text = $text.'<td colspan="2" style="padding-top: 7px;   padding-bottom: 17px;padding-right: 10px;">';
-                                $text = $text.'<table cellspasing="0" border="0" cellpadding="5" width="" style="margin: 0pt; padding: 20px 0; background-color: rgb(255, 255, 255); border-collapse: collapse;">';
-                            }else{
-                                $text = $text.'<td colspan="2" style="padding-top: 7px;   padding-bottom: 0;padding-right: 10px;">';
-                                $text = $text.'<table cellspasing="0" border="0" cellpadding="5" width="" style="margin: 0pt; padding: 0; background-color: rgb(255, 255, 255); border-collapse: collapse;">';
-                            }
-			    $text = $text.'<tr>';
-			    $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal; color:#000;">Номер билета:</td>';
-			    $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .$this->uniq. '</td>';
-			    $text = $text.'</tr>';
-			    $text = $text.'<tr>';
-			    $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal; color:#000;">Ссылка на билет:</td>';
-			    $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal; text-decoration:underline; color:#0000ff;"><a target="_blank" href="http://' .$_SERVER['HTTP_HOST']. '/ticket/view/' .$this->uniq. '" title="Здесь вы можете просмотреть статус покупки">' .$_SERVER['HTTP_HOST']. '/ticket/view/' .$this->uniq. '</a></td>';
-			    $text = $text.'</tr>';
-			    $text = $text.'<tr>';
-			    $text = $text.'<td colspan="2" style="font-family:Arial, Helvetica, sans-serif; font-size:12px; font-weight:normal; font-style:normal; color:#999;">';
-			    $text = $text.'Чтобы попасть на мероприятие вы должны:';
-			    $text = $text.'<ul style="list-style:none; margin:0pt; padding-top: 3px;padding-right: 0;padding-bottom: 0;padding-left: 0;">';
-				$text = $text.'<li>&mdash; внести плату за данный билет, указанным вами способом оплаты;</li>';
-			    $text = $text.'</ul>';
-			    $text = $text.'</td>';
-			    $text = $text.'</tr>';
-			    $text = $text.'</table>';
-			    $text = $text.'</td>';
-			    $text = $text.'</tr>';
-			    $text = $text.'<tr>';
-			    $text .= '<td style="padding-top: 10px; border-top-color: #999; border-top-style: solid; border-top-width: 1px;"><p style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal; color:#333;line-height: 0;">С уважением, администрация сайта <a target="_blank" href="' .$_SERVER['HTTP_HOST']. '" title="">ShowCode.ru</a>.</p></td>';
-                            $text = $text.'<td style="padding-right: 10px;">&nbsp;</td>';
-                            $text = $text.'</tr>';
-                            $text = $text.'</table>';
-                            $text = $text.'</td>';
-                            $text = $text.'</tr>';
-                            $text = $text.'</table>';
-                            $text = $text.'</td>';
-                            $text = $text.'</tr>';
-                            $text = $text.'<tr>';
-                            $text = $text.'<td height="20"></td>';
-			    $text = $text.'</tr>';
-				$text = $text.'</table>';
-
-				Yii::app()->mf->mail_html($this->mail,$fromMail,Yii::app()->name,$text,$title);
+		if(!$eventUniq->infinity_qantitty)
+		{
+			$count = $ticket->quantity - $this->quantity;
+			Tickets::model()->updateAll(array("quantity" => "$count"),"ticket_id = '$this->ticket_id' AND type = '$this->type'");
+		}
+				
+		//отправляем письмо на почту + смс
+		if($this->type == 'free')
+		{
+			$title = 'Билеты:' .$event['title'];
+			TransactionLog::model()->updateAll(array("status" => 1),"status = 0 AND uniq = '$this->uniq'");			
+			$model = $this;
+			Yii::app()->controller->buyIsDoneFree($model, $ticket, $eventUniq, $event);
+		}
+		else
+		{
+			if($this->mail && $this->payment != 'credit_card')
+			{				
+				$tit = Events::getEventTitle($this->event_id);
+				$ev_date = Events::getEventDate($this->event_id);
+				$title = 'Бронь: ' .$tit;
+				Yii::app()->controller->buyIsDonePay($model, $ticket, $eventUniq, $event, $tit);
 			}
 		}
+		//Yii::app()->mf->mail_html($this->mail,$fromMail,Yii::app()->name,$text,$title);
 	}
 
 	/**
@@ -580,214 +472,47 @@ class TransactionLog extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
-
-	public function buyIsDone(){
-		$ticket = Tickets::model()->findByPk($this->ticket_id);
-		TransactionLog::model()->updateAll(array("status" => 1),"status = 0 AND uniq = '$this->uniq'");
-		//$user = mysql_fetch_array(mysql_query('select phone from tbl_user where user_id="' .$log['user_id']. '"'));
-		if(isset(Yii::app()->user->phone)){
-			$phone = Yii::app()->user->phone;
-		}else{
-			$phone = $this->phone;
-		}
-
-			//Отправляем пользователю смс.
-		if (isset($phone))
+	
+	public function searchTickets($user_id, $flag, $page)
+	{
+		$criteria=new CDbCriteria;
+		
+		if($flag==1 && !empty($user_id))
 		{
-			require_once('./soap/sms24x7.php');
-			$EMAIL_SMS = 'rubtsov@complexsys.ru';
-			$PASSWORD_SMS = 'MoZBdJsXG8';
-			$message = 'Ваш билет находится здесь:' .PHP_EOL. 'http://' .$_SERVER['HTTP_HOST']. '/ticket/view/' .$this->uniq. '?preview';
-			$r = smsapi_push_msg_nologin($EMAIL_SMS, $PASSWORD_SMS, $phone, $message, array("unicode"=>"1"));
+			//Выводим все купленные билеты на созданное тобой мероприятие.
+			$myEvents = Events::model()->findAllByAttributes(array('author'=>$user_id));
+			
+			$evid = Array();
+			foreach ($myEvents as $myEvent)
+			{
+				$evid[] = "event_id = '".$myEvent->id."'";					
+			}				
+		
+			$event_id = implode(' or ', $evid);
+			$criteria->condition = $event_id;
 		}
-		//Отправляем письмо с билетами на почту...
-		$event = Events::model()->findByPk($this->event_id, array('select' => 'id,title,datetime,description'));
-		$eventUniq = $event->uniqium;
-		//$event = mysql_fetch_array(mysql_query('select id,title,description,datetime from tbl_events where id="' .$log['event_id']. '"'));
-		$title = 'Билеты:' .$event['title'];
-		$text = '';
-		$text = $text.'<table cellspasing="0" border="0" cellpadding="0" width="100%" style="background-color:#dadada; border-collapse: collapse; border-spacing:0;">';
-                $text = $text.'<tr>';
-                $text = $text.'<td height="20"></td>';
-                $text = $text.'</tr>';
-                $text = $text.'<tr>';
-                $text = $text.'<td align="center">';
-                $text = $text.'<table cellspasing="0" border="0" cellpadding="0" height="460px" width="728px" style="margin: 0pt; padding:0; background-color: rgb(255, 255, 255); border-collapse: collapse; border-spacing:0;">';
-                $text = $text.'<tr>';
-                $text = $text.'<td style="background-image:url(http://' .$_SERVER['HTTP_HOST']. '/images/email/content_bg.png); background-repeat:no-repeat; background-position:left top; padding-top: 0px; padding-right:0; padding-bottom:0; padding-left: 21px;">';
-                $text = $text.'<table cellspasing="0" border="0" cellpadding="0" width="698px" style="margin: 0pt; padding: 0pt; background-color: rgb(255, 255, 255); border-collapse: collapse; border-spacing:0;">';
-                $text = $text.'<tr>';
-                $text = $text.'<td colspan="2"><img src="http://' .$_SERVER['HTTP_HOST']. '/images/email/logo_thank_you.jpg" alt="Showcode. Спасибо за покупку." title="Showcode. Спасибо за покупку." style="margin: 0pt; padding: 0pt; border: 0pt none; display: block;"></td>';
-                $text = $text.'</tr>';
-                $text = $text.'<tr>';
-                if(!$eventUniq)
-                    $text = $text.'<td colspan="2"><div style="height: 40px;"><p style="font-family:Arial, Helvetica, sans-serif; font-size:24px; font-weight:normal; font-style:normal; color:#333; padding-bottom: 10px;">Здравствуйте, '.$this->family.'.</p></div></td>';
-                else
-                    $text = $text.'<td colspan="2"><div style="height: 30px;"><p style="font-family:Arial, Helvetica, sans-serif; font-size:24px; font-weight:normal; font-style:normal; color:#333; padding-bottom: 10px;">Здравствуйте, '.$this->family.'.</p></div></td>';
-                $text = $text.'</tr>';
-                $text = $text.'<tr>';
-                if(!$eventUniq){
-                    $text = $text.'<td style="background-color:#e5e5e5;"><p style=" font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal; color:#333;line-height: 18px;padding-left: 10px;padding-right: 10px;margin-top: 10px;margin-bottom: 10px;">Вы купили билет на мероприятие под названием «<a target="_blank" title="' .$event['title']. '" href="http://' .$_SERVER['HTTP_HOST']. '/events/view/' .$event['id']. '">' .$event['title']. '</a>», которое состоится <b>';
-                    if($this->type == 'travel'){
-                            $text = $text.''. Events::getEventDate($ticket->date_begin) .' - ';
-                            $text = $text.''. Events::getEventDate($ticket->date_end) .' года ';
-                    }else{
-                            $text = $text.''. Events::getEventDate($this->event_id) .' года ';
-                    }
-
-			if($ticket->time_begin){
-					$text = $text.'(начало в '. $ticket->time_begin;
-			}else{
-					$text = $text.'(начало в '. Events::getEventTime($this->event_id);
+		else
+		{
+			if($flag==0 && !empty($user_id))
+			{
+				$criteria->compare('user_id',$user_id);
 			}
-			if($ticket->time_end){
-					$text = $text.', окончание в '. $ticket->time_end;
-			}
-			$text = $text.'). ';
-
-                    if (isset($this->column) && isset($this->place))
-                    {
-                            $text = $text.'Ваш ряд №' .$this->column. ', место ' .$this->place. '.';
-                    }
-                    $text = $text.'</b></p></td>';
-                    $text = $text.'<td style="padding-right: 10px;">&nbsp;</td>';
-                }else{
-                    $text = $text.'<td>';
-                    $text = $text.'<table cellspasing="0" border="0" cellpadding="0" width="" style="margin: 0pt; padding: 20px 0; background-color: rgb(255, 255, 255); border-collapse: collapse;">';
-                    $text = $text.'<tr>';
-                    $text = $text.'<td width="120px">';
-                    $text = $text.'<img src="http://' .$_SERVER['HTTP_HOST']. '/images/email/zoo/zoo-logo.png" alt="' .$event->title. '" title="' .$event->title. '" style="margin: 0pt; padding: 0pt; border: 0pt none; display: block; border:1px #cccccc solid;">';
-                    $text = $text.'</td>';
-                    $text = $text.'<td style="background-color:#30aabc; width:419px">';
-                    $text = $text.'<p style="padding:0 10px 0 20px; font-family:Arial, Helvetica, sans-serif; font-size:12px; font-weight:normal; font-style:normal; color:#fff; line-height:18px;"><b>Вы купили билет</b> в «' .$event->title. '»<br />';
-                    $text = $text.'Часы работы: '.$eventUniq->time_work.'<br />';
-                    $text = $text.'Адрес: '.$event->address.'<br />';
-                    $text = $text.'Тел.: '.$eventUniq->phone.'</p>';
-                    $text = $text.'</td>';
-                    $text = $text.'<td style="background-color:#30aabc; vertical-align:bottom;">';
-                    $text = $text.'<img style="vertical-align:bottom;" src="http://' .$_SERVER['HTTP_HOST']. '/images/email/zoo/bird_top_part.png" alt="" />';
-                    $text = $text.'</td>';
-                    $text = $text.'</tr>';
-                    $text = $text.'<tr>';
-                    $text = $text.'<td><img style="vertical-align:top;" src="http://' .$_SERVER['HTTP_HOST']. '/images/email/zoo/bird_bottom_part_empty.png" alt=""/></td>';
-                    $text = $text.'<td><img style="vertical-align:top;" src="http://' .$_SERVER['HTTP_HOST']. '/images/email/zoo/bird_bottom_part_empty.png" alt=""/></td>';
-                    $text = $text.'<td>';
-                    $text = $text.'<img style="vertical-align:top;" src="http://' .$_SERVER['HTTP_HOST']. '/images/email/zoo/bird_bottom_part.png" alt=""/>';
-                    $text = $text.'</td>';
-                    $text = $text.'</tr>';
-                    $text = $text.'</table>';
-                    $text = $text.'</td>';
-                }
-                $text = $text.'</tr>';
-                $text = $text.'<tr>';
-                if(!$eventUniq){
-                    $text = $text.'<td colspan="2" style="padding-top: 7px;   padding-bottom: 17px;padding-right: 10px;">';
-                    $text = $text.'<table cellspasing="0" border="0" cellpadding="5" width="" style="margin: 0pt; padding: 20px 0; background-color: rgb(255, 255, 255); border-collapse: collapse;">';
-                }else{
-                    $text = $text.'<td colspan="2" style="padding-top: 7px;   padding-bottom: 0;padding-right: 10px;">';
-                    $text = $text.'<table cellspasing="0" border="0" cellpadding="5" width="" style="margin: 0pt; padding: 0; background-color: rgb(255, 255, 255); border-collapse: collapse;">';
-                }
-                $text = $text.'<tr>';
-                if(!$eventUniq)
-                    $text = $text.'<td rowspan="3" width="120px"><a href="http://' .$_SERVER['HTTP_HOST']. '/ticket/view/' .$this->uniq. '" target="_blank" title=""><img src="http://' .$_SERVER['HTTP_HOST']. '' .$this->qr. '" alt="' .$event['title']. '" style="margin: 0pt; padding: 0pt; border: 0pt none; display: block; border:1px #cccccc solid;"></a></td>';
-                else
-                    $text = $text.'<td rowspan="3" width="120px"><a href="http://' .$_SERVER['HTTP_HOST']. '/ticket/view/' .$this->uniq. '" target="_blank" title=""><img src="http://' .$_SERVER['HTTP_HOST']. '' .$this->qr. '" alt="' .$event['title']. '" width="125" style="margin: 0pt; padding: 0pt; border: 0pt none; display: block; border:1px #cccccc solid;"></a></td>';
-                $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal; color:#000;">Номер билета:</td>';
-                $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .$this->uniq. '</td>';
-                $text = $text.'</tr>';
-                $text = $text.'<tr>';
-                $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal; color:#000;">Ссылка на билет:</td>';
-                $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal; text-decoration:underline; color:#0000ff;"><a target="_blank" href="http://' .$_SERVER['HTTP_HOST']. '/ticket/view/' .$this->uniq. '" title="Здесь вы можете просмотреть статус покупки">' .$_SERVER['HTTP_HOST']. '/ticket/view/' .$this->uniq. '</a></td>';
-                $text = $text.'</tr>';
-                $text = $text.'<tr>';
-                $text = $text.'<td colspan="2" style="font-family:Arial, Helvetica, sans-serif; font-size:12px; font-weight:normal; font-style:normal; color:#999;">';
-                $text = $text.'Попасть на мероприятие вы сможете:';
-                $text = $text.'<ul style="list-style:none; margin:0pt; padding-top: 3px;padding-right: 0;padding-bottom: 0;padding-left: 0;">';
-                $text = $text.'<li>&mdash; распечастав изображение данного QR-кода на бумаге;</li>';
-                $text = $text.'<li>&mdash; показав изображение на экране любого цифрового носителя.</li>';
-                $text = $text.'</ul>';
-                $text = $text.'</td>';
-                $text = $text.'</tr>';
-                $text = $text.'</table>';
-                $text = $text.'</td>';
-                $text = $text.'</tr>';
-                $text = $text.'<tr>';
-                $text .= '<td style="padding-top: 10px; border-top-color: #999; border-top-style: solid; border-top-width: 1px;"><p style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal; color:#333;line-height: 0;">С уважением, администрация сайта <a target="_blank" href="' .$_SERVER['HTTP_HOST']. '" title="">ShowCode.ru</a>.</p></td>';
-                $text = $text.'<td style="padding-right: 10px;">&nbsp;</td>';
-                $text = $text.'</tr>';
-                $text = $text.'</table>';
-                $text = $text.'</td>';
-                $text = $text.'</tr>';
-                $text = $text.'</table>';
-                $text = $text.'</td>';
-                $text = $text.'</tr>';
-                $text = $text.'<tr>';
-                $text = $text.'<td height="20"></td>';
-                $text = $text.'</tr>';
-		$text = $text.'</table>';
-
-		//E-mail от кого отправлено письмо
-		//$fromMail = $Booking_Time = Control::model()->find("name = 'fromMail'")->value;
-		$fromMail = 'noreply@'.$_SERVER['HTTP_HOST'];
-		Yii::app()->mf->mail_html ($this->mail,$fromMail,Yii::app()->name,$text,$title);
-	}
-
-        /**
-	 * Возвращает верстку текста для электронной почты при отправке письма о купленном билете.
-	 */
-	public function getTextEmailSendListTickets($tickets){
-            $text = '';
-            $text = $text.'<table cellspasing="0" border="0" cellpadding="0" width="697px" style="margin: 0pt; padding: 0pt; background-color: rgb(255, 255, 255); border-collapse: collapse;">';
-            $text = $text.'<tr height="138px">';
-            $text = $text.'<td><img src="http://' .$_SERVER['HTTP_HOST']. '/images/email/logo_empty.jpg" alt="Showcode." title="Showcode." style="margin: 0pt; padding: 0pt; border: 0pt none; display: block;"></td>';
-            $text = $text.'</tr>';
-            $text = $text.'<tr height="41px">';
-            $text = $text.'<td><p style="font-family:Arial, Helvetica, sans-serif; font-size:24px; font-weight:normal; font-style:normal; color:#333;">Здравствуйте, '.Yii::app()->user->name.'.</p></td>';
-            $text = $text.'</tr>';
-            $text = $text.'<tr>';
-            $text = $text.'<td style="background-color:#e5e5e5;"><p style="padding:16px 10px; font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal; color:#333;">Вы запросили список всех билетов для мероприятия под названием «<a target="_blank" title="' .$this->title. '" href="http://' .$_SERVER['HTTP_HOST']. '/events/view/' .$this->id. '">' .$this->title. '</a>»</p></td>';
-            $text = $text.'</tr>';
-            $text = $text.'<tr>';
-            $text = $text.'<td style="padding-top:15px; padding-bottom:15px; border-bottom-width:1px; border-bottom-color:#999999; border-bottom-style:solid;">';
-            $text = $text.'<table cellspasing="0" border="0" cellpadding="5" width="" style="text-align: center; margin: 0pt; padding: 20px 0; background-color: rgb(255, 255, 255); border-collapse: collapse;">';
-            $text = $text.'<tr style="border: 1px solid #000;">';
-                $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .$tickets[0]->getAttributeLabel('user_id'). '</td>';
-                $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .$tickets[0]->getAttributeLabel('status'). '</td>';
-                $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .$tickets[0]->getAttributeLabel('quantity'). '</td>';
-                $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .$tickets[0]->getAttributeLabel('total'). '</td>';
-                $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .$tickets[0]->getAttributeLabel('column'). '</td>';
-                $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .$tickets[0]->getAttributeLabel('place'). '</td>';
-                $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .$tickets[0]->getAttributeLabel('uniq'). '</td>';
-                $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .$tickets[0]->getAttributeLabel('payment'). '</td>';
-            $text = $text.'</tr>';
-            foreach($tickets AS $i => $ticket){
-                $text = $text.'<tr style="border-bottom: 1px solid #000;">';
-                    if($ticket->user_id)
-                        $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' . Yii::app()->user->getAuthorName($ticket->user_id). '</td>';
-                    else
-                        $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .$ticket->family. '</td>';
-                    $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .TransactionLog::$status[$ticket->status]. '</td>';
-                    $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .$ticket->quantity. '</td>';
-                    $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .$ticket->total. '</td>';
-                    $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .$ticket->column. '</td>';
-                    $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .$ticket->place. '</td>';
-                    $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .$ticket->uniq. '</td>';
-                    $text = $text.'<td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal;">' .TransactionLog::$payment_type[$ticket->payment]. '</td>';
-                $text = $text.'</tr>';
-            }
-            $text = $text.'</table>';
-            $text = $text.'</td>';
-            $text = $text.'</tr>';
-            $text = $text.'<tr>';
-            $text = $text.'<td style="padding-top:5px;"><p style="font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; font-style:normal; color:#333;">С уважением, администрация сайта <a target="_blank" href="' .$_SERVER['HTTP_HOST']. '" title="">ShowCode.ru</a>.</p></td>';
-            $text = $text.'</tr>';
-            $text = $text.'</table>';
-
-            return $text;
+		} 
+		$criteria->order = 'datetime DESC';
+		
+		$page = (isset($page)) ? $page : 1;
+		
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+			'pagination'=> array(
+				'currentPage' => $page,
+			),
+		));
 	}
 
 	/* Отправляем запрос в Bank Payment Client */
-	public function virtualPaymentClient(){
+	public function virtualPaymentClient()
+	{
 		$Payment_Client_URL = "https://migs.mastercard.com.au/vpcpay"; // URL для доступа клиента-оплаты банка
 		$urlBack = 'http://'.$_SERVER['HTTP_HOST'].'/ticket/paymentClient';
 		$vpcURL = $Payment_Client_URL . "?";

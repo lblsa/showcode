@@ -173,4 +173,14 @@ class Tickets extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+	
+	public function searchTisk($id_ev)
+	{
+		$criteria=new CDbCriteria;
+		$criteria->compare('event_id',$id_ev);
+		
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+		));
+	}
 }

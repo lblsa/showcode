@@ -120,8 +120,9 @@ class UserController extends Controller
 		}
 		if(isset($_GET['newpass'])){
 			$new_pass = $model->generatePassword(10);
-                        if($model->email){
-                        		$text = $model->getTextEmailAboutRecoveryPassword($new_pass);
+                        if($model->email)
+						{
+                        		$text = $this->getTextEmailAboutRecoveryPassword($new_pass, $model);
                                 $fromMail = 'noreply@'.$_SERVER[HTTP_HOST];
                                 Yii::app()->mf->mail_html($model->email,$fromMail,Yii::app()->name,$text,'Восстановление пароля');
                                 //mail($_POST['email'],'Восстановление пароля ' .Yii::app()->name,$text);
@@ -171,7 +172,7 @@ class UserController extends Controller
 	 */
 	public function actionIndex()
 	{
-                $this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column2';
+        $this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column2';
 		//$dataProvider=new CActiveDataProvider('User');
 		$this->render(Yii::app()->mf->siteType(). '/index',array(
 			'data'=>  User::model()->findAll(),

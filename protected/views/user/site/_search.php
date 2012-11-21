@@ -7,7 +7,7 @@
 	'method'=>'get',
 )); ?>
 
-        <div>
+	<div>
 		<?php echo $form->label($model,'phone'); ?>
 		<?php echo $form->textField($model,'phone',array('size'=>60,'maxlength'=>128)); ?>
 	</div>

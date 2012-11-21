@@ -41,4 +41,12 @@ class UserIdentity extends CUserIdentity
 	{
         return $this->_id;
     }
+	
+	public function authenticate_vk_fb($user_model)
+	{
+		$this->_id = $user_model->user_id;
+		//Yii::app()->session->add('role', $user_model->role);
+		$this->errorCode=self::ERROR_NONE;	
+		return !$this->errorCode;
+	}
 }
