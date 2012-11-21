@@ -472,6 +472,43 @@ class TransactionLog extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+	
+	public function searchTickets($user_id, $flag, $page)
+	{
+		$criteria=new CDbCriteria;
+		
+		if($flag==1 && !empty($user_id))
+		{
+			//Выводим все купленные билеты на созданное тобой мероприятие.
+			$myEvents = Events::model()->findAllByAttributes(array('author'=>$user_id));
+			
+			$evid = Array();
+			foreach ($myEvents as $myEvent)
+			{
+				$evid[] = "event_id = '".$myEvent->id."'";					
+			}				
+		
+			$event_id = implode(' or ', $evid);
+			$criteria->condition = $event_id;
+		}
+		else
+		{
+			if($flag==0 && !empty($user_id))
+			{
+				$criteria->compare('user_id',$user_id);
+			}
+		} 
+		$criteria->order = 'datetime DESC';
+		
+		$page = (isset($page)) ? $page : 1;
+		
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+			'pagination'=> array(
+				'currentPage' => $page,
+			),
+		));
+	}
 
 	/* Отправляем запрос в Bank Payment Client */
 	public function virtualPaymentClient()

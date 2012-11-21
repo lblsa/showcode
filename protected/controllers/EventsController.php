@@ -1275,7 +1275,8 @@ class EventsController extends Controller
 		$flag=false;
 		if(isset($_POST['TransactionLog']))
 		{
-                    if($_POST['TransactionLog']['phone']){
+                    if($_POST['TransactionLog']['phone'])
+					{
                         $user = User::model()->find('phone = :phone',array(':phone'=>'7'.$_POST['TransactionLog']['phone']));
                         //регистрируем нового пользователя
                         if (count($user)==0){

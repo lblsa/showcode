@@ -49,19 +49,24 @@
 		}	
 		$columns1 = array(
 			array(
-				'name'=>'price',
+				'header'=>'Цена',
 				'htmlOptions'=>array('style'=>'width: 40px;'),
 				'value'=>'$data->price." руб."',
 			),
 			array(
-				'name'=>'time_begin',
-				'htmlOptions'=>array('style'=>'width: 100px;'),
+				'header'=>'Время начала',
+				'htmlOptions'=>array('style'=>'width: 90px;'),
+				'value'=>'$data->time_begin',
 			),
 			array(
-				'name'=>'time_end',
-				'htmlOptions'=>array('style'=>'width: 100px;'),
+				'header'=>'Время окончания',
+				'htmlOptions'=>array('style'=>'width: 110px;'),
+				'value'=>'$data->time_end',
 			),
-			'description',
+			array(
+				'header'=>'Описание',
+				'value'=>'$data->description',
+			),
 		);
 		
 		$columns = array_merge($columns, $columns1);
@@ -71,6 +76,7 @@
 			'dataProvider'=>$tickets->searchTisk($ticket[0]->event_id),
 			'columns'=>$columns,
 			'cssFile' => Yii::app()->baseUrl.'/css/gridview/styles.css',
+			'summaryText'=>'',
 		));
 	?>
 </div>

@@ -4,61 +4,71 @@
 		margin-top: 20px;
 		margin-bottom: 35px;
 	}
+	div.summary
+	{
+		text-align: right;
+		width: 94%!important;
+	}
 </style>
 <div id="list_tickets" >
-    <?php if(count($data)>0): ?>        
-    <table>
-		<?php if($pages->itemCount > 0): ?>
-		<tr>
-			<td colspan="11">
-				<div class="number_of_tickets">
-					<?php echo CHtml::encode('Записи с '); ?>
-					<span><?php echo ($pages->offset + 1); ?></span>
-					<?php echo CHtml::encode(' по '); ?>
-					<!--Вычисляет по какой элемент выводится список-->
-					<span><?php echo ($pages->offset + ($pages->limit-floor(($pages->currentPage+1) * (1/$pages->pageCount))*($pages->limit*$pages->pageCount - $pages->itemCount))); ?></span>
-					<?php echo CHtml::encode('. Всего записей '); ?>
-					<span><?php echo $pages->itemCount; ?></span>
-				</div>
-			</td>
-		</tr>
-		<?php endif; ?>
-		<tr class="title_table">
-			<td><?php echo CHtml::encode($data[0]->getAttributeLabel('event_id')); ?></td>
-			<td><?php echo CHtml::encode($data[0]->getAttributeLabel('type')); ?></td>
-			<td><?php echo CHtml::encode($data[0]->getAttributeLabel('quantity')); ?></td>
-			<td><?php echo CHtml::encode($data[0]->getAttributeLabel('price')); ?></td>
-			<td><?php echo CHtml::encode($data[0]->getAttributeLabel('total')); ?></td>
-			<td><?php echo CHtml::encode($data[0]->getAttributeLabel('datetime')); ?></td>
-			<td><?php echo CHtml::encode($data[0]->getAttributeLabel('user_id')); ?></td>
-			<td><?php echo CHtml::encode($data[0]->getAttributeLabel('mail')); ?></td>
-			<td><?php echo CHtml::encode($data[0]->getAttributeLabel('phone')); ?></td>
-			<td><?php echo CHtml::encode($data[0]->getAttributeLabel('payment')); ?></td>
-			<td><?php echo CHtml::encode($data[0]->getAttributeLabel('status')); ?></td>
-		</tr>
-		<?php foreach($data as $i=>$item): ?>
-		<tr>
-			<?php echo $this->renderPartial(Yii::app()->mf->siteType(). '/_view',array('data'=>$item)); ?>
-		</tr>
-		<?php endforeach; ?>
-	</table>
 
-        <!-- pagination:begin -->
-        <div class="pagination_coming_events">
-            <?php $this->widget('CLinkPager', array(
-                'pages' => $pages,
-                'header'=>'',
-                'nextPageLabel'=>'',
-                'prevPageLabel'=>'',
-                'firstPageLabel'=>'',
-                'lastPageLabel'=>'',
-                'htmlOptions'=>array('class'=>'','id'=>''),
-            )) ?>
-        </div>
-        <!-- pagination:end -->
-    <?php else:?>
-        <div style="font-size: 200%; margin-left: 20px; margin-bottom: 20px;">Нет билетов</div>
-    <?php endif; ?>
+<?php 
+	$this->widget('zii.widgets.grid.CGridView', array(
+		'id'=>'tickets-grid',
+		'dataProvider'=>$model->searchTickets($user_id, $flag, $page),
+		'columns'=>array(
+			array(
+				'header'=>'Мероприятие',
+				'htmlOptions'=>array('style'=>'width: 40px;'),
+				'value'=>'(Yii::app()->user->id == $data->user_id) ? CHtml::link(CHtml::encode(Events::getEventTitle($data->event_id)), array("ticket/view/".$data->uniq)) : CHtml::encode(Events::getEventTitle($data->event_id))',
+				'type'=>'raw',
+			),
+			array(
+				'header'=>'Тип билета',
+				'value'=>'CHtml::encode(Tickets::$type_ticket[$data->type])',
+			),
+			array(
+				'header'=>'Кол-во',
+				'value'=>'$data->quantity',
+			),
+			array(
+				'header'=>'Цена',
+				'value'=>'$data->price."&nbsp;руб."',
+				'type'=>'raw',
+			),
+			array(
+				'header'=>'Итог',
+				'value'=>'$data->total."&nbsp;руб."',
+				'type'=>'raw',
+			),
+			array(
+				'header'=>'Дата покупки',
+				'value'=>'CHtml::encode(Events::normalViewDate($data->datetime))',
+			),
+			array(
+				'header'=>'Покупатель',
+				'value'=>'($data->user_id) ? CHtml::encode(Yii::app()->user->getAuthorName($data->user_id)) : $data->family',
+			),
+			array(
+				'header'=>'E-mail',
+				'value'=>'$data->mail',
+			),
+			array(
+				'header'=>'Мобильный телефон',
+				'value'=>'$data->phone',
+			),
+			array(
+				'header'=>'Способ оплаты',
+				'value'=>'CHtml::encode(TransactionLog::$payment_type[$data->payment])',
+			),				
+			array(
+				'header'=>'Статус',
+				'value'=>'CHtml::encode(TransactionLog::$status[$data->status])',
+			),
+		),
+		'cssFile' => Yii::app()->baseUrl.'/css/gridview/styles.css',
+	));
+?>
 </div>
 <script type="text/javascript">
 
