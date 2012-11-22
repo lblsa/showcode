@@ -116,7 +116,8 @@ class EventsController extends Controller
 	{
 		$this->datepicker();
 		$model=$this->loadModel($id);
-		if($model->status != 1 && !Yii::app()->user->isAdmin() && !Yii::app()->user->isOrganizer()){
+		if($model->active != 1 && !Yii::app()->user->isAdmin() && !Yii::app()->user->isOrganizer())
+		{
 			if(Yii::app()->user->isGuest)
 					$this->redirect('/site/login');
 			else

@@ -1,3 +1,43 @@
+<div id="list_tickets">
+<?php 
+	$this->widget('zii.widgets.grid.CGridView', array(
+		'id'=>'tickets-grid',
+		'dataProvider'=>$model->search($event_id, true),
+		'columns'=>array(
+			array(
+				'header'=>'Дата',
+				'htmlOptions'=>array('style'=>'width: 40px;'),
+				'value'=>'CHtml::encode(Events::normalViewDate($data->datetime))',
+			),
+			array(
+				'header'=>'Билет',
+				'value'=>'"<strong>".$data->price."&nbsp;руб.</strong>"."<br/>".CHtml::encode(Tickets::$type_ticket[$data->type])',
+				'type'=>'raw',
+				'htmlOptions'=>array('style'=>'text-align: center; width: 60px;'),
+			),
+			array(
+				'header'=>'Куплено',
+				'value'=>'$data->quantity."/".$data->quantity*$data->price."&nbsp;руб."',
+				'type'=>'raw',
+				'htmlOptions'=>array('style'=>'text-align: center; width: 60px;'),
+				'class'=>'TotalColumn',
+				'footer'=>true,
+				'footerHtmlOptions'=>array('style'=>'font-weight: bold; width:60px; text-align: center', 'class'=>'summ'),
+			),
+			array(
+				'header'=>'Использовано',
+				'value'=>'($data->status==3) ? $data->quantity."/".$data->quantity*$data->price."&nbsp;руб." : "0/0&nbsp;руб."',
+				'type'=>'raw',
+				'htmlOptions'=>array('style'=>'text-align: center; width: 60px;'),
+				'class'=>'TotalColumn',
+				'footer'=>true,
+				'footerHtmlOptions'=>array('style'=>'font-weight: bold; width:60px; text-align: center', 'class'=>'summ'),
+			),
+		),
+		'cssFile' => Yii::app()->baseUrl.'/css/gridview/styles.css',
+	));
+?>
+</div>
 <?php $totaLbuyT =0; ?>
 <?php $totaLPricebuyT = 0; ?>
 <?php $totaLusedT = 0; ?>
