@@ -22,30 +22,30 @@ else
 
 <div class="main_form_wrapper list_buy_events">
     <div id="list_tickets">
-<h1>Пользователь <?php echo $model->name; ?></h1>
+	<h1>Пользователь <?php echo $model->name; ?></h1>
 
-<?php
-if (yii::app()->user->isAdmin() || Yii::app()->user->isOrganizer())
-	$attributes[] = 'uniq';
-$attributes[] = 'email';
-if($model->phone)
-	$attributes[] = 'phone';
-$attributes[] = 'name';
-$attributes[] = array(
-		'name'=>'role',
-		'type'=>'raw',
-		'value'=>User::$ROLE[$model->role]
-);
-$attributes[] = 'organization';
+	<?php
+	if (yii::app()->user->isAdmin() || Yii::app()->user->isOrganizer())
+		$attributes[] = 'uniq';
+	$attributes[] = 'email';
+	if($model->phone)
+		$attributes[] = 'phone';
+	$attributes[] = 'name';
+	$attributes[] = array(
+			'name'=>'role',
+			'type'=>'raw',
+			'value'=>User::$ROLE[$model->role]
+	);
+	$attributes[] = 'organization';
 
-$this->widget('zii.widgets.CDetailView', array(
-	'data'=>$model,
-	'attributes'=>$attributes,
-        'tagName'=>'table id="user_info_table"',
-        'itemTemplate'=>"<tr><td class=\"first_column\">{label}</td><td class=\"second_column\">{value}</td></tr>\n",
-        'htmlOptions'=>array('id'=>'user_info_table'),
-        'itemCssClass'=>array('')
-)); ?>
+	$this->widget('zii.widgets.CDetailView', array(
+		'data'=>$model,
+		'attributes'=>$attributes,
+			'tagName'=>'table id="user_info_table"',
+			'itemTemplate'=>"<tr><td class=\"first_column\">{label}</td><td class=\"second_column\">{value}</td></tr>\n",
+			'htmlOptions'=>array('id'=>'user_info_table'),
+			'itemCssClass'=>array('')
+	)); ?>
 
+	</div>
 </div>
-    </div>

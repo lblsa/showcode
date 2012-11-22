@@ -36,12 +36,12 @@ class EventsController extends Controller
 				'users'=>array('*','@'),
 			),
 			array('allow',			// Для Организатора разрешено: 'index', 'view', 'admin' и 'create'
-				'actions'=>array('index', 'view', 'create', 'admin'),
+				'actions'=>array('index', 'view', 'create', 'admin', 'SearchOrg'),
 				'expression' => 'yii::app()->user->isOrganizer()',
 				//'expression' => array($this, 'isOrganizer'),
 			),
 			array('allow',			//для создателей мероприятия разрешено редактировать его и проверять билеты.
-				'actions'=>array('admin','update','checkTicket','passedList','public','protectionEmail', 'sendAlert'),
+				'actions'=>array('admin','update','checkTicket','passedList','public','protectionEmail', 'sendAlert', 'SearchOrg'),
 				'expression' => 'yii::app()->user->isCreator($_GET["id"])',
 				//'expression' => array($this, 'isCreator'),
 			),
@@ -140,101 +140,118 @@ class EventsController extends Controller
 				$values[$key]['name'] = $user->name;
 				$values[$key]['phone'] = $user->phone;
 			}
-		}
-		
+		}		
 		
 		if(isset($_POST['TransactionLog']))
 		{
-			if (!isset(Yii::app()->user->id)){
-                            $user = User::model()->find('`phone` = :phone', array(':phone'=>'7'.$_POST['TransactionLog']['phone']));
-                            //регистрируем нового пользователя
-                            if (count($user)==0){
-                                $a = new User();
-                                $a->type = 'self';
-                                $a->email = $_POST['TransactionLog']['mail'];
-                                $a->name = $_POST['TransactionLog']['family'];
-                                $a->role = 'user';
-                                $a->phone = $_POST['TransactionLog']['phone'];
-                                $yourpass = User::generatePassword(10);
-                                $a->password = md5($yourpass);
-                                $a->save();
-                                if($a->email){
-                                    //$text = $a->getTextEmailAboutRegistration($yourpass);
-                                    //Yii::app()->mf->mail_html($a->email,'noreply@'.$_SERVER[HTTP_HOST],Yii::app()->name,$text,'Регистрация в ' .Yii::app()->name. '!');
-                                    $user = User::model()->find('`email`=:email and `phone`=:phone', array(':phone'=>$a->phone, ':email'=>$a->email));
-                                }else{
-                                    $user = User::model()->find('`phone`=:phone', array(':phone'=>$a->phone));
-                                }
+			if (!isset(Yii::app()->user->id))
+			{
+				$user = User::model()->find('`phone` = :phone', array(':phone'=>'7'.$_POST['TransactionLog']['phone']));
+				//регистрируем нового пользователя
+				if (count($user)==0)
+				{
+					$a = new User();
+					$a->type = 'self';
+					$a->email = $_POST['TransactionLog']['mail'];
+					$a->name = $_POST['TransactionLog']['family'];
+					$a->role = 'user';
+					$a->phone = $_POST['TransactionLog']['phone'];
+					$yourpass = User::generatePassword(10);
+					$a->password = md5($yourpass);
+					$a->save();
+					if($a->email)
+					{
+						//$text = $a->getTextEmailAboutRegistration($yourpass);
+						//Yii::app()->mf->mail_html($a->email,'noreply@'.$_SERVER[HTTP_HOST],Yii::app()->name,$text,'Регистрация в ' .Yii::app()->name. '!');
+						$user = User::model()->find('`email`=:email and `phone`=:phone', array(':phone'=>$a->phone, ':email'=>$a->email));
+					}else
+						$user = User::model()->find('`phone`=:phone', array(':phone'=>$a->phone));
 
-                                //$message = Yii::app()->name. '.Пароль:' .$yourpass;
-                                //$a->sendMessenge($message, $a->phone);
-                            }
+					//$message = Yii::app()->name. '.Пароль:' .$yourpass;
+					//$a->sendMessenge($message, $a->phone);
+				}
 			}
 
-			if(count($a->errors)==0){
-                                $_POST['TransactionLog']['user_id'] = $user->user_id;
-				if ($model->column && $model->place){
-                                        if(count($_POST['TransactionLog']['place']) == 0 && count($_POST['TransactionLog']['column']) == 0){
-                                            $log=new TransactionLog;
-                                            $log->addError('place', 1);
-                                        }else{
-                                            $valid = true;
-                                            $n = 0;
-                                            $logs = Array();
-                                            foreach($_POST['TransactionLog']['place'] as $i=>$value){
-                                                    $log=new TransactionLog;
-                                                    $temp = $_POST['TransactionLog'];
-                                                    $temp['place'] = intval($_POST['TransactionLog']['place'][$i]);
-                                                    $temp['column'] = intval($_POST['TransactionLog']['column'][$i]);
-                                                    $log->attributes=$temp;
-                                                    $valid=$log->validate() && $valid;
-                                                    $logs[$n] = $log;
-                                                    $n ++;
-                                            }
-                                            if($valid){
-                                                    for($i = 0; $i < $n; $i ++){
-                                                            if ($valid && $logs[$i]->insert()){
-                                                                    $valid = true;
-                                                            }else{
-                                                                    $valid = false;
-                                                            }
-                                                    }
-                                                    if($valid){
-                                                        if (!Yii::app()->user->isGuest)
-                                                            $this->redirect(array('ticket/view/' .$log->uniq));
-                                                        else{
-                                                            $log->addError('doAuth', 1);
-                                                        }
-
-                                                    }
-                                            }
-                                        }
-				}else{
-					$log=new TransactionLog;
-					$log->attributes = $_POST['TransactionLog'];
-					if ($log->save())
+			if(count($a->errors)==0)
+			{
+				$_POST['TransactionLog']['user_id'] = $user->user_id;
+				if ($model->column && $model->place)
+				{					
+					if(count($_POST['TransactionLog']['place']) == 0 && count($_POST['TransactionLog']['column']) == 0)
 					{
-                                            if($log->payment == 'credit_card')
-                                                $log->virtualPaymentClient ();
-                                            else{
-                                                if (!Yii::app()->user->isGuest)
-                                                    $this->redirect(array('ticket/view/' .$log->uniq));
-                                                else{
-                                                    $log->addError('doAuth', 1);
-                                                }
-                                            }
+						$log=new TransactionLog;
+						$log->addError('place', 1);
+					}
+					else
+					{						
+						$valid = true;
+						$n = 0;
+						$logs = Array();
+						foreach($_POST['TransactionLog']['place'] as $i=>$value)
+						{
+							$log=new TransactionLog;
+							$temp = $_POST['TransactionLog'];
+							$temp['place'] = intval($_POST['TransactionLog']['place'][$i]);
+							$temp['column'] = intval($_POST['TransactionLog']['column'][$i]);
+							$log->attributes=$temp;
+							$valid=$log->validate() && $valid;
+							$logs[$n] = $log;
+							$n ++;
+						}
+						
+						if($valid)
+						{
+							for($i = 0; $i < $n; $i ++)
+							{
+								if ($valid && $logs[$i]->insert())
+								{
+									$valid = true;
+								}
+								else
+								{
+									$valid = false;
+								}
+							}
+							if($valid)
+							{
+								if (!Yii::app()->user->isGuest)
+									$this->redirect(array('ticket/view/' .$log->uniq));
+								else
+									$log->addError('doAuth', 1);
+							}
+						}
 					}
 				}
-			}else{
+				else
+				{
+					$log=new TransactionLog;
+					$log->attributes = $_POST['TransactionLog'];
+					
+					if ($log->save())
+					{
+						if($log->payment == 'credit_card')
+							$log->virtualPaymentClient ();
+						else
+						{
+							if (!Yii::app()->user->isGuest)
+								$this->redirect(array('ticket/view/' .$log->uniq));
+							else
+								$log->addError('doAuth', 1);
+						}
+					}
+				}
+			}
+			else
+			{
 				$log=new TransactionLog;
-				foreach($a->errors as $column=>$value){
+				foreach($a->errors as $column=>$value)
+				{
 					$log->addError($column, $value[0]);
 				}
-
 			}
-		}else{
-			$log=new TransactionLog;
 		}
+		else
+			$log=new TransactionLog;
 
 		if (!isset($_GET['code']) && ($_GET['facebook']=='attending' || $_GET['facebook']=='declined'))
 		{
@@ -296,28 +313,35 @@ class EventsController extends Controller
 			$buy_place[] = ($tr[$i]->column-1)*$model->place + $tr[$i]->place;
 		}
 
-		if ($model->facebook_eid){
+		if ($model->facebook_eid)
 			$model->facebook_eid = 'http://www.facebook.com/event.php?eid=' .$model->facebook_eid;
-		}else{
-			if (isset($_GET['code'])){
+		else
+		{
+			if (isset($_GET['code']))
+			{
 				$data = array();
 	            $ticket = $this->loadTicket($model->id);
 	            $typing = $ticket[0]->attributes['type'];
-	            if ($typing=='travel'){
-	                    $bdate = strtotime( $ticket[0]->attributes['date_begin'] );
-	                    $edate = strtotime( $ticket[0]->attributes['date_end'] );
-	                    $start = date('Y-m-d H:i:s', mktime(0, 0, 0, date("m",$bdate), date("d",$bdate), date("y",$bdate)));
-	                    $ending = date('Y-m-d H:i:s', mktime(0, 0, 0, date("m",$edate), date("d",$edate), date("y",$edate)));
-	            }{
-	                    $end_time = $ticket[0]->attributes['time_end'];
-	                    $ndate = strtotime( $model->datetime );
-	                    $start = date('Y-m-d H:i:s', $ndate);
-	                    if($end_time){
-								$end_time = strtotime($end_time);
-	                            $ending = date("Y-m-d H:i:s",mktime(date("H",$end_time), date("i",$end_time), 0, date("m",$ndate), date("d",$ndate), date("y",$ndate)));
-	                    }else{
-	                            $ending = date("Y-m-d H:i:s",$ndate + 3600 * 24);
-						}
+	            if ($typing=='travel')
+				{
+	                $bdate = strtotime( $ticket[0]->attributes['date_begin'] );
+					$edate = strtotime( $ticket[0]->attributes['date_end'] );
+					$start = date('Y-m-d H:i:s', mktime(0, 0, 0, date("m",$bdate), date("d",$bdate), date("y",$bdate)));
+					$ending = date('Y-m-d H:i:s', mktime(0, 0, 0, date("m",$edate), date("d",$edate), date("y",$edate)));
+	            }
+				{
+					$end_time = $ticket[0]->attributes['time_end'];
+					$ndate = strtotime( $model->datetime );
+					$start = date('Y-m-d H:i:s', $ndate);
+					if($end_time)
+					{
+						$end_time = strtotime($end_time);
+						$ending = date("Y-m-d H:i:s",mktime(date("H",$end_time), date("i",$end_time), 0, date("m",$ndate), date("d",$ndate), date("y",$ndate)));
+					}
+					else
+					{
+						$ending = date("Y-m-d H:i:s",$ndate + 3600 * 24);
+					}
 	            }
 
 	            $data['name'] = $model->title;
@@ -350,7 +374,8 @@ class EventsController extends Controller
 			    $decoded = json_decode($result, true);
 			    curl_close($ch);
 
-			    if(is_array($decoded) && isset($decoded['id'])) {
+			    if(is_array($decoded) && isset($decoded['id']))
+				{
 			    	if (!Yii::app()->user->isGuest && !Yii::app()->user->access_token)
 					{
 						if (!Yii::app()->user->uid)
@@ -368,7 +393,11 @@ class EventsController extends Controller
 			    }
 			}
 		}
+		
+		$attributes = $this->getAttributes($this->loadTicket($id), $model, $model->uniqium);
 
+		$tickets = new Tickets;
+		
 		$this->render(Yii::app()->mf->siteType(). '/view',array(
 			'model'=>$model,
 			'ticket'=>$this->loadTicket($id),
@@ -378,9 +407,178 @@ class EventsController extends Controller
             'uniqEvent'=>$model->uniqium,
 			'ids' =>$ids,
 			'values' =>$values,
+			'attributes'=>$attributes,
+			'tickets'=>$tickets,
 		));
 	}
+	
+	public function getAttributes($ticket, $model, $uniqEvent)
+	{
+		if(!$uniqEvent)
+		{
+			$attributes = array(
+				array(
+					'name'=>'title',
+					'type'=>'raw',
+					'value'=>'<h2>'.$model->title.'</h2>',
+					),
+				array(
+					'name'=>'description',
+					'type'=>'raw',
+					'value'=>'<p>'.nl2br($model->description).'</p>',
+					),
+				array(
+					'name'=>'address',
+					'type'=>'raw',
+					'value'=>'<p>'.nl2br($model->address).'</p>',
+					),
+				array(
+					'name'=>'author',
+					'type'=>'raw',
+					'value'=>'<p>'.Yii::app()->user->getAuthorName($model->author).'</p>',
+					)
+			);
+			
+			$attributes[] = array(
+				'name'=>'datetime',
+				'type'=>'raw',
+				'value'=>'<p>'.$model->normalViewDate($model->datetime).'</p>',
+				);
 
+			if ($model->facebook_eid)
+				$attributes[] = array(
+					'name'=>'facebook_eid',
+					'type'=>'url',
+					);
+					
+			$attributes[]=array(
+				'label'=>'Тип',
+				'type'=>'raw',
+				'value'=>'<p>'.Tickets::$type_ticket[$ticket[0]['type']].'</p>',
+				);
+				
+			if ( isset($ticket[0]['date_begin']) && isset($ticket[0]['date_end']) )
+			{
+				$attributes[]=array(
+					'label'=>'Дата начала действия',
+					'type'=>'raw',
+					'value'=>'<p>'.Events::normalViewDate($ticket[0]['date_begin']).'</p>',
+					);
+				$attributes[]=array(
+					'label'=>'Дата окончания действия',
+					'type'=>'raw',
+					'value'=>'<p>'.Events::normalViewDate($ticket[0]['date_end']).'</p>',
+					);
+			}
+		}
+		else
+		{
+			$attributes = array(
+				array(
+					'type'=>'raw',
+					'value'=>'<div id="event-title'.$uniqEvent->prefix_class.'">'.'<h2>'.$model->title.$uniqEvent->prefix_title.'</h2>'.'</div>',
+					),
+				array(
+					'label'=>'<div><span>'.Events::model()->getAttributeLabel('address').':</span>',
+					'type'=>'raw',
+					'value'=>'<p>'.nl2br($model->address).'</p>'.'</div>',
+					),
+			  );
+
+			if($uniqEvent->location)
+				$attributes[] = array(
+					'label'=>'<div><span>'.EventUniq::model()->getAttributeLabel('location').':</span>',
+					'type'=>'raw',
+					'value'=>'<p id="mapLocation">Расположение</p>'.'</div><div id="map'.$uniqEvent->prefix_class.'" style="visibility:hidden;"><input id="buy_close'.$uniqEvent->prefix_class.'" class="buy_close" type="button" value="" name="yt0">'.$uniqEvent->location.'</div>',
+					);
+
+			if($uniqEvent->phone)
+				$attributes[] = array(
+					'label'=>'<div><span>'.EventUniq::model()->getAttributeLabel('phone').':</span>',
+					'type'=>'raw',
+					'value'=>'<p>'.nl2br($uniqEvent->phone).'</p>'.'</div>',
+					);
+
+			if($uniqEvent->fax)
+				$attributes[] = array(
+					'label'=>'<div><span>'.EventUniq::model()->getAttributeLabel('fax').':</span>',
+					'type'=>'raw',
+					'value'=>'<p>'.nl2br($uniqEvent->fax).'</p>'.'</div>',
+					);
+
+			if($uniqEvent->email)
+				$attributes[] = array(
+					'label'=>'<div><span>'.EventUniq::model()->getAttributeLabel('email').':</span>',
+					'type'=>'raw',
+					'value'=>'<p><a href="mailto:'.nl2br($uniqEvent->email).'">'.nl2br($uniqEvent->email).'</a></p>'.'</div>',
+					);
+
+			if($uniqEvent->sait)
+				$attributes[] = array(
+					'label'=>'<div><span>'.EventUniq::model()->getAttributeLabel('sait').':</span>',
+					'type'=>'raw',
+					'value'=>'<p><a target="_blank" href="http://'.nl2br($uniqEvent->sait).'">'.nl2br($uniqEvent->sait).'</a></p>'.'</div>',
+					);
+
+			if($uniqEvent->time_work)
+				$attributes[] = array(
+					'label'=>'<div><span>'.EventUniq::model()->getAttributeLabel('time_work').':</span>',
+					'type'=>'raw',
+					'value'=>'<p class="info_about_event_full'.$uniqEvent->prefix_class.'">'.nl2br($uniqEvent->time_work).'</p>'.'</div>',
+					);
+
+			$attributes[] = array(
+				'label'=>'<div><span>'.Events::model()->getAttributeLabel('description').':</span>',
+				'type'=>'raw',
+				'value'=>'<p class="info_about_event_full'.$uniqEvent->prefix_class.'">'.nl2br($model->description).'</p>'.'</div>',
+				);
+
+			if(Yii::app()->user->isAdmin())
+				$attributes[] = array(
+					'label'=>'<div><span>'.Events::model()->getAttributeLabel('author').':</span>',
+					'type'=>'raw',
+					'value'=>'<p>'.Yii::app()->user->getAuthorName($model->author).'</p>'.'</div>',
+					);
+
+			if(!$uniqEvent->infinity_time){
+				$attributes[] = array(
+					'label'=>'<div><span>'.Events::model()->getAttributeLabel('datetime').':</span>',
+					'type'=>'raw',
+					'value'=>'<p>'.$model->normalViewDate($model->datetime).'</p>'.'</div>',
+					);
+			}
+
+			if ($model->facebook_eid)
+				$attributes[] = array(
+					'name'=>'facebook_eid',
+					'type'=>'url',
+					);
+
+			if(Yii::app()->user->isAdmin())
+				$attributes[]=array(
+					'label'=>'<div><span>'.Tickets::model()->getAttributeLabel('type').':</span>',
+					'type'=>'raw',
+					'value'=>'<p>'.Tickets::$type_ticket[$ticket[0]['type']].'</p>'.'</div>',
+					);
+			if(Yii::app()->user->isAdmin())
+				if ( isset($ticket[0]['date_begin']) && isset($ticket[0]['date_end']) )
+				{
+					$attributes[]=array(
+						'label'=>'<div><span>'.Tickets::model()->getAttributeLabel('date_begin').':</span>',
+						'type'=>'raw',
+						'value'=>'<p>'.Events::normalViewDate($ticket[0]['date_begin']).'</p>'.'</div>',
+						);
+					$attributes[]=array(
+						'label'=>'<div><span>'.Tickets::model()->getAttributeLabel('date_end').':</span>',
+						'type'=>'raw',
+						'value'=>'<p>'.Events::normalViewDate($ticket[0]['date_end']).'</p>'.'</div>',
+						);
+
+				}
+		}
+		
+		return $attributes;
+	}
 	/**
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
@@ -503,8 +701,9 @@ class EventsController extends Controller
 	}
 	
 	//ищем всех организаторов
-	public function actionSearchOrg($term)
+	public function actionSearchOrg($term, $ids)
 	{
+		//echo '<pre>'; print_r($ids); echo '</pre>';
 		if (!empty($term))
 		{
 			//$term = mysql_escape_string($term);
@@ -514,7 +713,13 @@ class EventsController extends Controller
 			
 			$index = count($name);
 			
-			$sql = "select user_id, name as item, phone from tbl_user where user_id<>".$user_id." and name like '%".mysql_escape_string($name[$index - 1])."%'";
+			$and = '';
+			if (!empty($ids))
+			{
+				$and = ' and user_id not in ('.substr($ids, 0, -2).')';
+			}
+			
+			$sql = "select user_id, name as item, phone from tbl_user where user_id<>".$user_id." and name like '%".mysql_escape_string($name[$index - 1])."%'".$and;
 			$command = Yii::app()->db->createCommand($sql);
 			$dataReader = $command->query();
 			$users = $dataReader->readAll();		
@@ -1070,7 +1275,8 @@ class EventsController extends Controller
 		$flag=false;
 		if(isset($_POST['TransactionLog']))
 		{
-                    if($_POST['TransactionLog']['phone']){
+                    if($_POST['TransactionLog']['phone'])
+					{
                         $user = User::model()->find('phone = :phone',array(':phone'=>'7'.$_POST['TransactionLog']['phone']));
                         //регистрируем нового пользователя
                         if (count($user)==0){
@@ -1082,9 +1288,11 @@ class EventsController extends Controller
                             $a->phone = $_POST['TransactionLog']['phone'];
                             $yourpass = User::generatePassword(10);
                             $a->password = md5($yourpass);
-                            if($a->save()){
-                                if($a->email){
-                                    $text = $a->getTextEmailAboutRegistration($yourpass);
+                            if($a->save())
+							{
+                                if($a->email)
+								{
+                                    $text = $this->getTextEmailAboutRegistration($yourpass, $a);
                                     Yii::app()->mf->mail_html($a->email,'noreply@'.$_SERVER[HTTP_HOST],Yii::app()->name,$text,'Регистрация в ' .Yii::app()->name. '!');
                                 }
                                 $user = User::model()->find('phone = :phone',array(':phone'=>$a->phone));
@@ -1159,12 +1367,16 @@ class EventsController extends Controller
 		}else{
                     $log=new TransactionLog;
                 }
+				
+		$tickets = new Tickets;
+
 		if(!$flag)
 			$this->renderPartial('iframe',array(
 				'model'=>$model,
 				'ticket'=>$ticket,
 				'log'=>$log,
-                                'buy_place'=>$buy_place,
+				'buy_place'=>$buy_place,
+				'tickets' => $tickets,
 			));
 	}
 
@@ -1173,23 +1385,27 @@ class EventsController extends Controller
 	 * @param string $id id мероприятия
 	 */
 	public function actionPublic($id)
-        {
-            Events::model()->updateByPk($id, array('active'=>1));
+	{
+		Events::model()->updateByPk($id, array('active'=>1));
 
-            $this->render(Yii::app()->mf->siteType(). '/public',array('id'=>$id));
-        }
+		$this->render(Yii::app()->mf->siteType(). '/public',array('id'=>$id));
+	}
 
-        /**
+	/**
 	 * Высылает письмо организатору с билетами
 	 * @param string $id id мероприятия
 	 */
     public function actionProtectionEmail($id)
     {
+		$event = $this->loadModel($id);
+		$organizator = Yii::app()->user->name;
+				
         if(isset($_POST['email'])){
-            if($_POST['email'] || strlen($_POST['email']) > 5){
-                $event = $this->loadModel($id);
+            if($_POST['email'] || strlen($_POST['email']) > 5)
+			{                
                 $tickets = TransactionLog::model()->findAll(array('condition'=>'event_id=:event_id','params'=>array(':event_id'=>$id)));
-                $text = $event->getTextEmailSendListTickets($tickets);
+				$text = $this->getTextEmailSendListTickets($tickets, $event, $organizator);
+				
                 Yii::app()->mf->mail_html($_POST['email'],'noreply@'.$_SERVER[HTTP_HOST],Yii::app()->name,$text,'Список билетов на мероприятие «' .$event->title. '»');
 
                 $tr = TransactionLog::model()->findAll(array(
@@ -1235,8 +1451,6 @@ class EventsController extends Controller
             }else
                 $errors = 1;
         }
-        $event = $this->loadModel($id);
-        $organizator = Yii::app()->user;
         $this->render(Yii::app()->mf->siteType(). '/protectionEmail',
                 array(
                     'id'=>$id,

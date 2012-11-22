@@ -248,7 +248,7 @@
 			
 		
 		<div>
-			<?php $this->renderPartial(Yii::app()->mf->siteType(). '/_ticket', array('ticket'=>$ticket, 'buy'=>true, 'log'=>$log)); ?>
+			<?php $this->renderPartial(Yii::app()->mf->siteType(). '/_ticket', array('ticket'=>$ticket, 'buy'=>true, 'log'=>$log, 'tickets'=>$tickets)); ?>
 			
 			<?php if ($log->errors['ticket'][0]==1): ?>
 				<p style="color:red">Не выбран билет</p>

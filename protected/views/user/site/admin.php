@@ -10,19 +10,6 @@ $this->menu=array(
 	array('label'=>'Список пользователей', 'url'=>array('index')),
 	array('label'=>'Создать', 'url'=>array('create')),
 );
-
-Yii::app()->clientScript->registerScript('search', "
-$('.search-button').click(function(){
-	$('.search-form').toggle();
-	return false;
-});
-$('.search-form form').submit(function(){
-	$.fn.yiiGridView.update('user-grid', {
-		data: $(this).serialize()
-	});
-	return false;
-});
-");
 ?>
 <div class="main_form_wrapper list_buy_events">
     <h1>Управление пользователями</h1>
@@ -43,27 +30,32 @@ $('.search-form form').submit(function(){
                 'dataProvider'=>$model->search(),
                 //'filter'=>$model,
                 'columns'=>array(
-                        //'user_id',
-                        'name',
-                        'phone',
-                        'email',
-                        //'password',                        
-                        
-                        array(
-                                'name'=>'role',
-                                'value'=>'$data->role',
-                                'filter'=>User::$ROLE,
+					'name',
+					'phone',
+					'email',              
+					array(
+						'name'=>'role',
+						'value'=>'$data->role',
+						'filter'=>User::$ROLE,
+					),
+					'organization',
+					array(
+						'class'=>'CButtonColumn',
+					),
                 ),
-                        'organization',
-                        /*
-                        'profile',
-                        */
-                        array(
-                                'class'=>'CButtonColumn',
-                        ),
-                ),
-            'hideHeader'=>true,
-        )); ?>
-
+				'hideHeader'=>true,
+			)); ?>
     </div>
 </div>
+<script type="text/javascript">
+	$('.search-button').click(function(){
+		$('.search-form').toggle();
+		return false;
+	});
+	$('.search-form form').submit(function(){
+		$.fn.yiiGridView.update('user-grid', {
+			data: $(this).serialize()
+		});
+		return false;
+	});
+</script>

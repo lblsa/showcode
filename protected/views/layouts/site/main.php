@@ -44,6 +44,8 @@
 <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/cufon/MetaPro-Normal_400.font.js"></script>
 <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/cufon/Book_Antiqua_700-Book_Antiqua_italic_400.font.js"></script>
 
+<script type="text/javascript" src="//vk.com/js/api/openapi.js?63"></script>
+
 <script type="text/javascript">
 	Cufon.replace('#tickets', {fontFamily: "MetaPro-Medium" });
 	Cufon.replace('#tickets span', {fontFamily: "MetaPro-Normal" });

@@ -97,119 +97,117 @@
 	</div>
 
 
-        <h2>Билеты</h2>
-        <div class="bottom_form_style">
-	<div class="elements_form_line_1">
-		<?php
-		if(!$model->isNewRecord){
-			echo $form->hiddenField($ticket,'count_tickets',array('id'=>'count_tickets','value'=>count($tickets1)));
-		}else{
-			echo $form->hiddenField($tickets1,'count_tickets',array('id'=>'count_tickets','value'=>'1'));
-		}
-		if(!$model->isNewRecord){
-                        echo '<div>';
-                            echo $form->labelEx($tickets1[0],'type');
-                            echo $form->dropDownList($tickets1[0],'type',Tickets::$type_ticket);
-                            echo $form->error($tickets1[0],'type');
-                        echo '</div>';
+	<h2>Билеты</h2>
+	<div class="bottom_form_style">
+		<div class="elements_form_line_1">
+		<?php if(!$model->isNewRecord):?>
+			<?php echo $form->hiddenField($ticket,'count_tickets',array('id'=>'count_tickets','value'=>count($tickets1)));?>
+			<div>
+				<?php echo $form->labelEx($tickets1[0],'type');?>
+				<?php echo $form->dropDownList($tickets1[0],'type',Tickets::$type_ticket);?>
+				<?php echo $form->error($tickets1[0],'type');?>
+			</div>
 
-			foreach($tickets1 as $i=>$value){
-				if($i == 0)
-                                        echo '<div id="first_field">';
-				else
-					echo '<div>';
-                                            echo $form->hiddenField($value,'ticket_id[]',array('value'=>$value->ticket_id));
+			<?php foreach($tickets1 as $i=>$value):?>
+				<?php if($i == 0):?>
+					<div id="first_field">
+				<?php else:?>
+					<div>
+				<?php endif;?>
+				
+				<?php echo $form->hiddenField($value,'ticket_id[]',array('value'=>$value->ticket_id));?>
 
-                                            echo '<div class="type_ticket">';
-                                                echo $form->labelEx($value,'description');
-                                                echo $form->textField($value,'description[]',array('size'=>80, 'value'=>$value->description,'id'=>"type_ticket"));
-                                                echo $form->error($value,'description');
-                                            echo '</div>';
+				<div class="type_ticket">
+					<?php echo $form->labelEx($value,'description');?>
+					<?php echo $form->textField($value,'description[]',array('size'=>80, 'value'=>$value->description,'id'=>"type_ticket"));?>
+					<?php echo $form->error($value,'description');?>
+				</div>
 
-                                            echo '<div class="number">';
-                                                echo $form->labelEx($value,'quantity');
-                                                echo $form->textField($value,'quantity[]',array('size'=>14,'maxlength'=>10, 'value'=>$value->quantity,'id'=>"number"));
-                                                echo $form->error($value,'quantity');
-                                            echo '</div>';
+				<div class="number">
+					<?php echo $form->labelEx($value,'quantity');?>
+					<?php echo $form->textField($value,'quantity[]',array('size'=>14,'maxlength'=>10, 'value'=>$value->quantity,'id'=>"number"));?>
+					<?php echo $form->error($value,'quantity');?>
+				</div>
 
-                                            echo '<div class="type_ticket">';
-                                                echo $form->labelEx($value,'time_begin');
-                                                echo $form->textField($value,'time_begin[]',array('maxlength'=>'5', 'size'=>'14','value'=>$value->time_begin,'id'=>"type_ticket"));
-                                                echo $form->error($value,'time_begin');
-                                            echo '</div>';
+				<div class="type_ticket">
+					<?php echo $form->labelEx($value,'time_begin');?>
+					<?php echo $form->textField($value,'time_begin[]',array('maxlength'=>'5', 'size'=>'14','value'=>$value->time_begin,'id'=>"type_ticket"));?>
+					<?php echo $form->error($value,'time_begin');?>
+				</div>
 
-                                            echo '<div class="type_ticket">';
-                                                echo $form->labelEx($value,'time_end');
-                                                echo $form->textField($value,'time_end[]',array('maxlength'=>'5', 'size'=>'14','value'=>$value->time_end,'id'=>"type_ticket"));
-                                                echo $form->error($value,'time_end');
-                                            echo '</div>';
+				<div class="type_ticket">
+					<?php echo $form->labelEx($value,'time_end');?>
+					<?php echo $form->textField($value,'time_end[]',array('maxlength'=>'5', 'size'=>'14','value'=>$value->time_end,'id'=>"type_ticket"));?>
+					<?php echo $form->error($value,'time_end');?>
+				</div>
 
-                                            echo '<div class="price">';
-                                                echo $form->labelEx($value,'price');
-                                                echo $form->textField($value,'price[]',array('size'=>14,'maxlength'=>10, 'value'=>$value->price,'id'=>"price"));
-                                                echo $form->error($value,'price');
-                                            echo '</div>';
+				<div class="price">
+					<?php echo $form->labelEx($value,'price');?>
+					<?php echo $form->textField($value,'price[]',array('size'=>14,'maxlength'=>10, 'value'=>$value->price,'id'=>"price"));?>
+					<?php echo $form->error($value,'price');?>
+				</div>
 
-                                            if($i > 0){
-                                                    echo '<p>';
-                                                    echo CHtml::linkButton('Удалить билет',array(
-                                                       'submit'=>array('events/deleteTicket','id'=>$value->ticket_id),
-                                                       'params'=>array('returnUrl'=>array('/events/update/'.$model->id)),
-                                                       'confirm'=>"Вы уверены, что хотите удалить билет?",
-                                                    ));
-                                                    echo '</p>';
-                                            }
-				echo '</div>';
-			}
+				<?php if($i > 0):?>
+					<p>
+					<?php echo CHtml::linkButton('Удалить билет',array(
+					   'submit'=>array('events/deleteTicket','id'=>$value->ticket_id),
+					   'params'=>array('returnUrl'=>array('/events/update/'.$model->id)),
+					   'confirm'=>"Вы уверены, что хотите удалить билет?",
+					));?>
+					</p>
+				<?php endif;?>
+				</div>
+			<?php endforeach;?>
 
-			echo '<div class="switcher" style="display:none;">';
-				echo $form->labelEx($tickets1[0],'date_begin');
-				echo $form->textField($tickets1[0],'date_begin',array('class'=>'datepicker','value'=>$model->NormalViewDate($tickets1->date_begin)));
-				echo $form->error($tickets1[0],'date_begin');
+			<div class="switcher" style="display:none;">
+			<?php echo $form->labelEx($tickets1[0],'date_begin');?>
+			<?php echo $form->textField($tickets1[0],'date_begin',array('class'=>'datepicker','value'=>$model->NormalViewDate($tickets1->date_begin)));?>
+			<?php echo $form->error($tickets1[0],'date_begin');?>
 
-				echo '<label for="Tickets_date_end">'.CHtml::encode($tickets1[0]->getAttributeLabel("date_end")).'<span class="required">*</span></label>';
-				echo $form->textField($tickets1[0],'date_end',array('class'=>'datepicker','value'=>$model->NormalViewDate($tickets1->date_end)));
-				echo $form->error($tickets1[0],'date_end');
-			echo '</div>';
-		}else{
-                        echo '<div>';
-                            echo $form->labelEx($tickets1,'type');
-                            echo $form->dropDownList($tickets1,'type',Tickets::$type_ticket);
-                            echo $form->error($tickets1,'type');
-                        echo '</div>';
-			echo '<div id="first_field">';
-                            echo '<div class="type_ticket">';
-				echo $form->labelEx($tickets1,'description');
-				echo $form->textField($tickets1,'description[]',array('size'=>80,'value'=>$tickets1->description,'id'=>"type_ticket"));
-				echo $form->error($tickets1,'description');
-                            echo '</div>';
+			<label for="Tickets_date_end"><?php echo CHtml::encode($tickets1[0]->getAttributeLabel("date_end"));?>
+				<span class="required">*</span></label>
+				<?php echo $form->textField($tickets1[0],'date_end',array('class'=>'datepicker','value'=>$model->NormalViewDate($tickets1->date_end)));?>
+				<?php echo $form->error($tickets1[0],'date_end');?>
+			</div>
+		<?php else:?>
+			<?php echo $form->hiddenField($tickets1,'count_tickets',array('id'=>'count_tickets','value'=>'1'));?>
+			<div>
+				<?php echo $form->labelEx($tickets1,'type');?>
+				<?php echo $form->dropDownList($tickets1,'type',Tickets::$type_ticket);?>
+				<?php echo $form->error($tickets1,'type');?>
+			</div>
+			<div id="first_field">
+				<div class="type_ticket">
+					<?php echo $form->labelEx($tickets1,'description');?>
+					<?php echo $form->textField($tickets1,'description[]',array('size'=>80,'value'=>$tickets1->description,'id'=>"type_ticket"));?>
+					<?php echo $form->error($tickets1,'description');?>
+				</div>
 
-                            echo '<div class="number">';
-				echo $form->labelEx($tickets1,'quantity');
-				echo $form->textField($tickets1,'quantity[]',array('size'=>10,'maxlength'=>10,'value'=>$tickets1->quantity,'id'=>"number"));
-				echo $form->error($tickets1,'quantity');
-                            echo '</div>';
+				<div class="number">
+					<?php echo $form->labelEx($tickets1,'quantity');?>
+					<?php echo $form->textField($tickets1,'quantity[]',array('size'=>10,'maxlength'=>10,'value'=>$tickets1->quantity,'id'=>"number"));?>
+					<?php echo $form->error($tickets1,'quantity');?>
+				</div>
 
-                            echo '<div class="price" style="margin-left: 40px;">';
-				echo $form->labelEx($tickets1,'price');
-				echo $form->textField($tickets1,'price[]',array('size'=>14,'maxlength'=>10,'value'=>$tickets1->price,'id'=>'price'));
-				echo $form->error($tickets1,'price');
-                            echo '</div>';
+				<div class="price" style="margin-left: 40px;">
+					<?php echo $form->labelEx($tickets1,'price');?>
+					<?php echo $form->textField($tickets1,'price[]',array('size'=>14,'maxlength'=>10,'value'=>$tickets1->price,'id'=>'price'));?>
+					<?php echo $form->error($tickets1,'price');?>
+				</div>
 
-                            echo '<div class="type_ticket" style="margin-top: 25px;">';
-				echo $form->labelEx($tickets1,'time_begin');
-				echo $form->textField($tickets1,'time_begin[]',array('maxlength'=>'5', 'size'=>'14','value'=>$tickets1->time_begin));
-				echo $form->error($tickets1,'time_begin');
-                            echo '</div>';
+				<div class="type_ticket" style="margin-top: 25px;">
+					<?php echo $form->labelEx($tickets1,'time_begin');?>
+					<?php echo $form->textField($tickets1,'time_begin[]',array('maxlength'=>'5', 'size'=>'14','value'=>$tickets1->time_begin));?>
+					<?php echo $form->error($tickets1,'time_begin');?>
+				</div>
 
-                            echo '<div class="type_ticket" style="margin-top: 25px; margin-left: 40px;">';
-				echo $form->labelEx($tickets1,'time_end',array('style'=>'width: 120px;'));
-				echo $form->textField($tickets1,'time_end[]',array('maxlength'=>'5', 'size'=>'14','value'=>$tickets1->time_end));
-				echo $form->error($tickets1,'time_end');
-                            echo '</div>';
-			echo '</div>';
-		}
-		?>
+				<div class="type_ticket" style="margin-top: 25px; margin-left: 40px;">
+					<?php echo $form->labelEx($tickets1,'time_end',array('style'=>'width: 120px;'));?>
+					<?php echo $form->textField($tickets1,'time_end[]',array('maxlength'=>'5', 'size'=>'14','value'=>$tickets1->time_end));?>
+					<?php echo $form->error($tickets1,'time_end');?>
+				</div>
+			</div>
+		<?php endif; ?>
 	</div>
 
             <div class="clear"></div>
@@ -395,8 +393,15 @@
 				})
 				.autocomplete({
 					source: function( request, response ) {
+						
+						strId = '';
+						for(i = 0; i<ids.length; i++)
+						{
+							strId += ids[i] + ', ';
+						}
+						
 						$.getJSON( "<?php echo Yii::app()->createUrl('events/searchOrg'); ?>", {
-							term: extractLast( request.term )
+							term: extractLast( request.term ), 'ids': strId,
 						}, response );
 					},
 					search: function() {
@@ -411,27 +416,8 @@
 						return false;
 					},
 					select: function( event, ui ) {
-						//var terms = split( this.value );
-						// remove the current input
-						//terms.pop();
-						// add the selected item
-						//terms.push( ui.item.value );
-						for(i = 0; i<ids.length; i++)
-						{
-							if (ids[i]==ui.item.id)
-							{
-								alert('Выбранный организатор уже присутствует в списке!');
-								this.value = '';
-								return false;
-							}
-						}
 						ids.push(ui.item.id);
 						values.push(ui.item.value);
-						// add placeholder to get the comma-and-space at the end
-						//terms.push( "" );
-						//this.value = terms.join( ", " );
-						//alert(ids);
-						//alert(values);
 						newData();
 						this.value = '';
 						return false;

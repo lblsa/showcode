@@ -1,22 +1,3 @@
-<?php
-    Yii::app()->clientScript->registerScript('name_js1','
-        $("#list_tickets table tr").click(function()
-	{
-            if(this.children[0].getElementsByTagName("a").item("a")){
-                var to_link = this.children[0].getElementsByTagName("a").item("a").href;
-                document.location = to_link;
-            }
-            return true;
-	});
-    ');
-?>
-
-<?php //if (Yii::app()->user->id == $data->user_id):?>
-    <!--<td><?php //echo CHtml::link(CHtml::encode('Просмотреть'), array('view', 'id'=>$data->uniq)); ?></td>-->
-<?php //else: ?>
-    <!--<td></td>-->
-<?php //endif; ?>
-
 <?php if (Yii::app()->user->id == $data->user_id):?>
     <td><?php echo CHtml::link(CHtml::encode(Events::getEventTitle($data->event_id)), array('ticket/view/'.$data->uniq)); ?></td>
 <?php else: ?>
@@ -51,3 +32,15 @@
 <?php endif; ?>
 
     <td><?php echo CHtml::encode(TransactionLog::$status[$data->status]); ?></td>
+	
+<script type="text/javascript">
+	$("#list_tickets table tr").click(function()
+	{
+		if(this.children[0].getElementsByTagName("a").item("a"))
+		{
+			var to_link = this.children[0].getElementsByTagName("a").item("a").href;
+			document.location = to_link;
+		}
+		return true;
+	});
+</script>

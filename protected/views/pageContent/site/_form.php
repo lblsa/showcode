@@ -1,11 +1,5 @@
 <script src="/js/redactor/redactor.js"></script>
 <link rel="stylesheet" href="/js/redactor/css/redactor.css" />
-<?php 
-    Yii::app()->clientScript->registerScript('name_js1','
-	$(function(){$("#PageContent_body").redactor();	});
-    ');
-?>
-
 <div class="form_main">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
@@ -42,3 +36,6 @@
 <?php $this->endWidget(); ?>
 
 </div><!-- form -->
+<script type="text/javascript">
+	$(function(){$("#PageContent_body").redactor();	});
+</script>
