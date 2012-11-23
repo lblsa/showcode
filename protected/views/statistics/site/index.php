@@ -17,8 +17,8 @@
 	
 	
     <div id="list_tickets">
-        <div class="search-form">
-            <?php $this->renderPartial(Yii::app()->mf->siteType(). '/_search',array(
+         <div class="search-form">
+           <?php $this->renderPartial(Yii::app()->mf->siteType(). '/_search',array(
                     'model'=>$tickets,
                     'sortDate'=>$sortDate,
                     'users'=>$usersDropList,
@@ -28,7 +28,7 @@
 
         <br/>
 
-        <div>
+		<div>
             <?php if($tickets->user_id): ?>
                 <?php $this->renderPartial(Yii::app()->mf->siteType(). '/_table',array(
                         'model'=>$tickets,
@@ -36,6 +36,7 @@
                         'users'=>$users,
                         'events'=>$events,
                         'daysPeriod'=>$daysPeriod,
+						'event_id'=>$tickets->event_id,
                 )); ?>
             <?php endif; ?>
         </div>
