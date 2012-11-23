@@ -64,7 +64,7 @@ class StatisticsController extends Controller
 			
 			$selectStat = EventStat::model()->findByAttributes(array('user_id'=>Yii::app()->user->id, 'event_id'=>$_POST['TransactionLog']['event_id']))->send_stat;
 		
-        	/**            Заполняется фильтр            */
+        	//           Заполняется фильтр            
             $tickets->attributes = $_POST['TransactionLog'];			
             $tickets->date_begin = $_POST['TransactionLog']['date_begin'];
             $tickets->date_end = $_POST['TransactionLog']['date_end'];
@@ -79,7 +79,7 @@ class StatisticsController extends Controller
                 $eventsDropList = new Events;
             }
 
-            /**            Массив дней            */
+            //         Массив дней            
             if($_POST['TransactionLog']['date_begin'] && $_POST['TransactionLog']['date_end']){
                 $dayTIMEarray = $this->getArrayDatePeriod($_POST['TransactionLog']['period'], $_POST['TransactionLog']['date_begin'], $_POST['TransactionLog']['date_end']);
             }else{
@@ -104,17 +104,30 @@ class StatisticsController extends Controller
 
             }
         }else{
-            $eventsDropList = new Events;/*            Список мероприятий пользователя            */
+            $eventsDropList = new Events;//            Список мероприятий пользователя            
 
             $MinMaxDays = Yii::app()->db->createCommand('SELECT MAX(datetime) AS MaxDay, MIN(datetime) AS MinDay FROM tbl_transaction_log')->queryAll();
             $dayTIMEarray = $this->getArrayDatePeriod($_POST['TransactionLog']['period'], $MinMaxDays[0]['MinDay'], $MinMaxDays[0]['MaxDay']);
 
             $users = User::model()->findAll();
         }
-        /**
-        * Список пользователей
-        */
+        //Список пользователей
         $usersDropList = User::model()->findAll('role <> :role', array(':role'=>'user'));
+		
+		//фильтр по датам
+		if(isset($_POST['TransactionLog']))
+		{
+			//echo '<pre>'; print_r($_POST); echo '</pre>';
+			if(!empty($_POST['TransactionLog']['date_begin']))
+			{
+				$date_begin = date('Y-m-d', strtotime($_POST['TransactionLog']['date_begin']));
+				
+				if(!empty($_POST['TransactionLog']['date_end']))
+				{
+					$date_end = date('Y-m-d', strtotime($_POST['TransactionLog']['date_end']));
+				}
+			}
+		}
 
         $this->render(Yii::app()->mf->siteType(). '/index',array(
             'tickets'=>$tickets,
@@ -124,6 +137,8 @@ class StatisticsController extends Controller
             'users'=>$users,
             'daysPeriod'=>$dayTIMEarray,
 			'selectStat'=>$selectStat,
+			'date_begin'=>$date_begin,
+			'date_end'=>$date_end,
         ));
     }
 

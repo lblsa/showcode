@@ -37,6 +37,8 @@
                         'events'=>$events,
                         'daysPeriod'=>$daysPeriod,
 						'event_id'=>$tickets->event_id,
+						'date_begin'=>$date_begin,
+						'date_end'=>$date_end,
                 )); ?>
             <?php endif; ?>
         </div>

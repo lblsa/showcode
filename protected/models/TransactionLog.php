@@ -41,6 +41,9 @@ class TransactionLog extends CActiveRecord
 	public $date_end;
 	public $period;
 	public $rememberMail;
+	public $sQuant;
+	public $sPrice;
+	public $datetime_end;
 
 	/**
 	 * This method is invoked before saving a record (after validation, if any).
@@ -393,14 +396,17 @@ class TransactionLog extends CActiveRecord
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
 	 */
-	public function search($id, $flag = false)
+	public function search($id, $flag = false, $date_begin = '', $date_end = '')
 	{
 		// Warning: Please modify the following code to remove attributes that
 		// should not be searched.
 
 		$criteria=new CDbCriteria;
 		//$criteria->condition = 'event_id="' .$id. '"';
-
+		//[sql]SELECT DATE_FORMAT(date,'%d.%m.%y') AS date,DATE_FORMAT(DATE_ADD(date,INTERVAL 6 DAY),'%d.%m.%y') AS end_date,count(*) AS count FROM table GROUP BY DATE_FORMAT(date,'%Y-%u')[/sql]
+		if($flag)
+			$criteria->select = "event_id, datetime, type, status, sum(quantity) as sQuant, sum(price) as sPrice, DATE_FORMAT(DATE_ADD(datetime,INTERVAL 6 DAY),'%d.%m.%Y') AS datetime_end";
+		
 		$criteria->compare('log_id',$this->log_id);
 		$criteria->compare('uniq',$this->uniq);
 		$criteria->compare('event_id',$id,true);
@@ -419,12 +425,34 @@ class TransactionLog extends CActiveRecord
 		if(!$flag)
 			$criteria->order = 'datetime DESC';
 		else
+		{
+			if(!empty($date_begin) && !empty($date_end))
+			{
+				$criteria->addBetweenCondition('datetime', $date_begin, $date_end, 'AND');
+				//$criteria->addBetweenCondition("DATE_FORMAT(DATE_ADD(datetime,INTERVAL 6 DAY),'%d.%m.%Y')", $date_begin, $date_end, 'AND');
+			}
+			else
+			{
+				if (!empty($date_begin))
+				{
+					$criteria->condition = "datetime>='".$date_begin."'";				
+				}
+				if(!empty($date_end))
+				{
+					$criteria->condition = "datetime<='".$date_end."'";				
+					$criteria->condition = "DATE_FORMAT(DATE_ADD(datetime,INTERVAL 6 DAY),'%d.%m.%Y')<='".$date_end."'";				
+				}	
+			}			
+			$criteria->group = "event_id, DATE_FORMAT(datetime, '%d.%m.%y')";
 			$criteria->order = 'datetime ASC';
+		}
 		
-		
+		//echo '<pre>'; print_r($criteria); echo '</pre>';exit;
 		$pagination = array(
 				'pageSize' => 10,
 			);
+			
+		//echo '<pre>'; print_r($criteria); echo '</pre>';
 		if($flag) $pagination = false;
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -436,6 +464,7 @@ class TransactionLog extends CActiveRecord
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
 	 */
+
 	public function searchStatistics($event, $date_b, $user, $period, $ticket)
 	{
 		// Warning: Please modify the following code to remove attributes that

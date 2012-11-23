@@ -2,42 +2,44 @@
 <?php 
 	$this->widget('zii.widgets.grid.CGridView', array(
 		'id'=>'tickets-grid',
-		'dataProvider'=>$model->search($event_id, true),
+		'dataProvider'=>$model->search($event_id, true, $date_begin, $date_end),
 		'columns'=>array(
 			array(
 				'header'=>'Дата',
-				'htmlOptions'=>array('style'=>'width: 40px;'),
-				'value'=>'CHtml::encode(Events::normalViewDate($data->datetime))',
+				'htmlOptions'=>array('style'=>'width: 25%;'),
+				'value'=>'CHtml::encode(Events::normalViewDate($data->datetime))." - ".$data->datetime_end',
 			),
 			array(
 				'header'=>'Билет',
-				'value'=>'"<strong>".$data->price."&nbsp;руб.</strong>"."<br/>".CHtml::encode(Tickets::$type_ticket[$data->type])',
+				'value'=>'"<strong>".$data->sPrice."&nbsp;руб.</strong>"."<br/>".CHtml::encode(Tickets::$type_ticket[$data->type])',
 				'type'=>'raw',
-				'htmlOptions'=>array('style'=>'text-align: center; width: 60px;'),
+				'htmlOptions'=>array('style'=>'text-align: center; width: 25%;'),
 			),
 			array(
 				'header'=>'Куплено',
-				'value'=>'$data->quantity."/".$data->quantity*$data->price."&nbsp;руб."',
+				'value'=>'$data->sQuant."/".$data->sQuant*$data->sPrice."&nbsp;руб."',
 				'type'=>'raw',
-				'htmlOptions'=>array('style'=>'text-align: center; width: 60px;'),
+				'htmlOptions'=>array('style'=>'text-align: center; width: 25%;'),
 				'class'=>'TotalColumn',
 				'footer'=>true,
-				'footerHtmlOptions'=>array('style'=>'font-weight: bold; width:60px; text-align: center', 'class'=>'summ'),
+				'footerHtmlOptions'=>array('style'=>'font-weight: bold; width: 25%; text-align: center', 'class'=>'summ'),
 			),
 			array(
 				'header'=>'Использовано',
-				'value'=>'($data->status==3) ? $data->quantity."/".$data->quantity*$data->price."&nbsp;руб." : "0/0&nbsp;руб."',
+				'value'=>'($data->status==3) ? $data->sQuant."/".$data->sQuant*$data->sPrice."&nbsp;руб." : "0/0&nbsp;руб."',
 				'type'=>'raw',
-				'htmlOptions'=>array('style'=>'text-align: center; width: 60px;'),
+				'htmlOptions'=>array('style'=>'text-align: center; width: 25%'),
 				'class'=>'TotalColumn',
 				'footer'=>true,
-				'footerHtmlOptions'=>array('style'=>'font-weight: bold; width:60px; text-align: center', 'class'=>'summ'),
+				'footerHtmlOptions'=>array('style'=>'font-weight: bold; width: 25%; text-align: center', 'class'=>'summ'),
 			),
 		),
 		'cssFile' => Yii::app()->baseUrl.'/css/gridview/styles.css',
+		'summaryText'=>'',
 	));
 ?>
 </div>
+<?php /*
 <?php $totaLbuyT =0; ?>
 <?php $totaLPricebuyT = 0; ?>
 <?php $totaLusedT = 0; ?>
@@ -94,7 +96,7 @@
                                     /*case 0:
                                         $bookedT = intval($ticket1->quantity);
                                         break;*/
-                                    case 1:
+                                   /* case 1:
                                         $buyT = intval($ticket1['quantity']) + $buyT;
                                         break;
                                     case 2:
@@ -124,4 +126,4 @@
         <td style="text-align: center;"><?php echo $totaLbuyT; ?>&nbsp;/&nbsp;<span><?php echo $totaLPricebuyT; ?>&nbsp;руб.</span></td>
         <td style="text-align: center;"><?php echo $totaLusedT; ?>&nbsp;/&nbsp;<span><?php echo $totaLPriceusedT; ?>&nbsp;руб.</span></td>
     </tr>
-</table>
+</table>*/?>
