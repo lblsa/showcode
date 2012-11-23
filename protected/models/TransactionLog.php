@@ -393,17 +393,17 @@ class TransactionLog extends CActiveRecord
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
 	 */
-	public function search($id)
+	public function search($id, $flag = false)
 	{
 		// Warning: Please modify the following code to remove attributes that
 		// should not be searched.
 
 		$criteria=new CDbCriteria;
-		$criteria->condition = 'event_id="' .$id. '"';
+		//$criteria->condition = 'event_id="' .$id. '"';
 
 		$criteria->compare('log_id',$this->log_id);
 		$criteria->compare('uniq',$this->uniq);
-		$criteria->compare('event_id',$this->event_id,true);
+		$criteria->compare('event_id',$id,true);
 		$criteria->compare('type',$this->type,true);
 		$criteria->compare('quantity',$this->quantity);
 		$criteria->compare('price',$this->price);
@@ -416,10 +416,19 @@ class TransactionLog extends CActiveRecord
 		$criteria->compare('family',$this->family,true);
 		$criteria->compare('address',$this->address,true);
 		$criteria->compare('phone',$this->phone,true);
-                $criteria->order = 'datetime DESC';
-
+		if(!$flag)
+			$criteria->order = 'datetime DESC';
+		else
+			$criteria->order = 'datetime ASC';
+		
+		
+		$pagination = array(
+				'pageSize' => 10,
+			);
+		if($flag) $pagination = false;
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+			'pagination' =>$pagination,
 		));
 	}
 
