@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 21, 2012 at 11:20 PM
+-- Generation Time: Nov 25, 2012 at 10:48 PM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.6-1ubuntu1
 
@@ -148,7 +148,7 @@ CREATE TABLE IF NOT EXISTS `tbl_event_stat` (
   `send_stat` int(11) NOT NULL DEFAULT '0',
   `last_date` date NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `tbl_event_stat`
@@ -161,7 +161,8 @@ INSERT INTO `tbl_event_stat` (`id`, `user_id`, `event_id`, `send_stat`, `last_da
 (4, 90, '3891671b', 0, '2012-10-26'),
 (5, 90, '3891671b', 0, '2012-10-26'),
 (6, 90, '3891671b', 1, '2012-10-26'),
-(7, 90, 'eabf880c', 2, '2012-10-31');
+(7, 90, 'eabf880c', 2, '2012-10-31'),
+(8, 90, '', 0, '2012-11-22');
 
 -- --------------------------------------------------------
 
@@ -393,6 +394,27 @@ INSERT INTO `tbl_tickets` (`ticket_id`, `event_id`, `type`, `quantity`, `price`,
 (166, '4c7a03d3', 'free', 477, 0, NULL, NULL, NULL, NULL, NULL),
 (167, 'eabf880c', 'free', 482, 0, NULL, NULL, NULL, NULL, NULL),
 (168, '63577feb', 'free', 11, 0, NULL, NULL, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_tmp_interval`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_tmp_interval` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `number` int(11) NOT NULL,
+  `begin` date NOT NULL,
+  `end` date NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=228 ;
+
+--
+-- Dumping data for table `tbl_tmp_interval`
+--
+
+INSERT INTO `tbl_tmp_interval` (`id`, `number`, `begin`, `end`) VALUES
+(227, 0, '2012-11-01', '2012-11-23');
 
 -- --------------------------------------------------------
 
