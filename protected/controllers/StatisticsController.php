@@ -118,6 +118,10 @@ class StatisticsController extends Controller
 		if(isset($_POST['TransactionLog']))
 		{
 			//echo '<pre>'; print_r($_POST); echo '</pre>';
+			if (isset($_POST['TransactionLog']['period']))
+			{
+				$period = $_POST['TransactionLog']['period'];
+			}
 			if(!empty($_POST['TransactionLog']['date_begin']))
 			{
 				$date_begin = date('Y-m-d', strtotime($_POST['TransactionLog']['date_begin']));
@@ -127,18 +131,23 @@ class StatisticsController extends Controller
 					$date_end = date('Y-m-d', strtotime($_POST['TransactionLog']['date_end']));
 				}
 			}
+			
+			
+
+			
 		}
 
         $this->render(Yii::app()->mf->siteType(). '/index',array(
-            'tickets'=>$tickets,
-            'sortDate'=>$sortDate,
-            'usersDropList'=>$usersDropList,
-            'eventsDropList'=>$eventsDropList,
-            'users'=>$users,
-            'daysPeriod'=>$dayTIMEarray,
-			'selectStat'=>$selectStat,
-			'date_begin'=>$date_begin,
-			'date_end'=>$date_end,
+            'tickets' => $tickets,
+            'sortDate' => $sortDate,
+            'usersDropList' => $usersDropList,
+            'eventsDropList' => $eventsDropList,
+            'users' => $users,
+            'daysPeriod' => $dayTIMEarray,
+			'selectStat' => $selectStat,
+			'date_begin' => $date_begin,
+			'date_end' => $date_end,
+			'period' => $period,
         ));
     }
 

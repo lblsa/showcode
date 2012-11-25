@@ -31,14 +31,15 @@
 		<div>
             <?php if($tickets->user_id): ?>
                 <?php $this->renderPartial(Yii::app()->mf->siteType(). '/_table',array(
-                        'model'=>$tickets,
-                        'sortDate'=>$sortDate,
-                        'users'=>$users,
-                        'events'=>$events,
-                        'daysPeriod'=>$daysPeriod,
-						'event_id'=>$tickets->event_id,
-						'date_begin'=>$date_begin,
-						'date_end'=>$date_end,
+                        'model' => $tickets,
+                        'sortDate' => $sortDate,
+                        'users' => $users,
+                        'events' => $events,
+                        'daysPeriod' => $daysPeriod,
+						'event_id' => $tickets->event_id,
+						'date_begin' => $date_begin,
+						'date_end' => $date_end,
+						'period' => $period,
                 )); ?>
             <?php endif; ?>
         </div>
