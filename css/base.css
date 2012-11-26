@@ -1991,3 +1991,8 @@ td.place.select_mouse{background: #AAE6FF}
 	width: auto;
 	cursor: pointer;
 }
+td.summ
+{
+	font-weight: bold; 
+	text-align: center;
+}
