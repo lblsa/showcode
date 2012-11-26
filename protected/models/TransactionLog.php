@@ -402,74 +402,80 @@ class TransactionLog extends CActiveRecord
 		// Warning: Please modify the following code to remove attributes that
 		// should not be searched.
 		
-		$transaction = Yii::app()->db->beginTransaction();
-		
-		//удаляем все из временной таблицы
-		$sql = "delete from tbl_tmp_interval";
-		$command = Yii::app()->db->createCommand($sql);
-		$command->execute();
-
-		$interval = array();
-		if ($period=='days')
+		if($flag)
 		{
-			$n = 0;
-			$interval[$n]['begin'] = $date_begin;
-			$interval[$n]['end'] = $date_end;
-		}
-		else
-		{
-			$dif = strtotime($date_end) - strtotime($date_begin);
-			if ($period=='weeks')
-				$n = substr($dif/(86400*7), 0, 1);
-			if ($period=='mounths')
-				$n = substr($dif/(86400*30), 0, 1);
-			$date = new DateTime($date_begin);
-			$n_date = $date;
+			$transaction = Yii::app()->db->beginTransaction();
 			
-			//полные недели/месяцы
-			if($n!=0)
+			//удаляем все из временной таблицы
+			$sql = "delete from tbl_tmp_interval";
+			$command = Yii::app()->db->createCommand($sql);
+			$command->execute();
+
+			$interval = array();
+			if ($period=='days')
 			{
-				for ($i = 0; $i<$n; $i++)
-				{
-					$interval[$i]['begin'] = $n_date->format('Y-m-d');		
-					if ($period=='weeks')
-						$n_date = $date->add(new DateInterval('P6D'));	
-					if ($period=='mounths')
-						$n_date = $date->add(new DateInterval('P29D'));	
-					$interval[$i]['end'] = $n_date->format('Y-m-d');	
-					$n_date = $date->add(new DateInterval('P1D'));			
-				}
-				
-				//оставшиеся дни
-				if(strtotime($date_end)!=strtotime($interval[$n-1]['end'])) 
-				{
-					$interval[$n]['begin'] = $n_date->format('Y-m-d');
-					$interval[$n]['end'] = $date_end;
-				}
-			}
-			else
-			{
+				$n = 0;
 				$interval[$n]['begin'] = $date_begin;
 				$interval[$n]['end'] = $date_end;
 			}
-		}
-		
-		//добавляем ов временную талицу интервалы
-		for ($i = 0; $i<$n+1; $i++)
-		{
-			$sql = "insert into tbl_tmp_interval (number, begin, end) values (".$i.", '".$interval[$i]['begin']."', '".$interval[$i]['end']."')";
-			$command = Yii::app()->db->createCommand($sql);
-			$command->execute();
-		}
+			else
+			{
+				$dif = strtotime($date_end) - strtotime($date_begin);
+				if ($period=='weeks')
+					$n = substr($dif/(86400*7), 0, 1);
+				if ($period=='mounths')
+					$n = substr($dif/(86400*30), 0, 1);
+				$date = new DateTime($date_begin);
+				$n_date = $date;
 				
+				//полные недели/месяцы
+				if($n!=0)
+				{
+					for ($i = 0; $i<$n; $i++)
+					{
+						$interval[$i]['begin'] = $n_date->format('Y-m-d');		
+						if ($period=='weeks')
+							$n_date = $date->add(new DateInterval('P6D'));	
+						if ($period=='mounths')
+							$n_date = $date->add(new DateInterval('P29D'));	
+						$interval[$i]['end'] = $n_date->format('Y-m-d');	
+						$n_date = $date->add(new DateInterval('P1D'));			
+					}
+					
+					//оставшиеся дни
+					if(strtotime($date_end)!=strtotime($interval[$n-1]['end'])) 
+					{
+						$interval[$n]['begin'] = $n_date->format('Y-m-d');
+						$interval[$n]['end'] = $date_end;
+					}
+				}
+				else
+				{
+					$interval[$n]['begin'] = $date_begin;
+					$interval[$n]['end'] = $date_end;
+				}
+			}
+			
+			//добавляем ов временную талицу интервалы
+			for ($i = 0; $i<$n+1; $i++)
+			{
+				$sql = "insert into tbl_tmp_interval (number, begin, end) values (".$i.", '".$interval[$i]['begin']."', '".$interval[$i]['end']."')";
+				$command = Yii::app()->db->createCommand($sql);
+				$command->execute();
+			}
+		}		
 
 		$criteria=new CDbCriteria;
-		if($period=='days')
-			$select = '';
-		else
-			$select = ", tbl_tmp_interval.begin as b, tbl_tmp_interval.end as e";
+
 		if($flag)
+		{
+			if($period=='days')
+				$select = '';
+			else
+				$select = ", tbl_tmp_interval.begin as b, tbl_tmp_interval.end as e";
+			
 			$criteria->select = "t.event_id, t.datetime, t.type, t.status, sum(t.quantity) as sQuant, sum(t.price) as sPrice".$select;
+		}			
 			
 		//echo '<pre>'; print_r($id); echo '</pre>';
 		$criteria->compare('event_id',$id,true);
@@ -500,13 +506,10 @@ class TransactionLog extends CActiveRecord
 				
 			$criteria->order = 't.datetime ASC';
 		}
-		
-		//echo '<pre>'; print_r($criteria); echo '</pre>'//;exit;
+
 		$pagination = array(
 				'pageSize' => 10,
 			);
-			
-		//echo '<pre>'; print_r($criteria); echo '</pre>';
 		if($flag) $pagination = false;
 		
 		$return = new CActiveDataProvider($this, array(
@@ -519,57 +522,6 @@ class TransactionLog extends CActiveRecord
 		return $return;
 	}
 
-        /**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
-	 */
-
-	public function searchStatistics($event, $date_b, $user, $period, $ticket)
-	{
-		// Warning: Please modify the following code to remove attributes that
-		// should not be searched.
-		$criteria=new CDbCriteria;
-
-                $cond = '';
-                if($date_b){
-                    switch ($period) {
-       		        case 'days':
-        	           	$cond .= 'DATE(datetime) = "' .Yii::app()->mf->dateForMysql($date_b['day'].'.'.$date_b['mounth'].'.'.$date_b['year']). '" AND ';
-    	                    break;
-	                case 'weeks':
-
-	                   	$cond .= 'WEEK(datetime) = "' .intval($date_b['week']). '" AND YEAR(datetime) = "' .intval($date_b['year']). '" AND ';
-                        	break;
-                    case 'mounths':
-                    	$cond .= 'MONTH(datetime) = "' .intval($date_b['mounth']). '" AND YEAR(datetime) = "' .intval($date_b['year']). '" AND ';
-                    	    break;
-                	}
-
-				}
-                if($user)
-                    $cond .= 'event_id IN (SELECT id FROM tbl_events WHERE author = "' .$user['user_id']. '") AND ';
-
-                if($event)
-                    $cond .= 'event_id="' .$event['id']. '" AND ';
-
-                if($ticket)
-                    $cond .= 'ticket_id="' .$ticket['ticket_id']. '" AND ';
-
-                $cond .= '1';
-
-		$criteria->condition = $cond;
-
-		$criteria->group = 'status';
-
-		$criteria->select = 'COUNT(*) AS quantity, status';
-
-                $criteria->order = 'status DESC';
-
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
-	}
-	
 	public function searchTickets($user_id, $flag, $page)
 	{
 		$criteria=new CDbCriteria;

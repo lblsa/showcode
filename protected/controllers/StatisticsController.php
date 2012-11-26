@@ -115,41 +115,6 @@ class StatisticsController extends Controller
         ));
     }
 
-    public function getArrayDatePeriod($period, $date_b, $date_e){
-        $date_b = new DateTime(trim($date_b));
-        $date_e = new DateTime(trim($date_e));
-        $date_b->setTime(0, 0, 0);
-        $date_e->setTime(0, 0, 0);
-
-        $daysArray = Array();
-        switch ($period) {
-            case 'days':
-                while ($date_b <= $date_e) {
-                    array_push($daysArray, Array('day'=>$date_b->format("d"),'mounth'=>$date_b->format("m"),'year'=>$date_b->format("Y")));
-                    $date_b->modify('+1 day');
-                }
-                break;
-            case 'weeks':
-                while ($date_b <= $date_e) {
-                    if($date_b->format("m") == 1 && $date_b->format("W") == 52)
-                        array_push($daysArray, Array('year'=>intval($date_b->format("Y"))-1,'week'=>$date_b->format("W")));
-                    else
-                        array_push($daysArray, Array('year'=>$date_b->format("Y"),'week'=>$date_b->format("W")));
-                    $date_b->modify('+1 week');
-                }
-                break;
-            case 'mounths':
-                $date_b->setDate($date_b->format("Y"), $date_b->format("n"), 1);
-                $date_e->setDate($date_e->format("Y"), $date_e->format("n"), 1);
-                while ($date_b <= $date_e) {
-                    array_push($daysArray, Array('mounth'=>$date_b->format("m"),'year'=>$date_b->format("Y")));
-                    $date_b->modify('+1 month');
-                }
-                break;
-        }
-        return $daysArray;
-    }
-
     // Uncomment the following methods and override them if needed
 	/*
 	public function filters()
@@ -179,33 +144,6 @@ class StatisticsController extends Controller
 	
 	public function actionTest()
 	{
-		$event_id = 'eabf880c';
-		$user_id = 90;
-		
-		$tickets = new TransactionLog;
-		
-		$tickets->period = 'days';
-		$tickets->event_id = $event_id;
-		$tickets->user_id = $user_id;
-
-		$eventsDropList = Events::model()->findAll('active = 1 AND author=:author', array(':author'=>$user_id));
-		if(count($eventsDropList) == 0)
-		   $eventsDropList = new Events;
-		else
-			$eventsDropList = new Events;
-
-		/**            Массив дней            */
-		$exp = '';
-		$exp .= 'event_id IN (SELECT id FROM tbl_events WHERE author = "' .$user_id. '") AND ';
-		$exp .= 'event_id  = "' .$event_id. '" AND ';
-
-		$MinMaxDays = Yii::app()->db->createCommand('SELECT MAX(datetime) AS MaxDay, MIN(datetime) AS MinDay FROM tbl_transaction_log WHERE '.$exp.'1')->queryAll();
-
-		$dayTIMEarray = $this->getArrayDatePeriod('days', $MinMaxDays[0]['MinDay'], $MinMaxDays[0]['MaxDay']);
-
-		$users = User::model()->findByPk($user_id);
-		$users = Array($users);
-		
 		//все переделываю...	
 		$event_id = 'eabf880c';
 		$user_id = 90;	
