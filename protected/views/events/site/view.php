@@ -43,8 +43,6 @@ if($model->place)
 	$places = $model->place;
 else
 	$places = 0;
-//Yii::app()->clientScript->registerScriptFile('http://userapi.com/js/api/openapi.js?34', CClientScript::POS_HEAD);
-//$id_api_vk = intval(Yii::app()->params["vk_id"]);
 ?>
 
 <?php

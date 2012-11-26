@@ -70,24 +70,6 @@ class EventsController extends Controller
 	*/
 
 	/**
-	 * Функция подключения Jquery datepicker
-	 */
-	public function datepicker()
-	{
-		$cs=Yii::app()->clientScript;
-		//$cs->registerCoreScript('jquery');
-		$cs->registerCSSFile(Yii::app()->request->baseUrl.'/js/theme-redmond/jquery-ui-1.8.13.custom.css');
-		$cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/jquery-ui-1.8.16.custom.min.js', CClientScript::POS_HEAD);
-		$cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/jquery-ui-timepicker-addon.js', CClientScript::POS_HEAD);
-		/*
-		$script = '$(function(){
-			$(".datetimepicker").datetimepicker({minDate:"0"});
-			});';
-		$cs->registerScript('datepicker_init_local', $script, CClientScript::POS_BEGIN);
-		*/
-	}
-
-	/**
 	 * Добавляет пользователя во встречу на Facebook.
 	 * @param string $access_token сгенерированный ключ "access_token" для конкретного пользователя для доступа к API "graph.facebook.com"
 	 * @param integer $facebook_eid id встречи в facebook
@@ -114,7 +96,6 @@ class EventsController extends Controller
 	 */
 	public function actionView($id)
 	{
-		$this->datepicker();
 		$model=$this->loadModel($id);
 		if($model->active != 1 && !Yii::app()->user->isAdmin() && !Yii::app()->user->isOrganizer())
 		{
@@ -587,9 +568,8 @@ class EventsController extends Controller
 	public function actionCreate()
 	{
         $this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column3';
-		//$this->datepicker();
-		$model=new Events;
 		
+		$model=new Events;		
 		$modelOrg = new EventOrg;
 		
 		// Uncomment the following line if AJAX validation is needed
@@ -750,7 +730,7 @@ class EventsController extends Controller
 	public function actionUpdate($id)
 	{
         $this->layout='//layouts/' .Yii::app()->mf->siteType(). '/column3';
-		//$this->datepicker();
+
 		$model=$this->loadModel($id);
 		$tickets=$this->loadTicket($id);
 		$valid=true;		
@@ -973,14 +953,14 @@ class EventsController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$this->datepicker();
 		$model=new Events('search');
 
 		$model->unsetAttributes();  // clear any default values
 
 		if(isset($_GET['Events']))
 			$model->attributes=$_GET['Events'];
-
+		
+		
 		$this->render(Yii::app()->mf->siteType(). '/admin',array(
 			'model'=>$model,
 		));
