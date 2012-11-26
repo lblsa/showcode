@@ -56,74 +56,62 @@ class StatisticsController extends Controller
             'weeks'=>'неделям',
             'mounths'=>'месяцам',
         );
-
-		
+	
         $tickets = new TransactionLog;
-
-        if(isset($_POST['TransactionLog'])){
-			
-			$selectStat = EventStat::model()->findByAttributes(array('user_id'=>Yii::app()->user->id, 'event_id'=>$_POST['TransactionLog']['event_id']))->send_stat;
-		
-        	/**            Заполняется фильтр            */
+	
+		//фильтр по датам
+		if(isset($_POST['TransactionLog']))
+		{
+        	//Заполняется фильтр            
             $tickets->attributes = $_POST['TransactionLog'];			
-            $tickets->date_begin = $_POST['TransactionLog']['date_begin'];
-            $tickets->date_end = $_POST['TransactionLog']['date_end'];
-            $tickets->period = $_POST['TransactionLog']['period'];
+
+			$date_begin = '';
+			$date_end = '';
+			if (isset($_POST['TransactionLog']['period']))
+			{
+				$period = $_POST['TransactionLog']['period'];
+				$tickets->period = $period;
+			}
+			if(!empty($_POST['TransactionLog']['date_begin']))
+			{
+				$tickets->date_begin = $_POST['TransactionLog']['date_begin'];
+				$date_begin = date('Y-m-d', strtotime($_POST['TransactionLog']['date_begin']));
+				
+				if(!empty($_POST['TransactionLog']['date_end']))
+				{
+					$tickets->date_end = $_POST['TransactionLog']['date_end'];
+					$date_end = date('Y-m-d', strtotime($_POST['TransactionLog']['date_end']));
+				}
+			}
 			
-			//echo '<pre>'; print_r($tickets->attributes); echo '</pre>';exit;
-            if ($_POST['TransactionLog']['user_id'] != ''){
-                $eventsDropList = Events::model()->findAll('active = 1 AND author=:author', array(':author'=>$_POST['TransactionLog']['user_id']));
-                if(count($eventsDropList) == 0)
-                    $eventsDropList = new Events;
-            }else{
-                $eventsDropList = new Events;
-            }
-
-            /**            Массив дней            */
-            if($_POST['TransactionLog']['date_begin'] && $_POST['TransactionLog']['date_end']){
-                $dayTIMEarray = $this->getArrayDatePeriod($_POST['TransactionLog']['period'], $_POST['TransactionLog']['date_begin'], $_POST['TransactionLog']['date_end']);
-            }else{
-            	$exp = '';
-            	if ($_POST['TransactionLog']['user_id'] != ''){
-            		$exp .= 'event_id IN (SELECT id FROM tbl_events WHERE author = "' .$_POST['TransactionLog']['user_id']. '") AND ';
-            		if ($_POST['TransactionLog']['event_id'] != ''){
-            			$exp .= 'event_id  = "' .$_POST['TransactionLog']['event_id']. '" AND ';
-            		}
-            	}
-
-            	$MinMaxDays = Yii::app()->db->createCommand('SELECT MAX(datetime) AS MaxDay, MIN(datetime) AS MinDay FROM tbl_transaction_log WHERE '.$exp.'1')->queryAll();
-
-                $dayTIMEarray = $this->getArrayDatePeriod($_POST['TransactionLog']['period'], $MinMaxDays[0]['MinDay'], $MinMaxDays[0]['MaxDay']);
-            }
-
-            if ($_POST['TransactionLog']['user_id'] != ''){
-            	$users = User::model()->findByPk($_POST['TransactionLog']['user_id']);
-            	$users = Array($users);
-            }else{
-            	$users = User::model()->findAll();
-
-            }
-        }else{
-            $eventsDropList = new Events;/*            Список мероприятий пользователя            */
-
-            $MinMaxDays = Yii::app()->db->createCommand('SELECT MAX(datetime) AS MaxDay, MIN(datetime) AS MinDay FROM tbl_transaction_log')->queryAll();
-            $dayTIMEarray = $this->getArrayDatePeriod($_POST['TransactionLog']['period'], $MinMaxDays[0]['MinDay'], $MinMaxDays[0]['MaxDay']);
-
-            $users = User::model()->findAll();
-        }
-        /**
-        * Список пользователей
-        */
-        $usersDropList = User::model()->findAll('role <> :role', array(':role'=>'user'));
+			$sql = "select sum(quantity) as sq, sum(price) as sp from tbl_transaction_log where event_id = '".$tickets->event_id."' and datetime between '".$date_begin."' and '".$date_end."'";
+			$command = Yii::app()->db->createCommand($sql);
+			$dataReader = $command->query();
+			$data = $dataReader->read();		
+			$quantityAll = $data['sq'];	
+			$priceAll = $data['sp'];
+			$qXp = $quantityAll*$priceAll;
+			
+			$sql = "select sum(quantity) as sq, sum(price) as sp from tbl_transaction_log where event_id = '".$tickets->event_id."' and datetime between '".$date_begin."' and '".$date_end."' and status = 3";
+			$command = Yii::app()->db->createCommand($sql);
+			$dataReader = $command->query();
+			$data = $dataReader->read();			
+			$quantityAllu = $data['sq'];	
+			$priceAllu = $data['sp'];
+			$qXpu = $quantityAllu*$priceAllu;
+			
+		}
 
         $this->render(Yii::app()->mf->siteType(). '/index',array(
-            'tickets'=>$tickets,
-            'sortDate'=>$sortDate,
-            'usersDropList'=>$usersDropList,
-            'eventsDropList'=>$eventsDropList,
-            'users'=>$users,
-            'daysPeriod'=>$dayTIMEarray,
-			'selectStat'=>$selectStat,
+            'tickets' => $tickets,
+            'sortDate' => $sortDate,
+			'date_begin' => $date_begin,
+			'date_end' => $date_end,
+			'period' => $period,
+			'quantityAll' => $quantityAll,
+			'quantityAllu' => $quantityAllu,
+			'qXp' => $qXp,
+			'qXpu' => $qXpu,
         ));
     }
 

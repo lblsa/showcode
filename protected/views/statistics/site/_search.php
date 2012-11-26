@@ -9,12 +9,6 @@
 	'action'=>Yii::app()->createUrl($this->id),
 	'method'=>'post',
     )); ?>
-
-        <?php if(!Yii::app()->user->isAdmin()): ?>
-            <?php echo $form->hiddenField($model,'user_id'); ?>
-            <?php echo $form->hiddenField($model,'event_id'); ?>
-        <?php endif; ?>
-
         <table class="filter-statistics-grid">
             <tr class="title_table">
                 <td colspan="2">Даты</td>
@@ -48,8 +42,10 @@
         </table>
         <br/>
         <div>
-            <?php echo $form->hiddenField($model,'user_id'); ?>
-            <?php echo $form->hiddenField($model,'event_id'); ?>
+            <?php /*echo $form->hiddenField($model,'user_id'); ?>
+            <?php echo $form->hiddenField($model,'event_id');*/ ?>
+			<?php echo CHtml::hiddenField('TransactionLog[user_id]', Yii::app()->user->id);?>
+			<?php echo CHtml::hiddenField('TransactionLog[event_id]', $model->event_id);?>
             <?php echo CHtml::submitButton('Применить',array('id'=>'submit_save_button')); ?>
         </div>
     <?php $this->endWidget(); ?>
@@ -58,7 +54,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("input.datepicker").datepicker({
-			minDate:"0",
+			//minDate:"0",
 			dateFormat:"dd.mm.yy",
 		});
 		

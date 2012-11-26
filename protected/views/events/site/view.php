@@ -61,7 +61,8 @@ if (yii::app()->user->isAdmin() || yii::app()->user->isCreator($model->id))
         if($model->active != 1)
             $this->menu[]=array('label'=>'Удалить мероприятие', 'url'=>'', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Вы действительно хотите удалить мероприятие?'));
         else
-            $this->menu[]=array('label'=>'Статистика', 'url'=>'#', 'linkOptions'=>array('submit'=>array('/statistics'),'params'=>array('TransactionLog[user_id]' => $model->author,'TransactionLog[event_id]'=>$model->id,'TransactionLog[period]'=>'weeks','TransactionLog[date_begin]'=> date('d.m.Y', mktime(0, 0, 0, date("m")-2, date("d"), date("Y"))),'TransactionLog[date_end]'=>date('d.m.Y'))));
+            //$this->menu[]=array('label'=>'Статистика', 'url'=>'#', 'linkOptions'=>array('submit'=>array('/statistics'),'params'=>array('TransactionLog[user_id]' => $model->author,'TransactionLog[event_id]'=>$model->id,'TransactionLog[period]'=>'weeks','TransactionLog[date_begin]'=> date('d.m.Y', mktime(0, 0, 0, date("m")-2, date("d"), date("Y"))),'TransactionLog[date_end]'=>date('d.m.Y'))));
+            $this->menu[]=array('label'=>'Статистика', 'url'=>'#', 'linkOptions'=>array('submit'=>array('/statistics'),'params'=>array('TransactionLog[user_id]' => $model->author,'TransactionLog[event_id]'=>$model->id)));
 if (yii::app()->user->isCreator($model->id))
 {
 	$this->menu[] = array('label'=>'Редактировать', 'url'=>array('update', 'id'=>$model->id));	

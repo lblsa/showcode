@@ -41,6 +41,10 @@ class TransactionLog extends CActiveRecord
 	public $date_end;
 	public $period;
 	public $rememberMail;
+	public $sQuant;
+	public $sPrice;
+	public $b;
+	public $e;
 
 	/**
 	 * This method is invoked before saving a record (after validation, if any).
@@ -393,22 +397,89 @@ class TransactionLog extends CActiveRecord
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
 	 */
-	public function search($id, $flag = false)
+	public function search($id, $flag = false, $period = '', $date_begin = '', $date_end = '')
 	{
 		// Warning: Please modify the following code to remove attributes that
 		// should not be searched.
+		
+		$transaction = Yii::app()->db->beginTransaction();
+		
+		//удаляем все из временной таблицы
+		$sql = "delete from tbl_tmp_interval";
+		$command = Yii::app()->db->createCommand($sql);
+		$command->execute();
+
+		$interval = array();
+		if ($period=='days')
+		{
+			$n = 0;
+			$interval[$n]['begin'] = $date_begin;
+			$interval[$n]['end'] = $date_end;
+		}
+		else
+		{
+			$dif = strtotime($date_end) - strtotime($date_begin);
+			if ($period=='weeks')
+				$n = substr($dif/(86400*7), 0, 1);
+			if ($period=='mounths')
+				$n = substr($dif/(86400*30), 0, 1);
+			$date = new DateTime($date_begin);
+			$n_date = $date;
+			
+			//полные недели/месяцы
+			if($n!=0)
+			{
+				for ($i = 0; $i<$n; $i++)
+				{
+					$interval[$i]['begin'] = $n_date->format('Y-m-d');		
+					if ($period=='weeks')
+						$n_date = $date->add(new DateInterval('P6D'));	
+					if ($period=='mounths')
+						$n_date = $date->add(new DateInterval('P29D'));	
+					$interval[$i]['end'] = $n_date->format('Y-m-d');	
+					$n_date = $date->add(new DateInterval('P1D'));			
+				}
+				
+				//оставшиеся дни
+				if(strtotime($date_end)!=strtotime($interval[$n-1]['end'])) 
+				{
+					$interval[$n]['begin'] = $n_date->format('Y-m-d');
+					$interval[$n]['end'] = $date_end;
+				}
+			}
+			else
+			{
+				$interval[$n]['begin'] = $date_begin;
+				$interval[$n]['end'] = $date_end;
+			}
+		}
+		
+		//добавляем ов временную талицу интервалы
+		for ($i = 0; $i<$n+1; $i++)
+		{
+			$sql = "insert into tbl_tmp_interval (number, begin, end) values (".$i.", '".$interval[$i]['begin']."', '".$interval[$i]['end']."')";
+			$command = Yii::app()->db->createCommand($sql);
+			$command->execute();
+		}
+				
 
 		$criteria=new CDbCriteria;
-		//$criteria->condition = 'event_id="' .$id. '"';
-
-		$criteria->compare('log_id',$this->log_id);
-		$criteria->compare('uniq',$this->uniq);
+		if($period=='days')
+			$select = '';
+		else
+			$select = ", tbl_tmp_interval.begin as b, tbl_tmp_interval.end as e";
+		if($flag)
+			$criteria->select = "t.event_id, t.datetime, t.type, t.status, sum(t.quantity) as sQuant, sum(t.price) as sPrice".$select;
+			
+		//echo '<pre>'; print_r($id); echo '</pre>';
 		$criteria->compare('event_id',$id,true);
+		$criteria->compare('log_id',$this->log_id);
+		$criteria->compare('uniq',$this->uniq);		
 		$criteria->compare('type',$this->type,true);
 		$criteria->compare('quantity',$this->quantity);
 		$criteria->compare('price',$this->price);
 		$criteria->compare('total',$this->total);
-		$criteria->compare('user_id',$this->user_id);
+		//$criteria->compare('user_id',$this->user_id);
 		$criteria->compare('datetime',$this->datetime);
 		$criteria->compare('payment',$this->payment);
 		$criteria->compare('status',$this->status);
@@ -416,26 +487,43 @@ class TransactionLog extends CActiveRecord
 		$criteria->compare('family',$this->family,true);
 		$criteria->compare('address',$this->address,true);
 		$criteria->compare('phone',$this->phone,true);
+
 		if(!$flag)
 			$criteria->order = 'datetime DESC';
 		else
-			$criteria->order = 'datetime ASC';
+		{
+			$criteria->join = "inner join tbl_tmp_interval on t.datetime between tbl_tmp_interval.begin and tbl_tmp_interval.end";
+			if($period=='days')
+				$criteria->group = "t.datetime";
+			else
+				$criteria->group = "tbl_tmp_interval.number";
+				
+			$criteria->order = 't.datetime ASC';
+		}
 		
-		
+		//echo '<pre>'; print_r($criteria); echo '</pre>'//;exit;
 		$pagination = array(
 				'pageSize' => 10,
 			);
+			
+		//echo '<pre>'; print_r($criteria); echo '</pre>';
 		if($flag) $pagination = false;
-		return new CActiveDataProvider($this, array(
+		
+		$return = new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 			'pagination' =>$pagination,
 		));
+		
+		$transaction->commit();
+		
+		return $return;
 	}
 
         /**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
 	 */
+
 	public function searchStatistics($event, $date_b, $user, $period, $ticket)
 	{
 		// Warning: Please modify the following code to remove attributes that
