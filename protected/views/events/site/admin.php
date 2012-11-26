@@ -5,24 +5,6 @@ $this->breadcrumbs=array(
 	'Мероприятия'=>array('index'),
 	'Управление мероприятиями',
 );
-/*
-$this->menu=array(
-	array('label'=>'Список мероприятий', 'url'=>array('index')),
-	array('label'=>'Создать', 'url'=>array('create')),
-);
-*/
-Yii::app()->clientScript->registerScript('search', "
-$('.search-button').click(function(){
-	$('.search-form').toggle();
-	return false;
-});
-$('.search-form form').submit(function(){
-	$.fn.yiiGridView.update('events-grid', {
-		data: $(this).serialize()
-	});
-	return false;
-});
-");
 ?>
 
 <div class="main_form_wrapper list_buy_events">
@@ -37,7 +19,6 @@ $('.search-form form').submit(function(){
                     'model'=>$model,
             )); ?>
         </div><!-- search-form -->
-
         <?php $this->widget('zii.widgets.grid.CGridView', array(
                 'id'=>'events-grid',
                 'itemsCssClass'=>'',
@@ -46,36 +27,52 @@ $('.search-form form').submit(function(){
                 //'filter'=>$model,
                 'columns'=>array(
                         array(
-                                'name'=>'logo',
-                                'type'=>'image',
-                                'value'=>'$data->changeNameImageOnMini($data->logo)',
+							'name'=>'logo',
+							'type'=>'image',
+							'value'=>'$data->changeNameImageOnMini($data->logo)',
                         ),
                         array(
-                    'name'=>'title',
-                    'type'=>'raw',
-                    'value'=>'CHtml::link(CHtml::encode($data->title), "view/".$data->id)',
-                ),
+							'name'=>'title',
+							'type'=>'raw',
+							'value'=>'CHtml::link(CHtml::encode($data->title), "view/".$data->id)',
+						),
                         //'description',
                         array(
-                        'name'=>'datetime',
-                        'type'=>'raw',
-                        'value'=>'$data->NormalViewDate($data->datetime)',
+							'name'=>'datetime',
+							'type'=>'raw',
+							'value'=>'$data->NormalViewDate($data->datetime)',
                         ),
                         array(
-                    'name'=>'author',
-                    'type'=>'raw',
-                    'value'=>'Yii::app()->user->getAuthorName($data->author)',
-                ),
+							'name'=>'author',
+							'type'=>'raw',
+							'value'=>'Yii::app()->user->getAuthorName($data->author)',
+						),
+                        /*array(
+							'name'=>'status',
+							'value'=>'Events::$STATUS[$data->status]',
+							'filter'=>Events::$STATUS,
+						),*/                        
                         array(
-                                'name'=>'status',
-                                'value'=>'Events::$STATUS[$data->status]',
-                                'filter'=>Events::$STATUS,
-                ),                        
-                        array(
-                                'class'=>'CButtonColumn',
+							'class'=>'CButtonColumn',
                         ),
-                ),
+					),
             'hideHeader'=>true,
+			'cssFile' => Yii::app()->baseUrl.'/css/gridview/styles.css',
         )); ?>
     </div>
 </div>
+<script type="text/javascript">	
+	$(document).ready(function(){
+		$('.search-button').click(function(){
+			$('.search-form').toggle();
+			return false;
+		});
+		$('.search-form form').submit(function(){
+			$.fn.yiiGridView.update('events-grid', {
+				data: $(this).serialize()
+			});
+			return false;
+		});
+	});
+	
+</script>

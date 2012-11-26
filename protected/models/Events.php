@@ -217,7 +217,7 @@ class Events extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('title, status, date, time', 'required', 'message'=>'Не может быть пустым'),
+			array('title, date, time', 'required', 'message'=>'Не может быть пустым'),
 			array('column, place, facebook_eid', 'numerical', 'integerOnly'=>true, 'message'=>'Вводите только числа'),
 			array('column, place', 'length', 'max'=>3),
 			array('addEventFacebook', 'boolean'),
@@ -229,7 +229,7 @@ class Events extends CActiveRecord
                 'tooLarge'=>'Изображение должно быть не больше 1024 * 1280 точек и не больше 2 МБ',
 				),*/
 			// По следующим атрибутам осуществляется поиск:
-			array('title, description, datetime, author, status, logo, facebook_eid,address, active', 'safe', 'on'=>'search'),
+			array('title, description, datetime, author, logo, facebook_eid,address, active', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -262,7 +262,7 @@ class Events extends CActiveRecord
 			'date' => 'Дата',
 			'time' => 'Время',
 			'author' => 'Автор',
-			'status' => 'Статус',
+			//'status' => 'Статус',
 			'logo' => 'Изображение',
 			'column' => 'Ряд',
 			'place' => 'Место',
@@ -297,7 +297,7 @@ class Events extends CActiveRecord
 			$criteria->compare('author',$this->author,true);
 		else
 			$criteria->compare('author',Yii::app()->user->id,true);
-		$criteria->compare('status',$this->status,true);
+		//$criteria->compare('status',$this->status,true);
 		$criteria->compare('logo',$this->logo,true);
 		$criteria->compare('active',$this->active,true);
                 $criteria->order = 'datetime DESC';
