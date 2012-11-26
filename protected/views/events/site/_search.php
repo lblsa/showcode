@@ -3,8 +3,8 @@
 
 <?php $form=$this->beginWidget('CActiveForm', array(
         'id'=>'events-form',
-	'action'=>Yii::app()->createUrl($this->route),
-	'method'=>'get',
+		'action'=>Yii::app()->createUrl($this->route),
+		'method'=>'get',
 )); ?>
 
 	<div>
@@ -23,8 +23,8 @@
 	</div>
 	
 	<div>
-		<?php echo $form->label($model,'status'); ?>
-		<?php echo $form->dropDownList($model,'status',Events::$STATUS); ?>
+		<?php //echo $form->label($model,'status'); ?>
+		<?php //echo $form->dropDownList($model,'status',Events::$STATUS); ?>
 	</div>	
 
 	<div>
